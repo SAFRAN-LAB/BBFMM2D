@@ -33,18 +33,43 @@
 
 <p>BBFMM2D is an open source package of the Black-box Fast Multipole Method in 2 dimensions.</p>
 
+<a> Directories and files</a>
+<pre><code>
+$./examples/	:	Example input C++ codes; Needed to read input from user or from input file.
+$./src/		:	Source code in C++
+$./header/	:	Relevant header files
+$./exec/	:	Executables for BBFMM2D
+$./input/	:	The input file.
+$./README	:	This file
+$./License	:	License file
+$./Makefile	:	Makefile
+</code></pre>
+
 <a> Who's behind BBFMM?</a>
 Eric Darve
 William Fong
 Sivaram Ambikasaran
 Ruoxi Wang
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<a>Setting things up</a>
+<p>
+1) To run this package, you need to have Eigen.
+
+2) Download Eigen from here: http://eigen.tuxfamily.org/index.php?title=Main_Page
+
+3) Create a directory named Codes/ inside the main Eigen folder and copy the directory BBFMM2D/ into the directory Codes/.
+
+4) Open the Makefile, which is inside the folder BBFMM2D. Ensure that you have included the path to Eigen in the line containing "CFLAGS". For instance, in the above setting, the path "-I ./../../" should be included in the Makefile.
+
+5) Once you have this set up, you should be able to run the code. Check whether the code runs by performing the following action. Go to the directory where Makefile is in, then key in the following three commands in the terminal:
+<pre><code>
+$make get_matrix_through_routine_standard_kernel
+$cd exec/
+$./H2_2D_MVP_get_matrix_through_routine_standard_kernel
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+The code should now run.
+</p>
 
 <h3>
 <a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
