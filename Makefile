@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-c -Wall -DNDEBUG -O3 -ffast-math -ffinite-math-only -I header/ -I ./../
 LDFLAGS=
 
-SOURCES=exec/H2_2D_tree.cpp exec/H2_2D_node.cpp 
+SOURCES=exec/H2_2D_tree.cpp exec/H2_2D_node.cpp exec/read_inputfile.cpp
 RELEASE_ALL=release
 SOURCESA=src/H2_2D_MVP_input_from_file_standard_kernel.cpp
 SOURCESB=src/H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp 
@@ -51,5 +51,5 @@ clean:
 	rm -rf *.out src/*.o exec/*.o release/*
 
 tar:
-	tar -zcvf H2_2D_MVP.tar.gz ./src/H2_2D_MVP_input_from_file_standard_kernel.cpp ./src/H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp ./src/H2_2D_MVP_input_from_file_mykernel.cpp ./src/H2_2D_MVP_get_matrix_through_routine_mykernel.cpp ./exec/H2_2D_tree.cpp ./exec/H2_2D_node.cpp ./header/H2_2D_tree.hpp ./header/H2_2D_node.hpp Makefile
+	tar -zcvf H2_2D_MVP.tar.gz ./src/H2_2D_MVP_input_from_file_standard_kernel.cpp ./src/H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp ./src/H2_2D_MVP_input_from_file_mykernel.cpp ./src/H2_2D_MVP_get_matrix_through_routine_mykernel.cpp ./exec/H2_2D_tree.cpp ./exec/H2_2D_node.cpp exec/read_inputfile.cpp ./header/read_inputfile.hpp ./header/H2_2D_tree.hpp ./header/H2_2D_node.hpp Makefile
 

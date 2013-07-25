@@ -20,7 +20,6 @@
 #include"cmath"
 #include"Eigen/Dense"
 #include"./H2_2D_node.hpp"
-#include"./kernel.hpp"
 
 using namespace Eigen;
 using namespace std;
