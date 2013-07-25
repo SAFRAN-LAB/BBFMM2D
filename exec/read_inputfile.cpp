@@ -9,7 +9,7 @@
 
 #include"read_inputfile.hpp"
 
-void read_Location_and_Measurement_operator (const string& filename, unsigned long& N, VectorXd* location, unsigned& m, MatrixXd& H) {
+void read_Location_and_Measurement_operator (const string& filename, unsigned long& N, VectorXd* location, unsigned& m, MatrixXd& Htranspose) {
     ifstream fin;
 	fin.open(filename.c_str());
 	
@@ -26,7 +26,7 @@ void read_Location_and_Measurement_operator (const string& filename, unsigned lo
     ss << line;
     char nonuse;
     ss >> N >> nonuse >> m;
-    H = MatrixXd::Zero(N,m);
+    Htranspose  =   MatrixXd::Zero(N,m);
     location[0]	=	VectorXd::Random(N);
 	location[1]	=	VectorXd::Random(N);
     
@@ -46,14 +46,14 @@ void read_Location_and_Measurement_operator (const string& filename, unsigned lo
             i++;
         }
         if (line.length()!=(unsigned)i+2) {
-            read_Measurement_operator(line.substr(i+1), row, H, m);
+            read_Measurement_operator(line.substr(i+1), row, Htranspose, m);
         }
         row++;
     }
     fin.close();
 }
 
-void read_Measurement_operator(const string& s, unsigned long row, MatrixXd& H, unsigned m) {
+void read_Measurement_operator(const string& s, unsigned long row, MatrixXd& Htranspose, unsigned m) {
     if (!s.empty()) {
         unsigned k = 0;
         const char* start_pt = NULL;
@@ -64,7 +64,7 @@ void read_Measurement_operator(const string& s, unsigned long row, MatrixXd& H, 
                     i++;
                 }
                 if(start_pt!=&s[i]) {
-                    H(row,k)=(double)atof(start_pt);
+                    Htranspose(row,k)=(double)atof(start_pt);
                 }
                 k++;
             }
