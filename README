@@ -39,7 +39,7 @@ SETTING THINGS UP:
 
 4) Open the Makefile, which is inside the folder BBFMM2D. Ensure that you have included the path to Eigen in the line containing "CFLAGS". For instance, in the above setting, the path "-I ./../../" should be included in the Makefile.
 
-4) Once you have this set up, you should be able to run the code. Check whether the code runs by performing the following action. Go to the directory where Makefile is in, then key in the following three commands in the terminal:
+5) Once you have this set up, you should be able to run the code. Check whether the code runs by performing the following action. Go to the directory where Makefile is in, then key in the following three commands in the terminal:
 
 		make get_matrix_through_routine_standard_kernel
 		cd exec/
