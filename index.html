@@ -31,7 +31,7 @@
           <h3>
 <a name="welcome-to-bbfmm2d" class="anchor" href="#welcome-to-bbfmm2d"><span class="octicon octicon-link"></span></a>Welcome to 2D Black Box FMM.</h3>
 
-<p>BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions.</p>
+<p>BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions. You can redistribute and/or modify the codes and scripts under the terms of the MPL2 license. <a href="http://www.mozilla.org/MPL/2.0/FAQ.html">Go here </a> for more details on the license.</p>
 
 <h3> Directories and files</h3>
 <pre><code>
@@ -52,22 +52,22 @@ Sivaram Ambikasaran<br>
 Ruoxi Wang
 
 <h3>Setting things up</h3>
-1) To run this package, you need to have Eigen.<br>
+1) To get the package running, you need to have Eigen.<br>
 
-2) Download Eigen from here: http://eigen.tuxfamily.org/index.php?title=Main_Page<br>
+2) If you do not have Eigen, download it from here: http://eigen.tuxfamily.org/index.php?title=Main_Page<br>
 
 3) Create a directory named Codes/ inside the main Eigen folder and copy the directory BBFMM2D/ into the directory Codes/.<br>
 
 4) Open the Makefile, which is inside the folder BBFMM2D. Ensure that you have included the path to Eigen in the line containing "CFLAGS". For instance, in the above setting, the path "-I ./../../" should be included in the Makefile.<br>
 
-5) Once you have this set up, you should be able to run the code. Check whether the code runs by performing the following action. Go to the directory, where Makefile is in, then key in the following three commands in the terminal:
+5) Once you have this set up, you should be able to run the code. Check whether the code runs by performing the following action. Go to the directory, where Makefile is in; then key in the following three commands in the terminal:
 <pre><code>
 $make get_matrix_through_routine_standard_kernel
 $cd exec/
 $./H2_2D_MVP_get_matrix_through_routine_standard_kernel
 </code></pre>
 
-The code should now run.
+6) For more details, read through the README.txt file.
 
 <h3>
 <a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
