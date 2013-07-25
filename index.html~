@@ -37,7 +37,6 @@
 Eric Darve
 William Fong
 Sivaram Ambikasaran
-Ruoxi Wang
 
 <pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
