@@ -33,7 +33,9 @@ SETTING THINGS UP:
 
 2) Download Eigen from here: http://eigen.tuxfamily.org/index.php?title=Main_Page
 
-3) Open the Makefile, ensure that you have included the path to Eigen in the line containing "CFLAGS". For instance, the Makefile is the folder inside the Eigen folder named: /2D_black_box_fmm/. Hence, the Eigen folder was the parent of this folder. Hence, the makefile consists of the include path: "-I ./../"
+3) Create a directory named Codes/ inside the main Eigen folder and copy the directory BBFMM2D/ into the directory Codes/.
+
+4) Open the Makefile, which is inside the folder BBFMM2D. Ensure that you have included the path to Eigen in the line containing "CFLAGS". For instance, in the above setting, the path "-I ./../../" should be included in the Makefile.
 
 4) Once you have this set up, you should be able to run the code. Check whether the code runs by performing the following action. Go to the directory where Makefile is in, then key in the following three commands in the terminal:
 
