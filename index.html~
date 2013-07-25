@@ -56,7 +56,7 @@ $cd exec/
 $./H2_2D_MVP_get_matrix_through_routine_standard_kernel
 </code></pre>
 
-6) For more details, read through the ./README.txt file.
+6) For more details, read through the README.txt file.
 
 <h3>
 <a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
