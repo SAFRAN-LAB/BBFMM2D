@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-c -Wall -DNDEBUG -O3 -ffast-math -ffinite-math-only -I header/ -I ./../
+CFLAGS=-c -Wall -DNDEBUG -O3 -ffast-math -ffinite-math-only -I header/ -I ./../../
 LDFLAGS=
 
 SOURCES=exec/H2_2D_tree.cpp exec/H2_2D_node.cpp exec/read_inputfile.cpp
