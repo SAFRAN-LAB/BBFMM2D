@@ -4,10 +4,10 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	read_inputfie.cpp
+//	read_location_H.cpp
 //
 
-#include"read_inputfile.hpp"
+#include"read_location_H.hpp"
 
 void read_Location_and_Measurement_operator (const string& filename, unsigned long& N, VectorXd* location, unsigned& m, MatrixXd& Htranspose) {
     ifstream fin;

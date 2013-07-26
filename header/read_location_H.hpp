@@ -4,10 +4,10 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	read_inputfile.hpp
+//	read_location_H.hpp
 //
-#ifndef __read_inputfile_hpp__
-#define __read_inputfile_hpp__
+#ifndef __read_location_H_hpp__
+#define __read_location_H_hpp__
 
 #include"iostream"
 #include <sstream>
@@ -29,4 +29,4 @@ void read_Location_and_Measurement_operator (const string& filename, unsigned lo
 
 void read_Measurement_operator(const string& s, unsigned long row, MatrixXd& H, unsigned m);
 
-#endif //(__read_inputfile_hpp__)
+#endif //(__read_location_H_hpp__)

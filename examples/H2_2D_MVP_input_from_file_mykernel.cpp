@@ -14,7 +14,8 @@
 #include"cmath"
 #include"ctime"
 #include"./H2_2D_tree.hpp"
-
+#include"kernel_types.hpp"
+#include"read_location_H.hpp"
 using namespace std;
 using namespace Eigen;
 

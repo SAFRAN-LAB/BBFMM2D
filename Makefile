@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-c -Wall -DNDEBUG -O3 -ffast-math -ffinite-math-only -I header/ -I ./../../
 LDFLAGS=
 
-SOURCES=src/H2_2D_tree.cpp src/H2_2D_node.cpp src/read_inputfile.cpp
+SOURCES=src/H2_2D_tree.cpp src/H2_2D_node.cpp src/read_location_H.cpp src/kernel_base.cpp src/kernel_types.cpp
 
 SOURCESA=examples/H2_2D_MVP_input_from_file_standard_kernel.cpp
 SOURCESB=examples/H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp 
