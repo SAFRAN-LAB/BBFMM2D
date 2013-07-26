@@ -13,7 +13,7 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <title>BBFMM2D by Sivaram Ambikasaran</title>
+    <title>BBFMM2D</title>
   </head>
 
   <body>
@@ -65,7 +65,7 @@ Eric Darve<br>
 <h3>Support or Contact</h3>
 <p>Still having trouble with BBFMM2D? Contact one of the above and we’ll help you sort it out.</p>
 
-        </section>
+</section>
 
         <aside id="sidebar">
           <a href="https://github.com/sivaramambikasaran/BBFMM2D/zipball/master" class="button">
