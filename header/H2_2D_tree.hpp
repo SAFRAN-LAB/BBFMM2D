@@ -151,14 +151,5 @@ public:
     virtual double kernel_func(double R_square);
 };
 
-/* file format:
-    location   Measurement operator
-   (0.5, 0.5) (y,x,,)
-   (1.5, 0.5)
-    ...
- */
-void read_Location_and_Measurement_operator (const string& filename, unsigned long& N, VectorXd* location, unsigned& m, MatrixXd& H);
-
-void read_Measurement_operator(const string& s, unsigned long row, MatrixXd& H, unsigned m);
 
 #endif //(__H2_2D_tree_hpp__)
