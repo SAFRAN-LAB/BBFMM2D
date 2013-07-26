@@ -100,7 +100,9 @@ int main(){
     cout << "Starting Exact computating..." << endl;
 	clock_t start	=	clock();
 	MatrixXd Q;
-	A.kernel2D(N, location, N, location, Q);
+	A.kernel2D(N, location, N, location, Q);// Make sure the type of A here
+                                            // corresponds to the kernel used
+                                            // to generate Q.
 	clock_t end	=	clock();
     
 	double Exact_Assembly_time	=	double(end-start)/double(CLOCKS_PER_SEC);
