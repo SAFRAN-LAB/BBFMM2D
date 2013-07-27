@@ -10,6 +10,7 @@
 
 #include"iostream"
 #include<fstream>
+#include<string>
 #include"Eigen/Dense"
 #include"cmath"
 #include"ctime"
@@ -33,7 +34,9 @@ int main(){
 	unsigned m;           // Number of sets of charges;
 	MatrixXd Htranspose;  // All the different sets of charges;
     
-    read_Location_and_Measurement_operator ("../input/test_input.txt", N, location, m, Htranspose);
+    string filename_input = "../input/test_input.txt";
+    
+    read_Location_and_Measurement_operator (filename_input.c_str(), N, location, m, Htranspose);
 
 	cout << endl << "Number of charges:"    << N << endl;
 	cout << endl << "Number of sets of charges:" << m << endl;

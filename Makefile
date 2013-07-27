@@ -51,5 +51,4 @@ clean:
 	rm -rf *.out examples/*.o src/*.o exec/*
 
 tar:
-	tar -zcvf H2_2D_MVP.tar.gz ./examples/H2_2D_MVP_input_from_file_standard_kernel.cpp ./examples/H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp ./examples/H2_2D_MVP_input_from_file_mykernel.cpp ./examples/H2_2D_MVP_get_matrix_through_routine_mykernel.cpp ./src/H2_2D_tree.cpp ./src/H2_2D_node.cpp src/read_inputfile.cpp ./header/read_inputfile.hpp ./header/H2_2D_tree.hpp ./header/H2_2D_node.hpp Makefile
-
+	tar -zcvf BBFMM2D.tar.gz ./exec ./src ./header ./examples ./Makefile ./README ./LICENSE

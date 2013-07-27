@@ -75,7 +75,7 @@ Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp
 Go to the folder /input/, put your input file inside of this folder.
 Go to the folder /examples/, open "H2_2D_MVP_input_from_file_standard_kernel.cpp".
 --To change input filename:
-  read_Location_and_Measurement_operator ("../input/test_input.txt", N, location, m, Htranspose).
+  string filename_input = "../input/test_input.txt";
 --To use standard kernels:
   The same step as described in 1).
 
