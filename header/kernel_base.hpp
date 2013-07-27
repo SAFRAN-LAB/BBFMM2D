@@ -7,7 +7,7 @@
 //	H2_2D_tree.hpp
 //
 #ifndef __kernel_base_hpp__
-#define __kerbel_base_hpp__
+#define __kernel_base_hpp__
 
 #include"environment.hpp"
 #include"H2_2D_tree.hpp"
@@ -43,4 +43,4 @@ public:
 };
 
 
-#endif //(__kerbel_base_hpp__)
+#endif //(__kernel_base_hpp__)
