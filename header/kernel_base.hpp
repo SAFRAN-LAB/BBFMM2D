@@ -9,17 +9,8 @@
 #ifndef __kernel_base_hpp__
 #define __kerbel_base_hpp__
 
-#include"iostream"
-#include <sstream>
-#include<fstream>
-#include <stdexcept>
-#include <algorithm>
-#include <cctype>
-#include <string>
-#include <stdlib.h>
-#include"cmath"
-#include"Eigen/Dense"
-#include"./H2_2D_tree.hpp"
+#include"environment.hpp"
+#include"H2_2D_tree.hpp"
 
 using namespace Eigen;
 using namespace std;

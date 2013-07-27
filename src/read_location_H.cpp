@@ -9,6 +9,7 @@
 
 #include"read_location_H.hpp"
 
+using namespace Eigen;
 void read_Location_and_Measurement_operator (const string& filename, unsigned long& N, VectorXd* location, unsigned& m, MatrixXd& Htranspose) {
     ifstream fin;
 	fin.open(filename.c_str());

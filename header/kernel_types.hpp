@@ -9,16 +9,7 @@
 #ifndef __kernel_types_hpp__
 #define __kerbel_types_hpp__
 
-#include"iostream"
-#include <sstream>
-#include<fstream>
-#include <stdexcept>
-#include <algorithm>
-#include <cctype>
-#include <string>
-#include <stdlib.h>
-#include"cmath"
-#include"Eigen/Dense"
+#include"environment.hpp"
 #include"kernel_base.hpp"
 
 using namespace Eigen;
