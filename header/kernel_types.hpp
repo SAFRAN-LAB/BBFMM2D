@@ -18,32 +18,32 @@ using namespace std;
 
 class kernel_Logarithm: public kernel_base {
 public:
-    virtual double kernel_func(double R_square);
+    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y);
 };
 
 class kernel_OneOverR2: public kernel_base {
 public:
-    virtual double kernel_func(double R_square);
+    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y);
 };
 
 class kernel_Gaussian: public kernel_base {
 public:
-    virtual double kernel_func(double R_square);
+    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y);
 };
 
 class kernel_Quadric: public kernel_base {
 public:
-    virtual double kernel_func(double R_square);
+    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y);
 };
 
 class kernel_InverseQuadric: public kernel_base {
 public:
-    virtual double kernel_func(double R_square);
+    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y);
 };
 
 class kernel_ThinPlateSpline: public kernel_base {
 public:
-    virtual double kernel_func(double R_square);
+    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y);
 };
 
 

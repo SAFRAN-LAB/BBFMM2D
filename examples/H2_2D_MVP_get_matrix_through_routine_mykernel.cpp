@@ -8,11 +8,7 @@
 /* Input type : Through matrix generating routine;
    Types of kernel: kernel defined by user */
 
-#include"iostream"
-#include<fstream>
-#include"Eigen/Dense"
-#include"cmath"
-#include"ctime"
+#include"environment.hpp"
 #include"./H2_2D_tree.hpp"
 #include"kernel_types.hpp"
 
@@ -33,8 +29,10 @@ void get_charges(const unsigned long N, unsigned& m, MatrixXd& Htranspose){
 
 class mykernel: public kernel_base {
 public:
-    virtual double kernel_func(double R_square){
+    //point r0 = (r0_x, r0_y); point r1 = (r1_x, r1_y)
+    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y){
         //implement your own kernel here
+        double R_square	=	(r0_x-r1_x)*(r0_x-r1_x) + (r0_y-r1_y)*(r0_y-r1_y);
         return 1.0 + R_square;
     }
 };

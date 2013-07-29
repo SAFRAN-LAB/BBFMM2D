@@ -8,12 +8,7 @@
 /* Input type : From file;
    Types of kernel: standard kernels */
 
-#include"iostream"
-#include<fstream>
-#include<string>
-#include"Eigen/Dense"
-#include"cmath"
-#include"ctime"
+#include"environment.hpp"
 #include"./H2_2D_tree.hpp"
 #include"kernel_types.hpp"
 #include"read_location_H.hpp"

@@ -39,7 +39,7 @@ public:
     //	Tranfers potential from Chebyshev node of parent to Chebyshev node of children;
 	void transfer_nodepotential_to_child(H2_2D_node*& node,MatrixXd R[]);
 
-    virtual double kernel_func(double) = 0;
+    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y) = 0;
 };
 
 

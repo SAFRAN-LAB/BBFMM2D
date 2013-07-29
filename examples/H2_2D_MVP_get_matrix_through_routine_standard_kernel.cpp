@@ -8,11 +8,7 @@
 /* Input type : Through matrix generating routine;
    Types of kernel: standard kernels*/
 
-#include"iostream"
-#include<fstream>
-#include"Eigen/Dense"
-#include"cmath"
-#include"ctime"
+#include"environment.hpp"
 #include"./H2_2D_tree.hpp"
 #include"kernel_types.hpp"
 

@@ -9,7 +9,8 @@
 
 #include"kernel_types.hpp"
 
-double kernel_Logarithm::kernel_func(double R_square){
+double kernel_Logarithm::kernel_func(double r0_x, double r0_y, double r1_x, double r1_y){
+    double R_square	=	(r0_x-r1_x)*(r0_x-r1_x) + (r0_y-r1_y)*(r0_y-r1_y);
     if (R_square == 0){
         return 0;
     }
@@ -18,7 +19,8 @@ double kernel_Logarithm::kernel_func(double R_square){
     }
 }
 
-double kernel_OneOverR2::kernel_func(double R_square){
+double kernel_OneOverR2::kernel_func(double r0_x, double r0_y, double r1_x, double r1_y){
+    double R_square	=	(r0_x-r1_x)*(r0_x-r1_x) + (r0_y-r1_y)*(r0_y-r1_y);
     if (R_square == 0){
         return 0;
     }
@@ -27,19 +29,23 @@ double kernel_OneOverR2::kernel_func(double R_square){
     }
 }
 
-double kernel_Gaussian::kernel_func(double R_square){
+double kernel_Gaussian::kernel_func(double r0_x, double r0_y, double r1_x, double r1_y){
+    double R_square	=	(r0_x-r1_x)*(r0_x-r1_x) + (r0_y-r1_y)*(r0_y-r1_y);
     return exp(-R_square);
 }
 
-double kernel_Quadric::kernel_func(double R_square){
+double kernel_Quadric::kernel_func(double r0_x, double r0_y, double r1_x, double r1_y){
+    double R_square	=	(r0_x-r1_x)*(r0_x-r1_x) + (r0_y-r1_y)*(r0_y-r1_y);
     return 1.0+R_square;
 }
 
-double kernel_InverseQuadric::kernel_func(double R_square){
+double kernel_InverseQuadric::kernel_func(double r0_x, double r0_y, double r1_x, double r1_y){
+    double R_square	=	(r0_x-r1_x)*(r0_x-r1_x) + (r0_y-r1_y)*(r0_y-r1_y);
     return 1.0/(1.0+R_square);
 }
 
-double kernel_ThinPlateSpline::kernel_func(double R_square){
+double kernel_ThinPlateSpline::kernel_func(double r0_x, double r0_y, double r1_x, double r1_y){
+    double R_square	=	(r0_x-r1_x)*(r0_x-r1_x) + (r0_y-r1_y)*(r0_y-r1_y);
     if (R_square == 0){
         return 0;
     }

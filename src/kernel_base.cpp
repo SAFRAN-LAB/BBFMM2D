@@ -126,11 +126,9 @@ void kernel_base::transfer_nodepotential_to_child(H2_2D_node*& node, MatrixXd R[
 
 void kernel_base::kernel2D(const unsigned long M, const VectorXd* x, const unsigned long N, const VectorXd* y, MatrixXd& Kernel) {
 	Kernel	=	MatrixXd::Zero(M,N);
-	double R_square;
 	for(unsigned long i=0;i<M;++i){
 		for(unsigned long j=0;j<N;++j){
-			R_square	=	(x[0](i)-y[0](j))*(x[0](i)-y[0](j)) + (x[1](i)-y[1](j))*(x[1](i)-y[1](j));
-            Kernel(i,j) =   kernel_func(R_square);
+            Kernel(i,j) =   kernel_func(x[0](i),x[1](i),y[0](j),y[1](j));
         }
     }
 }
