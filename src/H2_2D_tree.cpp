@@ -8,7 +8,7 @@
 //
 
 #include"H2_2D_tree.hpp"
-H2_2D_tree::H2_2D_tree(const unsigned short nchebnodes, const MatrixXd& charge, const VectorXd* location){
+H2_2D_tree::H2_2D_tree(const unsigned short nchebnodes, const MatrixXd& charge, const vector<Point>& location){
 	this->nchebnodes	=	nchebnodes;
 	this->rank          =	nchebnodes*nchebnodes;
 	this->N             =	charge.rows();
@@ -16,9 +16,14 @@ H2_2D_tree::H2_2D_tree(const unsigned short nchebnodes, const MatrixXd& charge, 
 	this->maxlevels		=	0;
 
 	this->charge_tree	=	charge;
-	for(int k=0; k<2; ++k){
-		this->location_tree[k]	=	location[k];
-	}
+	
+    location_tree[0].resize(N,1);
+    location_tree[1].resize(N,1);
+    for (unsigned long k = 0; k < N; k++) {
+        this->location_tree[0](k)   =   location[k].x;
+        this->location_tree[1](k)   =   location[k].y;
+    }
+        
     //	Get Chebyshev nodes
 	cnode			=	VectorXd(nchebnodes);
 	get_standard_Chebyshev_nodes(nchebnodes,cnode);
@@ -34,10 +39,9 @@ H2_2D_tree::H2_2D_tree(const unsigned short nchebnodes, const MatrixXd& charge, 
 	root->nneighbor		=	0;
 	root->ninteraction	=	0;
 	root->N			=	N;
-	for(int k=0;k<2;++k){
-		root->center[k]	=	center[k];
-		root->radius[k]	=	radius[k];
-	}
+    root->center    =   center;
+    root->radius    =   radius;
+    
 	root->index.setLinSpaced(N,0,N-1);
     std::cout << "Assigning children..." << std::endl;
 	assignchildren(root);
@@ -67,14 +71,14 @@ void H2_2D_tree::assignchildren(H2_2D_node*& node){
 		node->potential		=	MatrixXd::Zero(node->N,m);
 		node->nodepotential	=	MatrixXd::Zero(rank,m);
 		node->nodecharge	=	MatrixXd::Zero(rank,m);
-
-		for(unsigned short j=0; j<2; ++j){
-			node->location[j]		=	VectorXd(node->N);
-			getscaledchebnode(nchebnodes, cnode, node->center[j], node->radius[j], node->scaledcnode[j]);
-			for(unsigned long k=0;k<node->N;++k){
-				node->location[j](k)=	location_tree[j](node->index(k));
-			}
-		}
+        
+        getscaledchebnode(nchebnodes, cnode, node->center, node->radius, node->scaledcnode);
+        for(unsigned long k=0;k<node->N;++k){
+            Point new_Point;
+            new_Point.x =   location_tree[0](node->index(k));
+            new_Point.y =   location_tree[1](node->index(k));
+            node->location.push_back(new_Point);
+        }
 
 		if(node->N<= (unsigned long) 4*rank){
 			node->isleaf	=	true;
@@ -89,16 +93,14 @@ void H2_2D_tree::assignchildren(H2_2D_node*& node){
 			for(unsigned short k=0; k<4; ++k){
 				node->child[k]			=	new H2_2D_node(node->nlevel+1, k);
 				node->child[k]->parent		=	node;
-				node->child[k]->center[0]	=	node->center[0]+((k%2)-0.5)*node->radius[0];
-				node->child[k]->center[1]	=	node->center[1]+((k/2)-0.5)*node->radius[1];
-				for(unsigned short j=0; j<2; ++j){
-					node->child[k]->radius[j]	=	0.5*node->radius[j];
-				}
+				node->child[k]->center.x	=	node->center.x+((k%2)-0.5)*node->radius.x;
+				node->child[k]->center.y	=	node->center.y+((k/2)-0.5)*node->radius.y;
+				node->child[k]->radius      =	node->radius*0.5;
 			node->child[k]->N		=	0;
 			}
 			for(unsigned long k=0; k<node->N; ++k){
-				if(location_tree[0](node->index(k))<node->center[0]){
-					if(location_tree[1](node->index(k))<node->center[1]){
+				if(location_tree[0](node->index(k))<node->center.x){
+					if(location_tree[1](node->index(k))<node->center.y){
 						node->child[0]->index.conservativeResize(node->child[0]->N+1);
 						node->child[0]->index(node->child[0]->N)	=	node->index(k);
 						++node->child[0]->N;
@@ -110,7 +112,7 @@ void H2_2D_tree::assignchildren(H2_2D_node*& node){
 					}
 				}
 				else{
-					if(location_tree[1](node->index(k))<node->center[1]){
+					if(location_tree[1](node->index(k))<node->center.y){
 						node->child[1]->index.conservativeResize(node->child[1]->N+1);
 						node->child[1]->index(node->child[1]->N)	=	node->index(k);
 						++node->child[1]->N;
@@ -175,7 +177,7 @@ void H2_2D_tree::get_standard_Chebyshev_nodes(const unsigned short nchebnodes, V
 	}
 }
 
-//	Obtains standard Chebyshev polynomials evaluated at given set of points;
+//	Obtains standard Chebyshev polynomials evaluated at given set of Points;
 void H2_2D_tree::get_standard_Chebyshev_polynomials(const unsigned short nchebpoly, const unsigned long N, const VectorXd& x, MatrixXd& T){
 	T	=	MatrixXd(N,nchebpoly);
 	T.col(0)=	VectorXd::Ones(N);
@@ -188,23 +190,53 @@ void H2_2D_tree::get_standard_Chebyshev_polynomials(const unsigned short nchebpo
 }
 
 //	Obtains center and radius of node location;
-void H2_2D_tree::get_center_radius(const VectorXd* location, double* center, double* radius){
-	double max_0	=	location[0].maxCoeff();
-	double max_1	=	location[1].maxCoeff();
-	double min_0	=	location[0].minCoeff();
-	double min_1	=	location[1].minCoeff();
-	center[0]	=	0.5*(max_0+min_0);
-	center[1]	=	0.5*(max_1+min_1);
-	radius[0]	=	0.5*(max_0-min_0);
-	radius[1]	=	0.5*(max_1-min_1);
+void H2_2D_tree::get_center_radius(const vector<Point>& location, Point& center, Point& radius){
+	double max_x;
+	double max_y;
+	double min_x;
+	double min_y;
+    max_And_Min_Coordinates(location, max_x, max_y, min_x, min_y);
+	center.x	=	0.5*(max_x+min_x);
+	center.y	=	0.5*(max_y+min_y);
+	radius.x	=	0.5*(max_x-min_x);
+	radius.y	=	0.5*(max_y-min_y);
 }
 
-//	Obtains interpolation operator, which interpolates information from Chebyshev nodes of parent to points in children;
-void H2_2D_tree::get_transfer_from_parent_to_children(const unsigned short nchebnodes, const VectorXd* location, const double* center, const double* radius, const VectorXd& cnode, const MatrixXd& Tnode, MatrixXd& R){
-	unsigned long N		=	location[0].size();
-	VectorXd standlocation[2];
-	standlocation[0]	=	(location[0]-center[0]*VectorXd::Ones(N))/radius[0];
-	standlocation[1]	=	(location[1]-center[1]*VectorXd::Ones(N))/radius[1];
+
+
+void H2_2D_tree::max_And_Min_Coordinates(const vector<Point>& vec, double& max_x, double& max_y, double& min_x, double& min_y) {
+    max_x   =   vec[0].x;
+    max_y   =   vec[0].y;
+    min_x   =   max_x;
+    min_y   =   max_y;
+    for (unsigned int i = 0; i < vec.size(); i++) {
+        if (vec[i].x>max_x) {
+            max_x   =   vec[i].x;
+        }
+        if (vec[i].y>max_y) {
+            max_y   =   vec[i].y;
+        }
+        if (vec[i].x<min_x) {
+            min_x   =   vec[i].x;
+        }
+        if (vec[i].y<min_y) {
+            min_y   =   vec[i].y;
+        }
+    }
+}
+
+
+//	Obtains interpolation operator, which interpolates information from Chebyshev nodes of parent to Points in children;
+void H2_2D_tree::get_transfer_from_parent_to_children(const unsigned short nchebnodes, const vector<Point>& location, const Point& center, const Point& radius, const VectorXd& cnode, const MatrixXd& Tnode, MatrixXd& R){
+	unsigned long N		=	location.size();
+    VectorXd standlocation[2];
+    standlocation[0].resize(N);
+    standlocation[1].resize(N);
+    for (unsigned long i = 0; i < N; i++) {
+        standlocation[0](i) =   (location[i].x-center.x)/radius.x;
+        standlocation[1](i) =   (location[i].y-center.y)/radius.y;
+    }
+    
 	MatrixXd Transfer[2];
 	for(unsigned short k=0;k<2;++k){
 		get_standard_Chebyshev_polynomials(nchebnodes, N, standlocation[k], Transfer[k]);
@@ -220,6 +252,7 @@ void H2_2D_tree::get_transfer_from_parent_to_children(const unsigned short ncheb
 		}
 	}
 }
+
 
 //	Obtains interpolation operator, which interpolates information from Chebyshev nodes of parent to Chebyshev nodes of children;
 void H2_2D_tree::get_transfer_from_parent_cnode_to_children_cnode(const unsigned short nchebnodes, const VectorXd& cnode, const MatrixXd& Tnode, MatrixXd& Transfer){
@@ -256,10 +289,11 @@ void H2_2D_tree::gettransfer(const unsigned short nchebnodes, const VectorXd& cn
 }
 
 //	Evaluates 'nchebnodes' standardized chebyshev nodes in any interval;
-void H2_2D_tree::getscaledchebnode(const unsigned short& nchebnodes, const VectorXd& cnode, const double& center, const double& radius, VectorXd& chebnode){
-	chebnode		=	VectorXd(nchebnodes);
+void H2_2D_tree::getscaledchebnode(const unsigned short& nchebnodes, const VectorXd& cnode, const Point& center, const Point& radius, vector<Point>& chebnode){
 	for(unsigned short k=0;k<nchebnodes;++k){
-		chebnode(k)	=	center+radius*cnode(k);
+        Point new_Point;
+        new_Point       =   center+radius*cnode(k);
+		chebnode.push_back(new_Point);
 	}
 }
 

@@ -10,7 +10,7 @@
 #include"read_location_H.hpp"
 
 using namespace Eigen;
-void read_Location_and_Measurement_operator (const string& filename, unsigned long& N, VectorXd* location, unsigned& m, MatrixXd& Htranspose) {
+void read_Location_and_Measurement_operator (const string& filename, unsigned long& N, vector<Point>& location, unsigned& m, MatrixXd& Htranspose) {
     ifstream fin;
 	fin.open(filename.c_str());
 	
@@ -28,8 +28,7 @@ void read_Location_and_Measurement_operator (const string& filename, unsigned lo
     char nonuse;
     ss >> N >> nonuse >> m;
     Htranspose  =   MatrixXd::Zero(N,m);
-    location[0]	=	VectorXd::Random(N);
-	location[1]	=	VectorXd::Random(N);
+   
     
     // read location and measurement operator
     unsigned long row = 0;
@@ -40,8 +39,10 @@ void read_Location_and_Measurement_operator (const string& filename, unsigned lo
         while (line[i]!=',') {
             i++;
         }
-        location[0](row) = (double)atof(&line[1]);
-        location[1](row) = (double)atof(&line[i+1]);
+        Point new_Point;
+        new_Point.x =   (double)atof(&line[1]);
+        new_Point.y =   (double)atof(&line[i+1]);
+        location.push_back(new_Point);
  
         while (line[i]!=')') {
             i++;

@@ -6,7 +6,21 @@
 //	
 //	H2_2D_node.cpp
 //
-#include "./H2_2D_node.hpp"
+#include "H2_2D_node.hpp"
+Point Point::operator+ (Point const& rhs ) const {
+    Point result;
+    result.x    =   this->x+rhs.x;
+    result.y    =   this->y+rhs.y;
+    return result;
+}
+
+Point Point::operator* (double rhs ) const {
+    Point result;
+    result.x    =   this->x*rhs;
+    result.y    =   this->y*rhs;
+    return result;
+}
+
 
 H2_2D_node::H2_2D_node(unsigned short nlevel, unsigned short nodenumber){
 //	Set parent NULL
@@ -35,6 +49,7 @@ H2_2D_node::H2_2D_node(unsigned short nlevel, unsigned short nodenumber){
 }
 
 H2_2D_node::~H2_2D_node(){
+
 //	Delete the children
 //	delete [] child;
 }

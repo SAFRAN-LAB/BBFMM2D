@@ -18,10 +18,9 @@ using namespace Eigen;
 
 class mykernel: public kernel_base {
 public:
-    //point r0 = (r0_x, r0_y); point r1 = (r1_x, r1_y)
-    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y){
+    virtual double kernel_func(Point r0, Point r1){
         //implement your own kernel here
-        double R_square	=	(r0_x-r1_x)*(r0_x-r1_x) + (r0_y-r1_y)*(r0_y-r1_y);
+        double R_square	=	(r0.x-r1.x)*(r0.x-r1.x) + (r0.y-r1.y)*(r0.y-r1.y);
         return 1.0 + R_square;
     }
 };
@@ -34,7 +33,7 @@ int main(){
     /*                                                        */
     /**********************************************************/
 	unsigned long N;      // Number of charges;
-	VectorXd location[2]; // Locations of the charges;
+	vector<Point> location; // Locations of the charges;
     
 	unsigned m;           // Number of sets of charges;
 	MatrixXd Htranspose;  // All the different sets of charges;

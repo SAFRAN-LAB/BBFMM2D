@@ -31,15 +31,16 @@ public:
 	void tranfer_potential_to_potential_tree(H2_2D_node*& node, MatrixXd& potential);
     
     //	Evaluate kernel at Chebyshev nodes;
-	void kernelcheb2D(const unsigned short& M, const VectorXd* x, const unsigned short& N, const VectorXd* y, MatrixXd& K);
+	void kernelcheb2D(const unsigned short& M, const vector<Point>& x, const unsigned short& N, const vector<Point>& y, MatrixXd& K);
     
     //	Evaluate the kernel;
-    void kernel2D(const unsigned long M, const VectorXd* x, const unsigned long N, const VectorXd* y, MatrixXd& Kernel);
+    void kernel2D(const unsigned long M, const vector<Point>& x, const unsigned long N, const vector<Point>& y, MatrixXd& Kernel);
     
     //	Tranfers potential from Chebyshev node of parent to Chebyshev node of children;
 	void transfer_nodepotential_to_child(H2_2D_node*& node,MatrixXd R[]);
 
-    virtual double kernel_func(double r0_x, double r0_y, double r1_x, double r1_y) = 0;
+    virtual double kernel_func(Point r0, Point r1) = 0;
+    
 };
 
 

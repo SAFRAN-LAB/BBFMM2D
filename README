@@ -58,7 +58,7 @@ The files you have control over are the files inside the directory ./examples/, 
 
 Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp".
 --To generate matrix through routine: 
-  Change void get_Location(unsigned long& N, VectorXd* location) and void get_charges(const unsigned long N, unsigned& m, MatrixXd& Htranspose)
+  Change void get_Location(unsigned long& N, vector<Point>& location) and void get_charges(const unsigned long N, unsigned& m, MatrixXd& Htranspose)
 --To use standard kernels: 
   Select the kernel type in main().
   Options of kernels:

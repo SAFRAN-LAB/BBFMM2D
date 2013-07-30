@@ -9,7 +9,7 @@
    Types of kernel: standard kernels */
 
 #include"environment.hpp"
-#include"./H2_2D_tree.hpp"
+#include"H2_2D_tree.hpp"
 #include"kernel_types.hpp"
 #include"read_location_H.hpp"
 
@@ -24,8 +24,7 @@ int main(){
     /*                                                        */
     /**********************************************************/
 	unsigned long N;      // Number of charges;
-	VectorXd location[2]; // Locations of the charges;
-    
+	vector<Point> location;// Locations of the charges;
 	unsigned m;           // Number of sets of charges;
 	MatrixXd Htranspose;  // All the different sets of charges;
     

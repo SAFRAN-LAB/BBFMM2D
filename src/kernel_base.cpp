@@ -95,22 +95,24 @@ void kernel_base::tranfer_potential_to_potential_tree(H2_2D_node*& node, MatrixX
 }
 
 //	Evaluate kernel at Chebyshev nodes;
-void kernel_base:: kernelcheb2D(const unsigned short& M, const VectorXd* x, const unsigned short& N, const VectorXd* y, MatrixXd& K){
-	VectorXd xnew[2]=	VectorXd(M*M);
-	VectorXd ynew[2]=	VectorXd(N*N);
+void kernel_base::kernelcheb2D(const unsigned short& M, const vector<Point>& x_Vec, const unsigned short& N, const vector<Point>& y_Vec, MatrixXd& K){
+	vector<Point> xnew;
+	vector<Point> ynew;
 	K		=	MatrixXd(M*M,N*N);
-//    std::cout << "I am here" <<std::endl;
 	for(unsigned short j=0;j<M;++j){
 		for(unsigned short i=0;i<M;++i){
-			xnew[0](j*M+i)	=	x[0](i);
-			xnew[1](j*M+i)	=	x[1](j);
+            Point new_Point;
+            new_Point.x     =   x_Vec[i].x;
+            new_Point.y     =   x_Vec[j].y;
+			xnew.push_back(new_Point);
 		}
 	}
-//    std::cout << "Done" <<std::endl;
 	for(unsigned short j=0;j<N;++j){
 		for(unsigned short i=0;i<N;++i){
-			ynew[0](j*N+i)	=	y[0](i);
-			ynew[1](j*N+i)	=	y[1](j);
+            Point new_Point;
+            new_Point.x     =   y_Vec[i].x;
+            new_Point.y     =   y_Vec[j].y;
+            ynew.push_back(new_Point);
 		}
 	}
 	kernel2D(M*M, xnew, N*N, ynew, K);
@@ -124,11 +126,11 @@ void kernel_base::transfer_nodepotential_to_child(H2_2D_node*& node, MatrixXd R[
 }
 
 
-void kernel_base::kernel2D(const unsigned long M, const VectorXd* x, const unsigned long N, const VectorXd* y, MatrixXd& Kernel) {
+void kernel_base::kernel2D(const unsigned long M, const vector<Point>& x, const unsigned long N, const vector<Point>& y, MatrixXd& Kernel) {
 	Kernel	=	MatrixXd::Zero(M,N);
 	for(unsigned long i=0;i<M;++i){
 		for(unsigned long j=0;j<N;++j){
-            Kernel(i,j) =   kernel_func(x[0](i),x[1](i),y[0](j),y[1](j));
+            Kernel(i,j) =   kernel_func(x[i],y[j]);
         }
     }
 }

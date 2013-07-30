@@ -15,10 +15,16 @@
 using namespace std;
 using namespace Eigen;
 
-void get_Location(unsigned long& N, VectorXd* location){
+void get_Location(unsigned long& N, vector<Point>& location){
 	N           =	5000;
-	location[0]	=	VectorXd::Random(N);
-	location[1]	=	VectorXd::Random(N);
+	VectorXd tmp1	=	VectorXd::Random(N);
+	VectorXd tmp2	=	VectorXd::Random(N);
+    for (unsigned long i = 0; i < N; i++) {
+        Point new_Point;
+        new_Point.x =   tmp1[i];
+        new_Point.y =   tmp2[i];
+        location.push_back(new_Point);
+    }
 }
 
 
@@ -35,7 +41,7 @@ int main(){
     /*                                                        */
     /**********************************************************/
 	unsigned long N;      // Number of charges;
-	VectorXd location[2]; // Locations of the charges;
+	vector<Point> location; // Locations of the charges;
     get_Location(N,location);
 
 	unsigned m;           // Number of sets of charges;

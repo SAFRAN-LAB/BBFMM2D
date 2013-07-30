@@ -9,9 +9,19 @@
 #ifndef __H2_2D_node_hpp__
 #define __H2_2D_node_hpp__
 
+#include"environment.hpp"
 #include"Eigen/Dense"
 
 using namespace Eigen;
+using namespace std;
+
+struct Point {
+    double x;
+    double y;
+    Point operator+ (Point const& rhs ) const;
+    Point operator* (double rhs ) const;
+};
+
 
 class H2_2D_node{
 public:
@@ -25,13 +35,13 @@ public:
 	unsigned short nlevel;		//	Level of the node. Root is at level 0;
 	unsigned short nodenumber;	//	The number of the node for identification purposes. Each node is assigned an integer from 0 to 3. The left bottom is assigned a value 0, the right bottom is assigned a value 1, the left top takes the value 2 and the right top takes the value 3;
 
-	double center[2], radius[2];	//	Center and radius of the node;
-
+    Point center; // Center of the node;
+    Point radius; // Radius of the node;
 	unsigned long N;		//	Number of points inside the node;
 
 	VectorXi index;			//	Index of the charges in the original vector;
-	VectorXd location[2];		//	Location of the points inside the node;
-	VectorXd scaledcnode[2];	//  Scaled Chebyshev nodes along both the directions;
+    vector<Point> location; //	Location of the points inside the node;
+    vector<Point> scaledcnode;//  Scaled Chebyshev nodes along both the directions;
 
 	MatrixXd charge;		//	Value of the charge for the points inside the node;
 	MatrixXd potential;		//	Value of the potential for the points inside the node;

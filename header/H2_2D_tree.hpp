@@ -22,7 +22,7 @@ const double PI	=	4.0*atan(1.0);
 class H2_2D_tree{
     friend class kernel_base;
 public:
-	H2_2D_tree(const unsigned short nchebnodes, const MatrixXd& charge, const VectorXd* location);
+	H2_2D_tree(const unsigned short nchebnodes, const MatrixXd& charge, const vector<Point>& location);
     unsigned short nchebnodes;	//	Number of chebyshev nodes along one direction;
     ~H2_2D_tree();
     
@@ -42,8 +42,8 @@ private:
 
 	MatrixXd R[4];			//	Translation matrix from cluster to its parent;
 	unsigned short nlevels;		//	Total number of levels in tree;
-	double center[2], radius[2];	//	Center and radius of tree;
-
+    Point center;           // Center of tree;
+    Point radius;           // Radius of tree;
 //	Assigns children;
 	void assignchildren(H2_2D_node*& node);
     
@@ -58,14 +58,16 @@ private:
 //	Obtains standard Chebyshev nodes in interval [-1,1];
 	void get_standard_Chebyshev_nodes(const unsigned short nchebnodes, VectorXd& cnode);
 
-//	Obtains standard Chebyshev polynomials evaluated at given set of points;
+//	Obtains standard Chebyshev polynomials evaluated at given set of Points;
 	void get_standard_Chebyshev_polynomials(const unsigned short nchebpoly, const unsigned long N, const VectorXd& x, MatrixXd& T);
 
 //	Obtains center and radius of node location;
-	void get_center_radius(const VectorXd* location, double* center, double* radius);
+	void get_center_radius(const vector<Point>& location, Point& center, Point& radius);
+    
+    void max_And_Min_Coordinates(const vector<Point>& vec, double& max_x, double& max_y, double& min_x, double& min_y);
 
-//	Obtains interpolation operator, which interpolates information from Chebyshev nodes of parent to points in children;
-	void get_transfer_from_parent_to_children(const unsigned short nchebnodes, const VectorXd* location, const double* center, const double* radius, const VectorXd& cnode, const MatrixXd& Tnode, MatrixXd& R);
+//	Obtains interpolation operator, which interpolates information from Chebyshev nodes of parent to Points in children;
+	void get_transfer_from_parent_to_children(const unsigned short nchebnodes, const vector<Point>& location, const Point& center, const Point& radius, const VectorXd& cnode, const MatrixXd& Tnode, MatrixXd& R);
 
 //	Obtains interpolation operator, which interpolates information from Chebyshev nodes of parent to Chebyshev nodes of children;
 	void get_transfer_from_parent_cnode_to_children_cnode(const unsigned short nchebnodes, const VectorXd& cnode, const MatrixXd& Tnode, MatrixXd& Transfer);
@@ -74,7 +76,7 @@ private:
 	void gettransfer(const unsigned short nchebnodes, const VectorXd& cnode, const MatrixXd& Tnode, MatrixXd* R);
 
 //	Evaluates 'nchebnodes' standardized chebyshev nodes in any interval;
-	void getscaledchebnode(const unsigned short& nchebnodes, const VectorXd& cnode, const double& center, const double& radius, VectorXd& chebnode);
+	void getscaledchebnode(const unsigned short& nchebnodes, const VectorXd& cnode, const Point& center, const Point& radius, vector<Point>& chebnode);
 
 
 //	Displays desired information;
