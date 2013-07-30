@@ -38,7 +38,7 @@ private:
 	unsigned maxlevels;		//	Counts maximum number of levels in tree;
 
 	MatrixXd charge_tree;		//	All charges;
-	MatrixXd location_tree[2];	//	All locations;
+	vector<Point> location_tree;	//	All locations;
 
 	MatrixXd R[4];			//	Translation matrix from cluster to its parent;
 	unsigned short nlevels;		//	Total number of levels in tree;

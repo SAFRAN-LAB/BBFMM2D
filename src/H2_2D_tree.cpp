@@ -14,15 +14,8 @@ H2_2D_tree::H2_2D_tree(const unsigned short nchebnodes, const MatrixXd& charge, 
 	this->N             =	charge.rows();
 	this->m             =	charge.cols();
 	this->maxlevels		=	0;
-
 	this->charge_tree	=	charge;
-	
-    location_tree[0].resize(N,1);
-    location_tree[1].resize(N,1);
-    for (unsigned long k = 0; k < N; k++) {
-        this->location_tree[0](k)   =   location[k].x;
-        this->location_tree[1](k)   =   location[k].y;
-    }
+    this->location_tree =   location;
         
     //	Get Chebyshev nodes
 	cnode			=	VectorXd(nchebnodes);
@@ -74,10 +67,7 @@ void H2_2D_tree::assignchildren(H2_2D_node*& node){
         
         getscaledchebnode(nchebnodes, cnode, node->center, node->radius, node->scaledcnode);
         for(unsigned long k=0;k<node->N;++k){
-            Point new_Point;
-            new_Point.x =   location_tree[0](node->index(k));
-            new_Point.y =   location_tree[1](node->index(k));
-            node->location.push_back(new_Point);
+            node->location.push_back(location_tree[node->index(k)]);
         }
 
 		if(node->N<= (unsigned long) 4*rank){
@@ -99,8 +89,8 @@ void H2_2D_tree::assignchildren(H2_2D_node*& node){
 			node->child[k]->N		=	0;
 			}
 			for(unsigned long k=0; k<node->N; ++k){
-				if(location_tree[0](node->index(k))<node->center.x){
-					if(location_tree[1](node->index(k))<node->center.y){
+				if(location_tree[node->index(k)].x<node->center.x){
+					if(location_tree[node->index(k)].y<node->center.y){
 						node->child[0]->index.conservativeResize(node->child[0]->N+1);
 						node->child[0]->index(node->child[0]->N)	=	node->index(k);
 						++node->child[0]->N;
@@ -112,7 +102,7 @@ void H2_2D_tree::assignchildren(H2_2D_node*& node){
 					}
 				}
 				else{
-					if(location_tree[1](node->index(k))<node->center.y){
+					if(location_tree[node->index(k)].y<node->center.y){
 						node->child[1]->index.conservativeResize(node->child[1]->N+1);
 						node->child[1]->index(node->child[1]->N)	=	node->index(k);
 						++node->child[1]->N;
