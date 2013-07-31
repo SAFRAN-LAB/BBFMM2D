@@ -1,3 +1,4 @@
+#BBFMM2D  
 
 This is the first public release of the BBFMM2D library.
 Date: July 24th, 2013
@@ -14,9 +15,8 @@ Version 3.1 - First external release.
 %% The Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not %% distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-**********************
-DIRECTORIES AND FILES:
-**********************
+###DIRECTORIES AND FILES:
+
 
 ./examples/	:	Example input C++ codes; Needed to read input from user or from input file.
 ./src/		:	Source code in C++
@@ -27,13 +27,11 @@ DIRECTORIES AND FILES:
 ./License	:	License file
 ./Makefile	:	Makefile
 
-******************
-SETTING THINGS UP:
-******************
+###SETTING THINGS UP:
 
 1) To run this package, you need to have Eigen.
 
-2) Download Eigen from here: http://eigen.tuxfamily.org/index.php?title=Main_Page
+2) Download Eigen from here: (http://eigen.tuxfamily.org/index.php?title=Main_Page)
 
 3) Create a directory named Codes/ inside the main Eigen folder and copy the directory BBFMM2D/ into the directory Codes/.
 
@@ -48,13 +46,11 @@ SETTING THINGS UP:
 The code should now run.
 
 	
-********************
-CHANGING THE INPUTS:
-********************
+###CHANGING THE INPUTS:
 
 The files you have control over are the files inside the directory ./examples/, read through the files both must be self explanatory for the most part.
 
-1) If you want to generate matrix through your own routine, and use the standard kernels:
+* If you want to generate matrix through your own routine, and use the standard kernels:
 
 Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp".
 --To generate matrix through routine: 
@@ -70,7 +66,7 @@ Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp
      	THINPLATESPLINE:    kernel_ThinPlateSpline
 
 	
-2) If you want to read matrix from file, and use standard kernels:
+* If you want to read matrix from file, and use standard kernels:
 
 Go to the folder /input/, put your input file inside of this folder.
 Go to the folder /examples/, open "H2_2D_MVP_input_from_file_standard_kernel.cpp".
@@ -80,7 +76,7 @@ Go to the folder /examples/, open "H2_2D_MVP_input_from_file_standard_kernel.cpp
   The same step as described in 1).
 
 
-3) If you want to generate matrix through your own routine, and use your own kernel:
+* If you want to generate matrix through your own routine, and use your own kernel:
 
 Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_myKernel.cpp".
 --To define your own kernel:
@@ -88,19 +84,18 @@ Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_myKernel.cpp".
 --To generate your matrix:
   The same step as described in 1).
 
-4) If you want to read matrix from file, and use your own kernel:
+* If you want to read matrix from file, and use your own kernel:
 
 Go to /examples/, open "H2_2D_MVP_input_from_file_myKernel.cpp".
---To define your own kernel:
-  Modify class myKernel. 
---To change input filename:
-  The same step as described in 2).
+	+To define your own kernel:
+  	Modify class myKernel. 
+	+To change input filename:
+  	The same step as described in 2).
 
 
 
-***********
-INPUT FILES
-***********
+###INPUT FILES  
+
 Go to /input/, you should put your own input file in the input folder.
 
 The file format is described as follows:
@@ -126,9 +121,8 @@ For example:
 (-0.984604,-0.44417) (,0.782447,-0.867924,0.485731,-0.729282,-0.481031,0.541473)
 
 
-*****************
-RUNNING THE CODE:
-*****************
+###RUNNING THE CODE:  
+
 Here we give an example:
 If you want to use "H2_2D_MVP_input_from_file_standard_kernel.cpp"
 
@@ -146,14 +140,14 @@ If you want to use "H2_2D_MVP_input_from_file_standard_kernel.cpp"
 
 4) Read through the makefile for other options.
 
-To run other .cpp files:
+To run other .cpp files:  
 
 a) H2_2D_MVP_get_matrix_through_routine_myKernel.cpp  
-   key in:
-   make get_matrix_through_routine_myKernel
-b) H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp
-   key in:
-   make get_matrix_through_routine_standard_kernel
-c) H2_2D_MVP_input_from_file_myKernel.cpp
-   key in:
-   make input_from_file_myKernel
+   key in:    
+   make get_matrix_through_routine_myKernel  
+b) H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp  
+   key in:  
+   make get_matrix_through_routine_standard_kernel  
+c) H2_2D_MVP_input_from_file_myKernel.cpp  
+   key in:  
+   make input_from_file_myKernel  
