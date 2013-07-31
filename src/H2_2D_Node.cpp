@@ -34,7 +34,10 @@ H2_2D_Node::H2_2D_Node(unsigned short nLevel, unsigned short nodeNumber){
 		neighbor[k]	=	NULL;
 	}
 //	Set interactions NULL
-	for(unsigned short k=0; k<40; ++k){
+	/*for(unsigned short k=0; k<40; ++k){
+		interaction[k]	=	NULL;
+	}*/
+    for(unsigned short k=0; k<27; ++k){
 		interaction[k]	=	NULL;
 	}
 	nNeighbor	=	0;
@@ -49,7 +52,10 @@ H2_2D_Node::H2_2D_Node(unsigned short nLevel, unsigned short nodeNumber){
 }
 
 H2_2D_Node::~H2_2D_Node(){
-
-//	Delete the children
-//	delete [] child;
+    for (unsigned short k=0; k<4; ++k) {
+        if (child[k]!=NULL) {
+            delete child[k];
+            child[k]    =   NULL;
+        }
+    }
 }
