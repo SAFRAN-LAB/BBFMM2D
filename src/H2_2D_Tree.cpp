@@ -9,31 +9,31 @@
 
 #include"H2_2D_Tree.hpp"
 H2_2D_Tree::H2_2D_Tree(const unsigned short nChebNodes, const MatrixXd& charge, const vector<Point>& location){
-	this->nChebNodes	=	nChebNodes;
+	this->nChebNodes    =	nChebNodes;
 	this->rank          =	nChebNodes*nChebNodes;
 	this->N             =	charge.rows();
 	this->m             =	charge.cols();
 	this->maxLevels		=	0;
 	this->chargeTree	=	charge;
-    this->locationTree =   location;
+    this->locationTree  =   location;
         
     //	Get Chebyshev nodes
-	cNode			=	VectorXd(nChebNodes);
+	cNode               =	VectorXd(nChebNodes);
 	get_Standard_Chebyshev_Nodes(nChebNodes,cNode);
     //	Get Chebyshev polynomials evaluated at Chebyshev nodes
-	TNode			=	MatrixXd(nChebNodes,nChebNodes);
+	TNode               =	MatrixXd(nChebNodes,nChebNodes);
 	get_Standard_Chebyshev_Polynomials(nChebNodes,nChebNodes,cNode,TNode);
     //	Gets transfer matrices
 	get_Transfer(nChebNodes,cNode,TNode,R);
-	nLevels			=	0;
+	nLevels             =	0;
 	get_Center_Radius(location, center, radius);
     //	Create root
-	root			=	new H2_2D_Node(0, 0);
+	root                =	new H2_2D_Node(0, 0);
 	root->nNeighbor		=	0;
 	root->nInteraction	=	0;
-	root->N			=	N;
-    root->center    =   center;
-    root->radius    =   radius;
+	root->N             =	N;
+    root->center        =   center;
+    root->radius        =   radius;
     
 	root->index.setLinSpaced(N,0,N-1);
     std::cout << "Assigning children..." << std::endl;
@@ -71,22 +71,22 @@ void H2_2D_Tree::assign_Children(H2_2D_Node*& node){
         }
 
 		if(node->N<= (unsigned long) 4*rank){
-			node->isLeaf	=	true;
+			node->isLeaf        =	true;
 			get_Transfer_From_Parent_To_Children(nChebNodes,node->location,node->center,node->radius,cNode,TNode,node->R);
 			get_Charge(node);
-			node->nodeCharge=	node->nodeCharge+node->R.transpose()*node->charge;
+			node->nodeCharge    =	node->nodeCharge+node->R.transpose()*node->charge;
 			if(this->maxLevels<node->nLevel){
 				this->maxLevels	=	node->nLevel;
 			}
 		}
 		else{
 			for(unsigned short k=0; k<4; ++k){
-				node->child[k]			=	new H2_2D_Node(node->nLevel+1, k);
+				node->child[k]              =	new H2_2D_Node(node->nLevel+1, k);
 				node->child[k]->parent		=	node;
 				node->child[k]->center.x	=	node->center.x+((k%2)-0.5)*node->radius.x;
 				node->child[k]->center.y	=	node->center.y+((k/2)-0.5)*node->radius.y;
 				node->child[k]->radius      =	node->radius*0.5;
-                node->child[k]->N		=	0;
+                node->child[k]->N           =	0;
 			}
 			for(unsigned long k=0; k<node->N; ++k){
 				if(locationTree[node->index(k)].x<node->center.x){
