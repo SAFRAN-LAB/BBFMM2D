@@ -44,7 +44,7 @@ H2_2D_Tree::H2_2D_Tree(const unsigned short nChebNodes, const MatrixXd& charge, 
 }
 
 
-void H2_2D_Tree::delete_Tree(H2_2D_Node*& node){
+/*void H2_2D_Tree::delete_Tree(H2_2D_Node*& node){
 	if(node!=NULL){
 		for(unsigned short k=0; k<4; ++k){
 			delete_Tree(node->child[k]);
@@ -52,7 +52,7 @@ void H2_2D_Tree::delete_Tree(H2_2D_Node*& node){
 		delete node;
 		node = NULL;
 	}
-}
+}*/
 
 //	Assigns children;
 void H2_2D_Tree::assign_Children(H2_2D_Node*& node){
@@ -599,7 +599,10 @@ void H2_2D_Tree:: assign_Cousin(H2_2D_Node*& node, unsigned short neighborNumber
 }
 
 H2_2D_Tree::~H2_2D_Tree() {
-    delete_Tree(root);
+    if(root!=NULL){
+		delete root;
+		root = NULL;
+	}
 }
 
 
