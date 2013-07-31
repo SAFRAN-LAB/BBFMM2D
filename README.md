@@ -5,7 +5,7 @@ Date: July 24th, 2013
 
 **Version 3.1 - First external release.**
 
-%% Copyleft Copyleft <img src="http://upload.wikimedia.org/wikipedia/commons/8/8b/Copyleft.svg" alt="Drawing" style="width: 10px;"/> 2013: Sivaram Ambikasaran, Ruoxi Wang and Eric Darve  
+%% Copyleft 2013: Sivaram Ambikasaran, Ruoxi Wang and Eric Darve  
 %% Developed by Sivaram Ambikasaran, Ruoxi Wang  
 %% Contact: <siva.1985@gmail.com> (Sivaram), <ruoxi@stanford.edu> (Ruoxi)  
 %%   
