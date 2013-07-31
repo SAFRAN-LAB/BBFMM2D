@@ -148,7 +148,7 @@ If you want to use "H2_2D_MVP_input_from_file_standard_kernel.cpp"
 
 To run other .cpp files:
 
-a) H2_2D_MVP_get_matrix_through_routine_myKernel.cpp
+a) H2_2D_MVP_get_matrix_through_routine_myKernel.cpp <br/>
    key in:
    make get_matrix_through_routine_myKernel
 b) H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp
