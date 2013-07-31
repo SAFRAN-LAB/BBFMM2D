@@ -86,11 +86,11 @@ Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_myKernel.cpp".
 
 * If you want to read matrix from file, and use your own kernel:
 
-Go to /examples/, open "H2_2D_MVP_input_from_file_myKernel.cpp".
-	+To define your own kernel:
-  	Modify class myKernel. 
-	+To change input filename:
-  	The same step as described in 2).
+Go to /examples/, open "H2_2D_MVP_input_from_file_myKernel.cpp".  
+	+To define your own kernel:  
+  	Modify class myKernel.  
+	+To change input filename:  
+  	The same step as described in 2).  
 
 
 
