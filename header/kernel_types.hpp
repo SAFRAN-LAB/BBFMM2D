@@ -4,47 +4,47 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	H2_2D_tree.hpp
+//	H2_2D_Tree.hpp
 //
-#ifndef __kernel_types_hpp__
-#define __kerbel_types_hpp__
+#ifndef __kernel_Types_hpp__
+#define __kernel_Types_hpp__
 
 #include"environment.hpp"
-#include"kernel_base.hpp"
+#include"kernel_Base.hpp"
 
 using namespace Eigen;
 using namespace std;
 
 
-class kernel_Logarithm: public kernel_base {
+class kernel_Logarithm: public kernel_Base {
 public:
-    virtual double kernel_func(Point r0, Point r1);
+    virtual double kernel_Func(Point r0, Point r1);
 };
 
-class kernel_OneOverR2: public kernel_base {
+class kernel_OneOverR2: public kernel_Base {
 public:
-    virtual double kernel_func(Point r0, Point r1);
+    virtual double kernel_Func(Point r0, Point r1);
 };
 
-class kernel_Gaussian: public kernel_base {
+class kernel_Gaussian: public kernel_Base {
 public:
-    virtual double kernel_func(Point r0, Point r1);
+    virtual double kernel_Func(Point r0, Point r1);
 };
 
-class kernel_Quadric: public kernel_base {
+class kernel_Quadric: public kernel_Base {
 public:
-    virtual double kernel_func(Point r0, Point r1);
+    virtual double kernel_Func(Point r0, Point r1);
 };
 
-class kernel_InverseQuadric: public kernel_base {
+class kernel_InverseQuadric: public kernel_Base {
 public:
-    virtual double kernel_func(Point r0, Point r1);
+    virtual double kernel_Func(Point r0, Point r1);
 };
 
-class kernel_ThinPlateSpline: public kernel_base {
+class kernel_ThinPlateSpline: public kernel_Base {
 public:
-    virtual double kernel_func(Point r0, Point r1);
+    virtual double kernel_Func(Point r0, Point r1);
 };
 
 
-#endif //(__kerbel_types_hpp__)
+#endif //(__kerbel_Types_hpp__)

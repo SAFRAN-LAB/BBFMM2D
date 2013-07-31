@@ -4,44 +4,44 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	H2_2D_tree.hpp
+//	H2_2D_Tree.hpp
 //
-#ifndef __kernel_base_hpp__
-#define __kernel_base_hpp__
+#ifndef __kernel_Base_hpp__
+#define __kernel_Base_hpp__
 
 #include"environment.hpp"
-#include"H2_2D_tree.hpp"
+#include"H2_2D_Tree.hpp"
 
 using namespace Eigen;
-using namespace std;
+//using namespace std;
 
 
-class kernel_base {
+class kernel_Base {
 public:
-    void calculatepotential(H2_2D_tree& tree, MatrixXd& potential);
+    void calculate_Potential(H2_2D_Tree& tree, MatrixXd& potential);
     
-    void calculatepotential(H2_2D_node*& node, MatrixXd& potential,H2_2D_tree& tree);
+    void calculate_Potential(H2_2D_Node*& node, MatrixXd& potential,H2_2D_Tree& tree);
     
-    void set_Tree_Potential_Zero(H2_2D_node* node);
+    void set_Tree_Potential_Zero(H2_2D_Node* node);
     
     //	Obtains Chebyshev node potential from well separated clusters;
-	void calculate_nodepotential_from_wellseparated_clusters(H2_2D_node*& node, unsigned short rank,unsigned short nchebnodes);
+	void calculate_NodePotential_From_Wellseparated_Clusters(H2_2D_Node*& node, unsigned short rank,unsigned short nChebNodes);
     
     //	Tranfers potential from node to final potential matrix when needed;
-	void tranfer_potential_to_potential_tree(H2_2D_node*& node, MatrixXd& potential);
+	void tranfer_Potential_To_Potential_Tree(H2_2D_Node*& node, MatrixXd& potential);
     
     //	Evaluate kernel at Chebyshev nodes;
-	void kernelcheb2D(const unsigned short& M, const vector<Point>& x, const unsigned short& N, const vector<Point>& y, MatrixXd& K);
+	void kernel_Cheb_2D(const unsigned short& M, const vector<Point>& x, const unsigned short& N, const vector<Point>& y, MatrixXd& K);
     
     //	Evaluate the kernel;
-    void kernel2D(const unsigned long M, const vector<Point>& x, const unsigned long N, const vector<Point>& y, MatrixXd& Kernel);
+    void kernel_2D(const unsigned long M, const vector<Point>& x, const unsigned long N, const vector<Point>& y, MatrixXd& kernel);
     
     //	Tranfers potential from Chebyshev node of parent to Chebyshev node of children;
-	void transfer_nodepotential_to_child(H2_2D_node*& node,MatrixXd R[]);
+	void transfer_NodePotential_To_Child(H2_2D_Node*& node,MatrixXd R[]);
 
-    virtual double kernel_func(Point r0, Point r1) = 0;
+    virtual double kernel_Func(Point r0, Point r1) = 0;
     
 };
 
 
-#endif //(__kernel_base_hpp__)
+#endif //(__kernel_Base_hpp__)

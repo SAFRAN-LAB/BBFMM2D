@@ -58,7 +58,7 @@ The files you have control over are the files inside the directory ./examples/, 
 
 Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp".
 --To generate matrix through routine: 
-  Change void get_Location(unsigned long& N, vector<Point>& location) and void get_charges(const unsigned long N, unsigned& m, MatrixXd& Htranspose)
+  Change void get_Location(unsigned long& N, vector<Point>& location) and void get_Charges(const unsigned long N, unsigned& m, MatrixXd& Htranspose)
 --To use standard kernels: 
   Select the kernel type in main().
   Options of kernels:
@@ -75,24 +75,24 @@ Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp
 Go to the folder /input/, put your input file inside of this folder.
 Go to the folder /examples/, open "H2_2D_MVP_input_from_file_standard_kernel.cpp".
 --To change input filename:
-  string filename_input = "../input/test_input.txt";
+  string filenameInput = "../input/test_input.txt";
 --To use standard kernels:
   The same step as described in 1).
 
 
 3) If you want to generate matrix through your own routine, and use your own kernel:
 
-Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_mykernel.cpp".
+Go to /examples/, open "H2_2D_MVP_get_matrix_through_routine_myKernel.cpp".
 --To define your own kernel:
-  Modify class mykernel. 
+  Modify class myKernel. 
 --To generate your matrix:
   The same step as described in 1).
 
 4) If you want to read matrix from file, and use your own kernel:
 
-Go to /examples/, open "H2_2D_MVP_input_from_file_mykernel.cpp".
+Go to /examples/, open "H2_2D_MVP_input_from_file_myKernel.cpp".
 --To define your own kernel:
-  Modify class mykernel. 
+  Modify class myKernel. 
 --To change input filename:
   The same step as described in 2).
 
@@ -148,12 +148,12 @@ If you want to use "H2_2D_MVP_input_from_file_standard_kernel.cpp"
 
 To run other .cpp files:
 
-a) H2_2D_MVP_get_matrix_through_routine_mykernel.cpp
+a) H2_2D_MVP_get_matrix_through_routine_myKernel.cpp
    key in:
-   make get_matrix_through_routine_mykernel
+   make get_matrix_through_routine_myKernel
 b) H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp
    key in:
    make get_matrix_through_routine_standard_kernel
-c) H2_2D_MVP_input_from_file_mykernel.cpp
+c) H2_2D_MVP_input_from_file_myKernel.cpp
    key in:
-   make input_from_file_mykernel
+   make input_from_file_myKernel

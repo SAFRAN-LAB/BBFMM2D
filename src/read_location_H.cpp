@@ -4,13 +4,13 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	read_location_H.cpp
+//	read_Location_H.cpp
 //
 
-#include"read_location_H.hpp"
+#include"read_Location_H.hpp"
 
 using namespace Eigen;
-void read_Location_and_Measurement_operator (const string& filename, unsigned long& N, vector<Point>& location, unsigned& m, MatrixXd& Htranspose) {
+void read_Location_And_Measurement_Operator (const string& filename, unsigned long& N, vector<Point>& location, unsigned& m, MatrixXd& Htranspose) {
     ifstream fin;
 	fin.open(filename.c_str());
 	
@@ -48,14 +48,14 @@ void read_Location_and_Measurement_operator (const string& filename, unsigned lo
             i++;
         }
         if (line.length()!=(unsigned)i+2) {
-            read_Measurement_operator(line.substr(i+1), row, Htranspose, m);
+            read_Measurement_Operator(line.substr(i+1), row, Htranspose, m);
         }
         row++;
     }
     fin.close();
 }
 
-void read_Measurement_operator(const string& s, unsigned long row, MatrixXd& Htranspose, unsigned m) {
+void read_Measurement_Operator(const string& s, unsigned long row, MatrixXd& Htranspose, unsigned m) {
     if (!s.empty()) {
         unsigned k = 0;
         const char* start_pt = NULL;

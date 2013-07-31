@@ -4,7 +4,7 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	H2_2D_tree.hpp
+//	environment.hpp
 //
 #ifndef __environment_hpp__
 #define __environment_hpp__

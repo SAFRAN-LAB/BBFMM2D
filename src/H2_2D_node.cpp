@@ -4,9 +4,9 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	H2_2D_node.cpp
+//	H2_2D_Node.cpp
 //
-#include "H2_2D_node.hpp"
+#include "H2_2D_Node.hpp"
 Point Point::operator+ (Point const& rhs ) const {
     Point result;
     result.x    =   this->x+rhs.x;
@@ -22,7 +22,7 @@ Point Point::operator* (double rhs ) const {
 }
 
 
-H2_2D_node::H2_2D_node(unsigned short nlevel, unsigned short nodenumber){
+H2_2D_Node::H2_2D_Node(unsigned short nLevel, unsigned short nodeNumber){
 //	Set parent NULL
 	parent	=	NULL;
 //	Set children NULL
@@ -37,18 +37,18 @@ H2_2D_node::H2_2D_node(unsigned short nlevel, unsigned short nodenumber){
 	for(unsigned short k=0; k<40; ++k){
 		interaction[k]	=	NULL;
 	}
-	nneighbor	=	0;
-	ninteraction	=	0;
+	nNeighbor	=	0;
+	nInteraction	=	0;
 
-	isleaf		=	false;
-	isempty		=	false;
-	charge_computed	=	false;
+	isLeaf		=	false;
+	isEmpty		=	false;
+	chargeComputed	=	false;
 
-	this->nlevel	=	nlevel;
-	this->nodenumber=	nodenumber;
+	this->nLevel	=	nLevel;
+	this->nodeNumber=	nodeNumber;
 }
 
-H2_2D_node::~H2_2D_node(){
+H2_2D_Node::~H2_2D_Node(){
 
 //	Delete the children
 //	delete [] child;
