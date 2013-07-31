@@ -4,47 +4,54 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	kernel_types.cpp
+//	kernel_Types.cpp
 //
 
-#include"kernel_types.hpp"
+#include"kernel_Types.hpp"
 
-double kernel_Logarithm::kernel_func(double R_square){
-    if (R_square == 0){
+
+double kernel_Logarithm::kernel_Func(Point r0, Point r1){
+    double rSquare	=	(r0.x-r1.x)*(r0.x-r1.x) + (r0.y-r1.y)*(r0.y-r1.y);
+    if (rSquare == 0){
         return 0;
     }
     else{
-        return 0.5*log(R_square);
+        return 0.5*log(rSquare);
     }
 }
 
-double kernel_OneOverR2::kernel_func(double R_square){
-    if (R_square == 0){
+double kernel_OneOverR2::kernel_Func(Point r0, Point r1){
+    double rSquare	=	(r0.x-r1.x)*(r0.x-r1.x) + (r0.y-r1.y)*(r0.y-r1.y);
+    if (rSquare == 0){
         return 0;
     }
     else{
-        return 1.0/R_square;
+        return 1.0/rSquare;
     }
 }
 
-double kernel_Gaussian::kernel_func(double R_square){
-    return exp(-R_square);
+double kernel_Gaussian::kernel_Func(Point r0, Point r1){
+    double rSquare	=	(r0.x-r1.x)*(r0.x-r1.x) + (r0.y-r1.y)*(r0.y-r1.y);
+    return exp(-rSquare);
 }
 
-double kernel_Quadric::kernel_func(double R_square){
-    return 1.0+R_square;
+double kernel_Quadric::kernel_Func(Point r0, Point r1){
+    double rSquare	=	(r0.x-r1.x)*(r0.x-r1.x) + (r0.y-r1.y)*(r0.y-r1.y);
+    return 1.0+rSquare;
 }
 
-double kernel_InverseQuadric::kernel_func(double R_square){
-    return 1.0/(1.0+R_square);
+double kernel_InverseQuadric::kernel_Func(Point r0, Point r1){
+    double rSquare	=	(r0.x-r1.x)*(r0.x-r1.x) + (r0.y-r1.y)*(r0.y-r1.y);
+    return 1.0/(1.0+rSquare);
 }
 
-double kernel_ThinPlateSpline::kernel_func(double R_square){
-    if (R_square == 0){
+double kernel_ThinPlateSpline::kernel_Func(Point r0, Point r1){
+    double rSquare	=	(r0.x-r1.x)*(r0.x-r1.x) + (r0.y-r1.y)*(r0.y-r1.y);
+    if (rSquare == 0){
         return 0;
     }
     else{
-        return 0.5*R_square*log(R_square);
+        return 0.5*rSquare*log(rSquare);
     }
 }
 

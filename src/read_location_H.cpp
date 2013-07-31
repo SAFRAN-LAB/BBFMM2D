@@ -4,12 +4,13 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	read_location_H.cpp
+//	read_Location_H.cpp
 //
 
-#include"read_location_H.hpp"
+#include"read_Location_H.hpp"
 
-void read_Location_and_Measurement_operator (const string& filename, unsigned long& N, VectorXd* location, unsigned& m, MatrixXd& Htranspose) {
+using namespace Eigen;
+void read_Location_And_Measurement_Operator (const string& filename, unsigned long& N, vector<Point>& location, unsigned& m, MatrixXd& Htranspose) {
     ifstream fin;
 	fin.open(filename.c_str());
 	
@@ -27,8 +28,7 @@ void read_Location_and_Measurement_operator (const string& filename, unsigned lo
     char nonuse;
     ss >> N >> nonuse >> m;
     Htranspose  =   MatrixXd::Zero(N,m);
-    location[0]	=	VectorXd::Random(N);
-	location[1]	=	VectorXd::Random(N);
+   
     
     // read location and measurement operator
     unsigned long row = 0;
@@ -39,21 +39,23 @@ void read_Location_and_Measurement_operator (const string& filename, unsigned lo
         while (line[i]!=',') {
             i++;
         }
-        location[0](row) = (double)atof(&line[1]);
-        location[1](row) = (double)atof(&line[i+1]);
+        Point new_Point;
+        new_Point.x =   (double)atof(&line[1]);
+        new_Point.y =   (double)atof(&line[i+1]);
+        location.push_back(new_Point);
  
         while (line[i]!=')') {
             i++;
         }
         if (line.length()!=(unsigned)i+2) {
-            read_Measurement_operator(line.substr(i+1), row, Htranspose, m);
+            read_Measurement_Operator(line.substr(i+1), row, Htranspose, m);
         }
         row++;
     }
     fin.close();
 }
 
-void read_Measurement_operator(const string& s, unsigned long row, MatrixXd& Htranspose, unsigned m) {
+void read_Measurement_Operator(const string& s, unsigned long row, MatrixXd& Htranspose, unsigned m) {
     if (!s.empty()) {
         unsigned k = 0;
         const char* start_pt = NULL;

@@ -8,25 +8,27 @@
 /* Input type : Through matrix generating routine;
    Types of kernel: standard kernels*/
 
-#include"iostream"
-#include<fstream>
-#include"Eigen/Dense"
-#include"cmath"
-#include"ctime"
-#include"./H2_2D_tree.hpp"
-#include"kernel_types.hpp"
+#include"environment.hpp"
+#include"H2_2D_Tree.hpp"
+#include"kernel_Types.hpp"
 
 using namespace std;
 using namespace Eigen;
 
-void get_Location(unsigned long& N, VectorXd* location){
+void get_Location(unsigned long& N, vector<Point>& location){
 	N           =	5000;
-	location[0]	=	VectorXd::Random(N);
-	location[1]	=	VectorXd::Random(N);
+	VectorXd tmp1	=	VectorXd::Random(N);
+	VectorXd tmp2	=	VectorXd::Random(N);
+    for (unsigned long i = 0; i < N; i++) {
+        Point newPoint;
+        newPoint.x =   tmp1[i];
+        newPoint.y =   tmp2[i];
+        location.push_back(newPoint);
+    }
 }
 
 
-void get_charges(const unsigned long N, unsigned& m, MatrixXd& Htranspose){
+void get_Charges(const unsigned long N, unsigned& m, MatrixXd& Htranspose){
 	m               =	10;
 	Htranspose		=	MatrixXd::Random(N,m);
 }
@@ -39,12 +41,12 @@ int main(){
     /*                                                        */
     /**********************************************************/
 	unsigned long N;      // Number of charges;
-	VectorXd location[2]; // Locations of the charges;
+	vector<Point> location; // Locations of the charges;
     get_Location(N,location);
 
 	unsigned m;           // Number of sets of charges;
 	MatrixXd Htranspose;  // All the different sets of charges;
-    get_charges(N,m,Htranspose);
+    get_Charges(N,m,Htranspose);
 
 
 	cout << endl << "Number of charges:"    << N << endl;
@@ -58,17 +60,17 @@ int main(){
     
     /****************      Building fmm tree     **************/
     
-	clock_t start_build	=	clock();
+	clock_t startBuild	=	clock();
 	unsigned short nchebnodes	=	6;                 // Number of Chebyshev nodes( >= 3) per dimension;
-    H2_2D_tree Atree(nchebnodes, Htranspose, location);// Build the fmm tree;
-    clock_t end_build	=	clock();
+    H2_2D_Tree Atree(nchebnodes, Htranspose, location);// Build the fmm tree;
+    clock_t endBuild	=	clock();
     
-    double FMM_total_time_build	=	double(end_build-start_build)/double(CLOCKS_PER_SEC);
-	cout << endl << "Total time taken for FMM(build tree) is: " << FMM_total_time_build << endl;
+    double FMMTotalTimeBuild	=	double(endBuild-startBuild)/double(CLOCKS_PER_SEC);
+	cout << endl << "Total time taken for FMM(build tree) is: " << FMMTotalTimeBuild << endl;
 
     /****************    Calculating potential   *************/
     
-    clock_t start_A	=	clock();
+    clock_t startA	=	clock();
 	MatrixXd potentialA(N,m);
     /* Options of kernel: 
             LOGARITHM:          kernel_Logarithm
@@ -79,23 +81,23 @@ int main(){
             THINPLATESPLINE:    kernel_ThinPlateSpline 
      */
     kernel_Quadric A;
-    A.calculatepotential(Atree,potentialA);
-    clock_t end_A	=	clock();
+    A.calculate_Potential(Atree,potentialA);
+    clock_t endA	=	clock();
     
-    double FMM_total_time_A	=	double(end_A-start_A)/double(CLOCKS_PER_SEC);
-	cout << endl << "Total time taken for FMM(calculating potential) is: " << FMM_total_time_A << endl;
+    double FMMTotalTimeA	=	double(endA-startA)/double(CLOCKS_PER_SEC);
+	cout << endl << "Total time taken for FMM(calculating potential) is: " << FMMTotalTimeA << endl;
 
 
     /****     If you want to use more than one kernels    ****/
     
-    /*clock_t start_B	=	clock();
+    /*clock_t startB	=	clock();
     MatrixXd potentialB(N,m);
     kernel_Gaussian B;
-    B.calculatepotential(Atree,potentialB);
-    clock_t end_B	=	clock();
+    B.calculate_Potential(Atree,potentialB);
+    clock_t endB	=	clock();
     
-    double FMM_total_time_B	=	double(end_B-start_B)/double(CLOCKS_PER_SEC);
-	cout << endl << "Total time taken for FMM(calculate B) is: " << FMM_total_time_B << endl;*/
+    double FMMTotalTimeB	=	double(endB-startB)/double(CLOCKS_PER_SEC);
+	cout << endl << "Total time taken for FMM(calculate B) is: " << FMMTotalTimeB << endl;*/
 
     
     /**********************************************************/
@@ -107,23 +109,23 @@ int main(){
     cout << "Starting Exact computating..." << endl;
 	clock_t start	=	clock();
 	MatrixXd Q;
-	A.kernel2D(N, location, N, location, Q);// Make sure the type of A here
+	A.kernel_2D(N, location, N, location, Q);// Make sure the type of A here
                                             // corresponds to the kernel used
                                             // to generate Q.
 	clock_t end	=	clock();
 
-	double Exact_Assembly_time	=	double(end-start)/double(CLOCKS_PER_SEC);
+	double exactAssemblyTime	=	double(end-start)/double(CLOCKS_PER_SEC);
 	start	=	clock();
-	MatrixXd potential_exact	=	Q*Htranspose;
+	MatrixXd potentialExact	=	Q*Htranspose;
 	end	=	clock();
-	double Exact_Computation_time	=	double(end-start)/double(CLOCKS_PER_SEC);
-	cout << endl << "Total time taken for exact matrix vector product is: " << Exact_Assembly_time+Exact_Computation_time << endl;
+	double exactComputationTime	=	double(end-start)/double(CLOCKS_PER_SEC);
+	cout << endl << "Total time taken for exact matrix vector product is: " << exactAssemblyTime+exactComputationTime << endl;
     
 
-	MatrixXd error              =	potentialA-potential_exact;
-	double absolute_Error		=	(error).norm();
-	double potential_Norm		=	(potential_exact).norm();
-	cout << endl << "Relative difference in the solution is: " << absolute_Error/potential_Norm << endl;
+	MatrixXd error              =	potentialA-potentialExact;
+	double absoluteError		=	(error).norm();
+	double potentialNorm		=	(potentialExact).norm();
+	cout << endl << "Relative difference in the solution is: " << absoluteError/potentialNorm << endl;
     
     return 0;
 }
