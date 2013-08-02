@@ -4,8 +4,9 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	BBFMM2D.hpp
-//
+/*! \file	BBFMM2D.hpp
+ header files needed for using BBFMM2D library
+*/
 #ifndef __BBFMM2D_hpp__
 #define __BBFMM2D_hpp__
 

@@ -5,8 +5,10 @@
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
 //
-/* Input type : Through matrix generating routine;
-   Types of kernel: standard kernels*/
+/*! \file H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp
+    Input type : Through matrix generating routine;
+   Types of kernel: standard kernels
+ */
 
 #include"environment.hpp"
 #include"H2_2D_Tree.hpp"
@@ -40,7 +42,7 @@ int main(){
     /*              Initializing the problem                  */
     /*                                                        */
     /**********************************************************/
-	unsigned long N;      // Number of charges;
+	unsigned long N;        // Number of charges;
 	vector<Point> location; // Locations of the charges;
     get_Location(N,location);
 

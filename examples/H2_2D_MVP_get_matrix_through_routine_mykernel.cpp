@@ -5,9 +5,9 @@
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
 //
-/*! 
-*Input type : Through matrix generating routine;
-*Types of kernel: kernel defined by user 
+/*! \file H2_2D_MVP_get_matrix_through_routine_mykernel.cpp
+  Input type : Through matrix generating routine;
+  Types of kernel: kernel defined by user 
 */
 
 #include"environment.hpp"

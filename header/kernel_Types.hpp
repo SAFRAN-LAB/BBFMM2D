@@ -4,7 +4,8 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-/*!	H2_2D_Tree.hpp
+/*!	\file kernel_Types.hpp
+  Defines differnt types of kernel
 */
 #ifndef __kernel_Types_hpp__
 #define __kernel_Types_hpp__

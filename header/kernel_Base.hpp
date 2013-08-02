@@ -4,7 +4,7 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-/*! \fileH2_2D_Tree.hpp
+/*! \file kernel_Base.hpp
 */
 #ifndef __kernel_Base_hpp__
 #define __kernel_Base_hpp__

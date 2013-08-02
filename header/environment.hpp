@@ -4,8 +4,9 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	environment.hpp
-//
+/*! \file environment.hpp
+ all the headers being used in BBFMM2D library
+*/
 #ifndef __environment_hpp__
 #define __environment_hpp__
 

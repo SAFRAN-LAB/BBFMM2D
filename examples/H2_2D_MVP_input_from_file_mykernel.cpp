@@ -5,8 +5,10 @@
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
 //
-/* Input type : From file;
-   Types of kernel: kernel defined by user */
+/*! \file H2_2D_MVP_input_from_file_mykernel.cpp
+   Input type : From file;
+   Types of kernel: kernel defined by user 
+ */
 
 #include"environment.hpp"
 #include"H2_2D_Tree.hpp"
