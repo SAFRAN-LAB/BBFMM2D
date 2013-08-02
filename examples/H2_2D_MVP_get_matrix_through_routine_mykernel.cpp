@@ -5,8 +5,10 @@
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
 //
-/* Input type : Through matrix generating routine;
-   Types of kernel: kernel defined by user */
+/*! 
+*Input type : Through matrix generating routine;
+*Types of kernel: kernel defined by user 
+*/
 
 #include"environment.hpp"
 #include"H2_2D_Tree.hpp"

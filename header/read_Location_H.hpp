@@ -4,8 +4,8 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	read_Location_H.hpp
-//
+/*!\file read_Location_H.hpp
+*/
 #ifndef __read_Location_H_hpp__
 #define __read_Location_H_hpp__
 

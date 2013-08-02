@@ -4,8 +4,8 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	H2_2D_Tree.hpp
-//
+/*!	H2_2D_Tree.hpp
+*/
 #ifndef __kernel_Types_hpp__
 #define __kernel_Types_hpp__
 

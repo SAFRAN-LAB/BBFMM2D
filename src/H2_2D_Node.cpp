@@ -34,9 +34,6 @@ H2_2D_Node::H2_2D_Node(unsigned short nLevel, unsigned short nodeNumber){
 		neighbor[k]	=	NULL;
 	}
 //	Set interactions NULL
-	/*for(unsigned short k=0; k<40; ++k){
-		interaction[k]	=	NULL;
-	}*/
     for(unsigned short k=0; k<27; ++k){
 		interaction[k]	=	NULL;
 	}

@@ -4,8 +4,8 @@
 //
 //	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
 //	
-//	H2_2D_Tree.hpp
-//
+/*! \fileH2_2D_Tree.hpp
+*/
 #ifndef __kernel_Base_hpp__
 #define __kernel_Base_hpp__
 
@@ -13,8 +13,6 @@
 #include"H2_2D_Tree.hpp"
 
 using namespace Eigen;
-//using namespace std;
-
 
 class kernel_Base {
 public:
@@ -24,21 +22,23 @@ public:
     
     void set_Tree_Potential_Zero(H2_2D_Node* node);
     
-    //	Obtains Chebyshev node potential from well separated clusters;
+    /*! Obtains Chebyshev node potential from well separated clusters;*/
 	void calculate_NodePotential_From_Wellseparated_Clusters(H2_2D_Node*& node, unsigned short rank,unsigned short nChebNodes);
     
-    //	Tranfers potential from node to final potential matrix when needed;
+    /*!	Tranfers potential from node to final potential matrix when needed;*/
 	void tranfer_Potential_To_Potential_Tree(H2_2D_Node*& node, MatrixXd& potential);
     
-    //	Evaluate kernel at Chebyshev nodes;
+    /*!	Evaluate kernel at Chebyshev nodes;*/
 	void kernel_Cheb_2D(const unsigned short& M, const vector<Point>& x, const unsigned short& N, const vector<Point>& y, MatrixXd& K);
     
-    //	Evaluate the kernel;
+    /*!	Evaluate the kernel;*/
     void kernel_2D(const unsigned long M, const vector<Point>& x, const unsigned long N, const vector<Point>& y, MatrixXd& kernel);
     
-    //	Tranfers potential from Chebyshev node of parent to Chebyshev node of children;
+    /*!	Tranfers potential from Chebyshev node of parent to Chebyshev node of children;*/
 	void transfer_NodePotential_To_Child(H2_2D_Node*& node,MatrixXd R[]);
 
+    //! A pure virtural function
+    /*! This function is used to define different types of kernel */
     virtual double kernel_Func(Point r0, Point r1) = 0;
     
 };
