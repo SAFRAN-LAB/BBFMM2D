@@ -22,25 +22,25 @@ EXECUTABLED=./exec/H2_2D_MVP_get_matrix_through_routine_mykernel
 
 
 input_from_file_standard_kernel: $(SOURCES) $(SOURCESA) $(EXECUTABLEA)
-	
+
 $(EXECUTABLEA): $(OBJECTSA)
 	$(CC) $(LDFLAGS) $(KERNEL) $(INDEX) $(OBJECTSA) -o $@
 
 
 get_matrix_through_routine_standard_kernel: $(SOURCES) $(SOURCESB) $(EXECUTABLEB)
-	
+
 $(EXECUTABLEB): $(OBJECTSB)
 	$(CC) $(LDFLAGS) $(KERNEL) $(INDEX) $(OBJECTSB) -o $@
 
 
 input_from_file_mykernel: $(SOURCES) $(SOURCESC) $(EXECUTABLEC)
-	
+
 $(EXECUTABLEC): $(OBJECTSC)
 	$(CC) $(LDFLAGS) $(KERNEL) $(INDEX) $(OBJECTSC) -o $@
 
 
 get_matrix_through_routine_mykernel: $(SOURCES) $(SOURCESD) $(EXECUTABLED)
-	
+
 $(EXECUTABLED): $(OBJECTSD)
 	$(CC) $(LDFLAGS) $(KERNEL) $(INDEX) $(OBJECTSD) -o $@
 
