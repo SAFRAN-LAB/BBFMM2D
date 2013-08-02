@@ -25,10 +25,10 @@ struct Point {
 
 class H2_2D_Node{
 public:
-	H2_2D_Node* child[4];		//	Each node has 4 children;
+	H2_2D_Node* child[4];	//	Each node has 4 children;
 	H2_2D_Node* parent;		//	Each node has 1 parent;
-	H2_2D_Node* neighbor[8];	//	Each node has atmost 8(=3^2-1^2) neighbors;
-	H2_2D_Node* interaction[27];	//	Each node has atmost 27(=6^2-3^2) wellseparated interactions. 40(=7^2-3^2) is the number of distinct well-separated interactions possible;
+	H2_2D_Node* neighbor[8];        //	Each node has atmost 8(=3^2-1^2) neighbors;
+	H2_2D_Node* interaction[27];    //	Each node has atmost 27(=6^2-3^2) wellseparated interactions. 40(=7^2-3^2) is the number of distinct well-separated interactions possible;
 
 	unsigned short nNeighbor;	//	Number of neighbors for each node;
 	unsigned short nInteraction;	//	Number of nodes in the interaction list;
