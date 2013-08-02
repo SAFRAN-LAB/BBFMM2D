@@ -5,11 +5,11 @@ Date: July 24th, 2013
 
 **Version 3.1 - First external release.**
 
-%% Copyleft 2013: Sivaram Ambikasaran, Ruoxi Wang and Eric Darve<br>        
-%% Developed by Sivaram Ambikasaran, Ruoxi Wang<br>       
-%% Contact: <siva.1985@gmail.com> (Sivaram), <ruoxi@stanford.edu> (Ruoxi)<br>    
-%% <br> 
-%% This program is free software; you can redistribute it and/or modify it under the terms of MPL2 license.<br>    
+%% Copyleft 2013: Sivaram Ambikasaran, Ruoxi Wang and Eric Darve         
+%% Developed by Sivaram Ambikasaran, Ruoxi Wang         
+%% Contact: <siva.1985@gmail.com> (Sivaram), <ruoxi@stanford.edu> (Ruoxi)     
+%%    
+%% This program is free software; you can redistribute it and/or modify it under the terms of MPL2 license.      
 %% The Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not %% distributed with this file, You can obtain one at <http://mozilla.org/MPL/2.0/.>  
 
 
