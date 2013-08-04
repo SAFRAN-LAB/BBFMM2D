@@ -84,7 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 </div><!-- contents -->
-    BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions. The Black-box Fast Multipole Method is an \(\mathcal{O}(N)\) fast multipole method. This fast multipole method is applicable for a wide range of non-oscillatory kernels, which can be evaluated for any pair of points. This Black-Box Fast Multipole Method relies on Chebyshev interplation to construct low-rank approximations for well-separated clusters. The main advantage of this fast multipole method is that it requires minimal pre-computation time.
+    BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions. The Black-box Fast Multipole Method is an \(\mathcal{O}(N)\) fast multipole method, which is a technique to calculate sums of the form \(f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}\). This fast multipole method is applicable for a wide range of non-oscillatory kernels, which can be evaluated for any pair of points. This Black-Box Fast Multipole Method relies on Chebyshev interplation to construct low-rank approximations for well-separated clusters. The main advantage of this fast multipole method is that it requires minimal pre-computation time and is applicable for a wide range of kernels.
     <!--Download-->
     <br/>
     <a href="https://github.com/sivaramambikasaran/BBFMM2D/tarball/master" class="button"><img src="images/downloadButton.jpeg" WIDTH=150 HEIGHT=80></a>
