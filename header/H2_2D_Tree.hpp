@@ -21,11 +21,14 @@ using namespace std;
 
 const double PI	=	4.0*atan(1.0);
 
+/*! The fmm tree */
 class H2_2D_Tree{
     friend class kernel_Base;
 public:
+    /*! Constructor of class H2_2D_Tree */
 	H2_2D_Tree(const unsigned short nChebNodes, const MatrixXd& charge, const vector<Point>& location);
     unsigned short nChebNodes;	/**<	Number of chebyshev nodes along one direction;*/
+    /*! Destructor of class H2_2D_Tree */
     ~H2_2D_Tree();
     
 private:

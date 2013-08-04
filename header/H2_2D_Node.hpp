@@ -17,6 +17,7 @@
 using namespace Eigen;
 using namespace std;
 
+/*! Point in 2 dimesion */
 struct Point {
     double x;
     double y;
@@ -24,7 +25,7 @@ struct Point {
     Point operator* (double rhs ) const;
 };
 
-
+/*! Node in FMM tree */
 class H2_2D_Node{
 public:
 	H2_2D_Node* child[4];           /**<	Each node has 4 children; */

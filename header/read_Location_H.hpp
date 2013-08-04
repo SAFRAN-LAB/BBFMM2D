@@ -6,6 +6,7 @@
  *  \version 3.1
  */
 /*!\file read_Location_H.hpp
+ read location and Htranspose from file
 */
 #ifndef __read_Location_H_hpp__
 #define __read_Location_H_hpp__

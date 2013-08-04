@@ -18,31 +18,37 @@ using namespace Eigen;
 using namespace std;
 
 
+/*! Logarithm kernel */
 class kernel_Logarithm: public kernel_Base {
 public:
     virtual double kernel_Func(Point r0, Point r1);
 };
 
+/*! OneOverR2 kernel */
 class kernel_OneOverR2: public kernel_Base {
 public:
     virtual double kernel_Func(Point r0, Point r1);
 };
 
+/*! Gaussian kernel */
 class kernel_Gaussian: public kernel_Base {
 public:
     virtual double kernel_Func(Point r0, Point r1);
 };
 
+/*! Quadric kernel */
 class kernel_Quadric: public kernel_Base {
 public:
     virtual double kernel_Func(Point r0, Point r1);
 };
 
+/*! InverseQuadric kernel */
 class kernel_InverseQuadric: public kernel_Base {
 public:
     virtual double kernel_Func(Point r0, Point r1);
 };
 
+/*! ThinPlateSpline kernel */
 class kernel_ThinPlateSpline: public kernel_Base {
 public:
     virtual double kernel_Func(Point r0, Point r1);
