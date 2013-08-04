@@ -1,11 +1,12 @@
-//	This Source Code Form is subject to the terms of the Mozilla Public
-//	License, v. 2.0. If a copy of the MPL was not distributed with this
-//	file, You can obtain one at http://mozilla.org/MPL/2.0/.
-//
-//	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
-//	
-//	H2_2D_Tree.cpp
-//
+/*!
+ *  \copyright This Source Code Form is subject to the terms of the Mozilla Public
+ *  License, v. 2.0. If a copy of the MPL was not distributed with this
+ *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *  \author Sivaram Ambikasaran, Ruoxi Wang
+ *  \version 3.1
+ */
+/*! \file	H2_2D_Tree.cpp
+*/
 
 #include"H2_2D_Tree.hpp"
 H2_2D_Tree::H2_2D_Tree(const unsigned short nChebNodes, const MatrixXd& charge, const vector<Point>& location){

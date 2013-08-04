@@ -1,11 +1,12 @@
-//	This Source Code Form is subject to the terms of the Mozilla Public
-//	License, v. 2.0. If a copy of the MPL was not distributed with this
-//	file, You can obtain one at http://mozilla.org/MPL/2.0/.
-//
-//	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
-//	
-//	kernel_Base.cpp
-//
+/*!
+ *  \copyright This Source Code Form is subject to the terms of the Mozilla Public
+ *  License, v. 2.0. If a copy of the MPL was not distributed with this
+ *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *  \author Sivaram Ambikasaran, Ruoxi Wang
+ *  \version 3.1
+ */
+/*! \file	kernel_Base.cpp
+*/
 
 #include"kernel_Base.hpp"
 void kernel_Base::calculate_Potential(H2_2D_Node*& node, MatrixXd& potential,H2_2D_Tree& tree){
@@ -15,7 +16,7 @@ void kernel_Base::calculate_Potential(H2_2D_Node*& node, MatrixXd& potential,H2_
 			for(unsigned short k=0;k<8;++k){
 				if(node->neighbor[k]!=NULL){
 					kernel_2D(node->N , node->location, node->neighbor[k]->N, node->neighbor[k]->location, tempK);
-                    //			Potential from neighbors
+                    //	Potential from neighbors
 					tree.get_Charge(node->neighbor[k]);
 					node->potential+=tempK*node->neighbor[k]->charge;
 				}

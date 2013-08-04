@@ -1,10 +1,10 @@
-//	This Source Code Form is subject to the terms of the Mozilla Public
-//	License, v. 2.0. If a copy of the MPL was not distributed with this
-//	file, You can obtain one at http://mozilla.org/MPL/2.0/.
-//
-//	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
-//	
-//
+/*!
+ *  \copyright This Source Code Form is subject to the terms of the Mozilla Public
+ *  License, v. 2.0. If a copy of the MPL was not distributed with this
+ *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *  \author Sivaram Ambikasaran, Ruoxi Wang
+ *  \version 3.1
+ */
 /*! \file H2_2D_MVP_input_from_file_standard_kernel.cpp
    Input type : From file;
    Types of kernel: standard kernels 
@@ -25,10 +25,10 @@ int main(){
     /*              Initializing the problem                  */
     /*                                                        */
     /**********************************************************/
-	unsigned long N;      // Number of charges;
-	vector<Point> location;// Locations of the charges;
-	unsigned m;           // Number of sets of charges;
-	MatrixXd Htranspose;  // All the different sets of charges;
+	unsigned long N;        // Number of charges;
+	vector<Point> location; // Locations of the charges;
+	unsigned m;             // Number of sets of charges;
+	MatrixXd Htranspose;    // All the different sets of charges;
     
     string filenameInput = "../input/test_input.txt";
     
@@ -46,7 +46,8 @@ int main(){
     /****************      Building fmm tree     **************/
     
 	clock_t startBuild	=	clock();
-	unsigned short nChebNodes	=	6;                 // Number of Chebyshev nodes( >= 3) per dimension;
+	unsigned short nChebNodes	=	6;                 // Number of Chebyshev nodes( >= 3)
+                                                       // per dimension;
     H2_2D_Tree Atree(nChebNodes, Htranspose, location);// Build the fmm tree;
     clock_t endBuild	=	clock();
     
@@ -95,8 +96,8 @@ int main(){
 	clock_t start	=	clock();
 	MatrixXd Q;
 	A.kernel_2D(N, location, N, location, Q);// Make sure the type of A here
-                                            // corresponds to the kernel used
-                                            // to generate Q.
+                                             // corresponds to the kernel used
+                                             // to generate Q.
 	clock_t end	=	clock();
 
 	double exactAssemblyTime	=	double(end-start)/double(CLOCKS_PER_SEC);

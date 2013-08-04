@@ -1,10 +1,10 @@
-//	This Source Code Form is subject to the terms of the Mozilla Public
-//	License, v. 2.0. If a copy of the MPL was not distributed with this
-//	file, You can obtain one at http://mozilla.org/MPL/2.0/.
-//
-//	<author>Sivaram Ambikasaran, Ruoxi Wang</author>
-//	
-//
+/*!
+ *  \copyright This Source Code Form is subject to the terms of the Mozilla Public
+ *  License, v. 2.0. If a copy of the MPL was not distributed with this
+ *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *  \author Sivaram Ambikasaran, Ruoxi Wang
+ *  \version 3.1
+ */
 /*! \file H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp
     Input type : Through matrix generating routine;
    Types of kernel: standard kernels
@@ -17,8 +17,9 @@
 using namespace std;
 using namespace Eigen;
 
+/*! Get the location */
 void get_Location(unsigned long& N, vector<Point>& location){
-	N           =	5000;
+	N               =	5000;
 	VectorXd tmp1	=	VectorXd::Random(N);
 	VectorXd tmp2	=	VectorXd::Random(N);
     for (unsigned long i = 0; i < N; i++) {
@@ -29,7 +30,7 @@ void get_Location(unsigned long& N, vector<Point>& location){
     }
 }
 
-
+/*! Get charges */
 void get_Charges(const unsigned long N, unsigned& m, MatrixXd& Htranspose){
 	m               =	10;
 	Htranspose		=	MatrixXd::Random(N,m);
@@ -46,8 +47,8 @@ int main(){
 	vector<Point> location; // Locations of the charges;
     get_Location(N,location);
 
-	unsigned m;           // Number of sets of charges;
-	MatrixXd Htranspose;  // All the different sets of charges;
+	unsigned m;             // Number of sets of charges;
+	MatrixXd Htranspose;    // All the different sets of charges;
     get_Charges(N,m,Htranspose);
 
 
@@ -63,7 +64,8 @@ int main(){
     /****************      Building fmm tree     **************/
     
 	clock_t startBuild	=	clock();
-	unsigned short nchebnodes	=	6;                 // Number of Chebyshev nodes( >= 3) per dimension;
+	unsigned short nchebnodes	=	6;                 // Number of Chebyshev nodes( >= 3)
+                                                       // per dimension;
     H2_2D_Tree Atree(nchebnodes, Htranspose, location);// Build the fmm tree;
     clock_t endBuild	=	clock();
     
@@ -112,8 +114,8 @@ int main(){
 	clock_t start	=	clock();
 	MatrixXd Q;
 	A.kernel_2D(N, location, N, location, Q);// Make sure the type of A here
-                                            // corresponds to the kernel used
-                                            // to generate Q.
+                                             // corresponds to the kernel used
+                                             // to generate Q.
 	clock_t end	=	clock();
 
 	double exactAssemblyTime	=	double(end-start)/double(CLOCKS_PER_SEC);
