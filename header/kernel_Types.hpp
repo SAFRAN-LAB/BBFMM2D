@@ -6,7 +6,7 @@
  *  \version 3.1
  */
 /*!	\file kernel_Types.hpp
-  Defines differnt types of kernel
+  Defines different types of kernel
 */
 #ifndef __kernel_Types_hpp__
 #define __kernel_Types_hpp__
