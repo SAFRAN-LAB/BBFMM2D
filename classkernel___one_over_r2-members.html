@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>BBFMM2D: Main Page</title>
+<title>BBFMM2D: Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -38,9 +38,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -60,7 +60,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-</div><!-- top -->
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -75,17 +82,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+</div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">BBFMM2D Documentation</div>  </div>
+<div class="title">kernel_OneOverR2 Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
-    BBFMM2D is an open source package of the Black-box Fast Multipole Method in 2 dimensions.
-    <!--Download-->
-    <br/>
-    <a href="https://github.com/sivaramambikasaran/BBFMM2D/tarball/master" class="button"><img src="images/downloadButton.jpeg" WIDTH=150 HEIGHT=80></a>
-    <!--End of Download-->
+
+<p>This is the complete list of members for <a class="el" href="classkernel___one_over_r2.html">kernel_OneOverR2</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="classkernel___base.html#ab0fbd2f07b6d9f729d739ced2bbfb361">calculate_NodePotential_From_Wellseparated_Clusters</a>(H2_2D_Node *&amp;node, unsigned short rank, unsigned short nChebNodes)</td><td class="entry"><a class="el" href="classkernel___base.html">kernel_Base</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>calculate_Potential</b>(H2_2D_Tree &amp;tree, MatrixXd &amp;potential) (defined in <a class="el" href="classkernel___base.html">kernel_Base</a>)</td><td class="entry"><a class="el" href="classkernel___base.html">kernel_Base</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>calculate_Potential</b>(H2_2D_Node *&amp;node, MatrixXd &amp;potential, H2_2D_Tree &amp;tree) (defined in <a class="el" href="classkernel___base.html">kernel_Base</a>)</td><td class="entry"><a class="el" href="classkernel___base.html">kernel_Base</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classkernel___base.html#a1bd96c73297ec810c8c6938635e9ba49">kernel_2D</a>(const unsigned long M, const vector&lt; Point &gt; &amp;x, const unsigned long N, const vector&lt; Point &gt; &amp;y, MatrixXd &amp;kernel)</td><td class="entry"><a class="el" href="classkernel___base.html">kernel_Base</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classkernel___base.html#a1c8450ca79c64bed654275c7e2ee6a55">kernel_Cheb_2D</a>(const unsigned short &amp;M, const vector&lt; Point &gt; &amp;x, const unsigned short &amp;N, const vector&lt; Point &gt; &amp;y, MatrixXd &amp;K)</td><td class="entry"><a class="el" href="classkernel___base.html">kernel_Base</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classkernel___one_over_r2.html#aca10b1c5e7692e9660784685966c41c6">kernel_Func</a>(Point r0, Point r1)</td><td class="entry"><a class="el" href="classkernel___one_over_r2.html">kernel_OneOverR2</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>set_Tree_Potential_Zero</b>(H2_2D_Node *node) (defined in <a class="el" href="classkernel___base.html">kernel_Base</a>)</td><td class="entry"><a class="el" href="classkernel___base.html">kernel_Base</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classkernel___base.html#a33e92601fefc9894e59daddec8c415b8">tranfer_Potential_To_Potential_Tree</a>(H2_2D_Node *&amp;node, MatrixXd &amp;potential)</td><td class="entry"><a class="el" href="classkernel___base.html">kernel_Base</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classkernel___base.html#a33c37dcc6ef0c8c6e40545849ec2ed6f">transfer_NodePotential_To_Child</a>(H2_2D_Node *&amp;node, MatrixXd R[])</td><td class="entry"><a class="el" href="classkernel___base.html">kernel_Base</a></td><td class="entry"></td></tr>
+</table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Sun Aug 4 2013 14:55:54 for BBFMM2D by &#160;<a href="http://www.doxygen.org/index.html">
