@@ -106,9 +106,9 @@ The files you have control over are the files inside the directory ./examples/, 
 	Go to `/examples/`, open `"H2_2D_MVP_binary_file_standard_kernel.cpp"`. 			     
     * To define your own kernel:  
       
-		  string filenameLocation     =   "../input/test_Location.bin";
-    	  string filenameH			   =   "../input/test_H.bin";
-    	  string filenameMetadata     =   "../input/metadata.txt";  
+		`string filenameLocation     =   "../input/test_Location.bin";`  
+    	`string filenameH			  =   "../input/test_H.bin";`  
+    	`string filenameMetadata     =   "../input/metadata.txt";`  
     change them into your input filenames. 
     * To change input filename: 
      
