@@ -6,7 +6,7 @@
  *  \version 3.1
  */
 /*! \file H2_2D_MVP_binary_file_mykernel.cpp
-   Input type : From binary file;
+   Input type : Binary file;
    Types of kernel: kernel defined by user 
  */
 

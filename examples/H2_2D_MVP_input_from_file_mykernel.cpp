@@ -6,7 +6,7 @@
  *  \version 3.1
  */
 /*! \file H2_2D_MVP_input_from_file_mykernel.cpp
-   Input type : From file;
+   Input type : Text file;
    Types of kernel: kernel defined by user 
  */
 
