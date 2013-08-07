@@ -103,16 +103,15 @@ The files you have control over are the files inside the directory ./examples/, 
   	     
 5. If you want to read matrix from binary file, and use standard kernel:
 	
-	Go to `/examples/`, open `"H2_2D_MVP_binary_file_standard_kernel.cpp"`. 
-	 
-	* To change the input filename:  
+	Go to `/examples/`, open `"H2_2D_MVP_binary_file_standard_kernel.cpp"`.      
+    * To define your own kernel:  
 
-	      string filenameLocation     =   "../input/test_Location.bin";
+  	      string filenameLocation     =   "../input/test_Location.bin";
     	  string filenameH			   =   "../input/test_H.bin";
-    	  string filenameMetadata     =   "../input/metadata.txt";
-    * To use standard kernels:  
-    
-    	The same step as described in 1.  
+    	  string filenameMetadata     =   "../input/metadata.txt"; 
+    * To change input filename: 
+     
+  	    The same step as described in 1. 
 
 6. If you want to read matrix from binary file, and use your own kernel:  
 
