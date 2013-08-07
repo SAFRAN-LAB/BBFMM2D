@@ -122,6 +122,6 @@ int main(){
 	double absoluteError		=	(error).norm();
 	double potentialNorm		=	(potentialExact).norm();
 	cout << endl << "Relative difference in the solution is: " << absoluteError/potentialNorm << endl;
-    
+        
     return 0;
 }

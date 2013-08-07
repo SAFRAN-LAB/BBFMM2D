@@ -68,7 +68,7 @@ The files you have control over are the files inside the directory ./examples/, 
   
 
 	
-2. If you want to read matrix from file, and use standard kernels:
+2. If you want to read matrix from text file, and use standard kernels:
 
     Go to the folder `/input/`, put your input file inside of this folder. 
      
@@ -91,7 +91,7 @@ The files you have control over are the files inside the directory ./examples/, 
     
       The same step as described in 1.
 
-4. If you want to read matrix from file, and use your own kernel:  
+4. If you want to read matrix from text file, and use your own kernel:  
 
 	Go to `/examples/`, open `"H2_2D_MVP_input_from_file_myKernel.cpp"`.      
     * To define your own kernel:  
@@ -99,13 +99,38 @@ The files you have control over are the files inside the directory ./examples/, 
   	    Modify `class myKernel`. 
     * To change input filename: 
      
-  	    The same step as described in 2.  
+  	    The same step as described in 2. 
+  	     
+5. If you want to read matrix from binary file, and use standard kernel:
+	
+	Go to `/examples/`, open `"H2_2D_MVP_binary_file_standard_kernel.cpp"`.  
+	* To change the input filename:  
+	
+		string filenameLocation     = "../input/test_Location.bin";
+    	string filenameHtranspose   =   "../input/test_H.bin";
+    	string filenameMetadata     =   "../input/metadata.txt";
+    * To use standard kernels:  
+    
+    	The same step as described in 1.  
 
+6. If you want to read matrix from binary file, and use your own kernel:  
+
+	Go to `/examples/`, open `"H2_2D_MVP_binary_file_mykernel.cpp"`.
+	* To change the input filename:  
+	
+	  	The same step as described in 5.  
+	* To define your own kernel:  
+	
+	   Modify `class myKernel`.
+	 
+    	
 
 
 ###INPUT FILES  
 
 Go to `/input/`, you should put your own input file in the input folder.
+
+####TEXT FILES
 
 The file format is described as follows:
 
@@ -131,7 +156,31 @@ For example:
 	(0.342299,-0.246828) (0.0732668,,,,,,0.0951028)  
 	(-0.984604,-0.44417) (,0.782447,-0.867924,0.485731,-0.729282,-0.481031,0.541473)  
 
+####BINARY FILES
 
+You should have 3 files:  
+
+1. A binary file for H matrix: 
+
+	Elements of H is stored in binary file row-wise.
+
+2. A binary file for Location:
+
+	Elements are stored this way(row-wise):
+		
+		loc0.x loc0.y  
+		loc1.x loc1.y  
+		…
+3. A text file for metadata: 
+ 
+   The file format is like this:  
+   
+   `Number of charges, Number of sets of charges`
+   
+   For example:
+
+ 		5000, 10
+   
 ###RUNNING THE CODE:  
 
 Here we give an example:  
@@ -167,4 +216,12 @@ To run other .cpp files:
    key in:  
    
    		make input_from_file_myKernel 
+4) `H2_2D_MVP_binary_file_mykernel.cpp`  
+   key in:
+   
+   		make binary_file_mykernel
+5) `H2_2D_MVP_binary_file_standard_kernel.cpp`  
+   key in:
+   
+   		make binary_file_standard_kernel
    
