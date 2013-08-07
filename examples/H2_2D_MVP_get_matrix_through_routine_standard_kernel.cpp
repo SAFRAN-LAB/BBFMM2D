@@ -11,8 +11,7 @@
  */
 
 #include"environment.hpp"
-#include"H2_2D_Tree.hpp"
-#include"kernel_Types.hpp"
+#include"BBFMM2D.hpp"
 
 using namespace std;
 using namespace Eigen;
