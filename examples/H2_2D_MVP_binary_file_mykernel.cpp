@@ -38,12 +38,12 @@ int main(){
 	unsigned m;             // Number of sets of charges;
 	MatrixXd Htranspose;    // All the different sets of charges;
     
-    string filenameLocation     = "../input/test_Location.bin";
-    string filenameHtranspose   =   "../input/test_H.bin";
+    string filenameLocation     =   "../input/test_Location.bin";
+    string filenameH            =   "../input/test_H.bin";
     string filenameMetadata     =   "../input/metadata.txt";
     
     read_Metadata_BBFMM2D (filenameMetadata, N, m);
-    read_Location_Htranpose_binary (filenameLocation, N, location, filenameHtranspose, m, Htranspose);
+    read_Location_Htranpose_binary (filenameLocation, N, location, filenameH, m, Htranspose);
     
 	cout << endl << "Number of charges:"    << N << endl;
 	cout << endl << "Number of sets of charges:" << m << endl;
