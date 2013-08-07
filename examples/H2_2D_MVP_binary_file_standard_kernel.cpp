@@ -28,8 +28,8 @@ int main(){
 	unsigned m;             // Number of sets of charges;
 	MatrixXd Htranspose;    // All the different sets of charges;
     
-    string filenameLocation     = "../input/LOC59x55.bin";
-    string filenameHtranspose   =   "../input/H59x55.bin";
+    string filenameLocation     = "../input/test_Location.bin";
+    string filenameHtranspose   =   "../input/test_H.bin";
     string filenameMetadata     =   "../input/metadata.txt";
     
     read_Metadata_BBFMM2D (filenameMetadata, N, m);
