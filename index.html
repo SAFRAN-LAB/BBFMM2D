@@ -14,6 +14,9 @@
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<!--include this for slides-->
+<script type="text/javascript" src="./javascripts/source/jquery.slides.min.js"></script>
+<!--end of include-->
 <!--Include this for text-->
 <script type="text/javascript"
      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -84,14 +87,189 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="headertitle">
 <div class="title">BBFMM2D Documentation</div>  </div>
 </div><!--header-->
-<div class="contents">
-    BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions. The Black-box Fast Multipole Method is an \(\mathcal{O}(N)\) fast multipole method, which is a technique to calculate sums of the form \(f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}\). This fast multipole method is applicable for a wide range of non-oscillatory kernels, which can be evaluated for any pair of points. This Black-Box Fast Multipole Method relies on Chebyshev interplation to construct low-rank approximations for well-separated clusters. The main advantage of this fast multipole method is that it requires minimal pre-computation time and is applicable for a wide range of kernels.
+    
+    
+    <table border="0" width="100%" cellspacing="75">
+        <tr>
+                    <td width="30%">
+                    <!--pictures-->
+                    <!-- SlidesJS Optional: If you'd like to use this design -->
+                    <style>
+                        body {
+                            -webkit-font-smoothing: antialiased;
+                            font: normal 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+                            color: #232525;
+                            padding-top:0px;
+                        }
+                        
+                        #slides {
+                            display: none
+                        }
+                        
+                        #slides .slidesjs-navigation {
+                            margin-top:5px;
+                        }
+                        
+                        a.slidesjs-next,
+                        a.slidesjs-previous,
+                        a.slidesjs-play,
+                        a.slidesjs-stop {
+                            background-image: url(images/btns-next-prev.png);
+                            background-repeat: no-repeat;
+                            display:block;
+                            width:12px;
+                            height:18px;
+                            overflow: hidden;
+                            text-indent: -9999px;
+                            float: left;
+                            margin-right:5px;
+                        }
+                        
+                        a.slidesjs-next {
+                            margin-right:10px;
+                            background-position: -12px 0;
+                        }
+                        
+                        a:hover.slidesjs-next {
+                            background-position: -12px -18px;
+                        }
+                        
+                        a.slidesjs-previous {
+                            background-position: 0 0;
+                        }
+                        
+                        a:hover.slidesjs-previous {
+                            background-position: 0 -18px;
+                        }
+                        
+                        a.slidesjs-play {
+                            width:15px;
+                            background-position: -25px 0;
+                        }
+                        
+                        a:hover.slidesjs-play {
+                            background-position: -25px -18px;
+                        }
+                        
+                        a.slidesjs-stop {
+                            width:18px;
+                            background-position: -41px 0;
+                        }
+                        
+                        a:hover.slidesjs-stop {
+                            background-position: -41px -18px;
+                        }
+                        
+                        .slidesjs-pagination {
+                            margin: 7px 0 0;
+                            float: right;
+                            list-style: none;
+                        }
+                        
+                        .slidesjs-pagination li {
+                            float: left;
+                            margin: 0 1px;
+                        }
+                        
+                        .slidesjs-pagination li a {
+                            display: block;
+                            width: 13px;
+                            height: 0;
+                            padding-top: 13px;
+                            background-image: url(images/pagination.png);
+                            background-position: 0 0;
+                            float: left;
+                            overflow: hidden;
+                        }
+                        
+                        .slidesjs-pagination li a.active,
+                        .slidesjs-pagination li a:hover.active {
+                            background-position: 0 -13px
+                        }
+                        
+                        .slidesjs-pagination li a:hover {
+                            background-position: 0 -26px
+                        }
+                        
+                        #slides a:link,
+                        #slides a:visited {
+                            color: #333
+                        }
+                        
+                        #slides a:hover,
+                        #slides a:active {
+                            color: #9e2020
+                        }
+                        
+                        .navbar {
+                            overflow: hidden
+                        }
+                        </style>
+                    <!-- End SlidesJS Optional-->
+                    
+                    <style>
+                        #slides {
+                            display: none
+                        }
+                        
+                        .container {
+                            margin: 0 auto
+                        }
+                        
+                        
+                        </style>
+                    
+                    
+                    <div id="slides" class=slidePhotos>
+                        <img src="images/2DQuadTree.png" class=slidePhotos>
+                            <img src="images/Nbody.png" class=slidePhotos>
+                                <img src="images/code.png" class=slidePhotos>
+                                    <img src="images/wellSeperatedTransfer.png" class=slidePhotos>
+                                        </div>
+                    
+                    
+                    <script>
+                        $(document).ready(function(){
+                                          $("#slides").slidesjs({
+                                                                width: 100,
+                                                                height:80,
+                                                                play: {
+                                                                active:true,
+                                                                auto: true,
+                                                                swap: true
+                                                                }
+                                                                
+                                                                
+                                                                });
+                                          });
+                        
+                        </script>
+                    <style>
+                        /* Prevents slides from flashing */
+                        .slidePhotos {
+                            width:100%;
+                            height: 100%;
+                        }
+                        </style>
+                    
+                <!--end of pictures-->
 
-</div><!-- contents -->
-<!--Download-->
-<a href="https://github.com/sivaramambikasaran/BBFMM2D/tarball/master" class="button"><img src="images/downloadButton.jpeg" WIDTH=150 HEIGHT=80></a>
-<!--End of Download-->
+            </td>
+            
+            <td width="70%">
+                <div class="contents">
+                    BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions. The Black-box Fast Multipole Method is an \(\mathcal{O}(N)\) fast multipole method, which is a technique to calculate sums of the form \(f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}\). This fast multipole method is applicable for a wide range of non-oscillatory kernels, which can be evaluated for any pair of points. This Black-Box Fast Multipole Method relies on Chebyshev interplation to construct low-rank approximations for well-separated clusters. The main advantage of this fast multipole method is that it requires minimal pre-computation time and is applicable for a wide range of kernels.
+                    <br/>
+                    <!--Download-->
+                    <a href="https://github.com/sivaramambikasaran/BBFMM2D/tarball/master" class="button"><img src="images/downloadButton.jpeg" WIDTH=150 HEIGHT=80></a>
+                    <!--End of Download-->
+                    
+                </div><!-- contents -->
+            </td>
 
+        </tr>
+    </table>
+   
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Wed Aug 7 2013 14:45:35 for BBFMM2D by &#160;<a href="http://www.doxygen.org/index.html">
