@@ -70,4 +70,4 @@ clean:
 	rm -rf *.out examples/*.o src/*.o exec/*
 
 tar:
-	tar -zcvf BBFMM2D.tar.gz ./exec ./src ./header ./examples ./Makefile ./README ./LICENSE
+	tar -zcvf BBFMM2D.tar.gz ./exec ./src ./header ./examples ./Makefile ./README.md ./LICENSE.md
