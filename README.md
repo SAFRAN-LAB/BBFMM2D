@@ -416,4 +416,6 @@ To run other .cpp files:
    key in:
    
    		make binary_file_standard_kernel
-   		
+$$Q_{ij}$$    		
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
