@@ -21,6 +21,8 @@ using namespace std;
 struct Point {
     double x;
     double y;
+    Point() {};
+    Point(double x_, double y_) : x(x_), y(y_) {}
     Point operator+ (Point const& rhs ) const;
     Point operator* (double rhs ) const;
 };

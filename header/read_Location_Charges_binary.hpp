@@ -5,7 +5,7 @@
  *  \author Sivaram Ambikasaran, Ruoxi Wang
  *  \version 3.1
  */
-/*!\file read_Location_Htranpose_binary.hpp
+/*!\file read_Location_Charges_binary.hpp
  read location and Htranspose from binary files
 */
 #ifndef __read_Location_Htranpose_binary_hpp__
@@ -18,6 +18,6 @@ using namespace Eigen;
 using namespace std;
 
 
-void read_Location_Htranpose_binary(const string& filenameLocation, unsigned long N, vector<Point>& location, const string& filenameHtranspose,unsigned m, MatrixXd& Htranspose);
+void read_Location_Charges_binary(const string& filenameLocation, unsigned long N, vector<Point>& location, const string& filenameHtranspose,unsigned m, double* charges);
 
 #endif //(__read_Location_Htranpose_binary_hpp__)

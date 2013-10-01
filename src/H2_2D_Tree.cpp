@@ -9,14 +9,15 @@
 */
 
 #include"H2_2D_Tree.hpp"
-H2_2D_Tree::H2_2D_Tree(const unsigned short nChebNodes, const MatrixXd& charge, const vector<Point>& location){
-	this->nChebNodes    =	nChebNodes;
-	this->rank          =	nChebNodes*nChebNodes;
-	this->N             =	charge.rows();
-	this->m             =	charge.cols();
-	this->maxLevels		=	0;
-	this->chargeTree	=	charge;
-    this->locationTree  =   location;
+H2_2D_Tree::H2_2D_Tree(const unsigned short nChebNodes, double* const charge, const vector<Point>& location, const unsigned long N, const unsigned m){
+    
+	this->nChebNodes        =	nChebNodes;
+	this->rank              =	nChebNodes*nChebNodes;
+	this->N                 =	N;
+	this->m                 =	m;
+	this->maxLevels         =	0;
+	this->chargeTree        =	Map<MatrixXd>(charge, N, m);
+    this->locationTree      =   location;
         
     //	Get Chebyshev nodes
 	cNode               =	VectorXd(nChebNodes);
@@ -43,17 +44,6 @@ H2_2D_Tree::H2_2D_Tree(const unsigned short nChebNodes, const MatrixXd& charge, 
     build_Tree(root);
     std::cout << "Maximum levels is: " << this->maxLevels << std::endl;
 }
-
-
-/*void H2_2D_Tree::delete_Tree(H2_2D_Node*& node){
-	if(node!=NULL){
-		for(unsigned short k=0; k<4; ++k){
-			delete_Tree(node->child[k]);
-		}
-		delete node;
-		node = NULL;
-	}
-}*/
 
 //	Assigns children;
 void H2_2D_Tree::assign_Children(H2_2D_Node*& node){

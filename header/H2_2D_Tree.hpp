@@ -11,7 +11,6 @@
 #ifndef __H2_2D_Tree_hpp__
 #define __H2_2D_Tree_hpp__
 
-
 #include"environment.hpp"
 #include"H2_2D_Node.hpp"
 
@@ -21,12 +20,13 @@ using namespace std;
 
 const double PI	=	4.0*atan(1.0);
 
+
 /*! The fmm tree */
 class H2_2D_Tree{
     friend class kernel_Base;
 public:
     /*! Constructor of class H2_2D_Tree */
-	H2_2D_Tree(const unsigned short nChebNodes, const MatrixXd& charge, const vector<Point>& location);
+    H2_2D_Tree(const unsigned short nChebNodes, double* const charge, const vector<Point>& location, const unsigned long N, const unsigned m);
     unsigned short nChebNodes;	/**<	Number of chebyshev nodes along one direction;*/
     /*! Destructor of class H2_2D_Tree */
     ~H2_2D_Tree();

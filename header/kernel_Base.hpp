@@ -19,7 +19,7 @@ using namespace Eigen;
 /*! Functions for calculating potential and virtual kernel function */
 class kernel_Base {
 public:
-    void calculate_Potential(H2_2D_Tree& tree, MatrixXd& potential);
+    void calculate_Potential(H2_2D_Tree& tree, double* potential);
     
     void calculate_Potential(H2_2D_Node*& node, MatrixXd& potential,H2_2D_Tree& tree);
     

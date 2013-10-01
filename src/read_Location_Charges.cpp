@@ -5,13 +5,17 @@
  *  \author Sivaram Ambikasaran, Ruoxi Wang
  *  \version 3.1
  */
-/*!\file	read_Location_H.cpp
+/*!\file	read_Location_Charges.cpp
 */
 
-#include"read_Location_H.hpp"
+#include"read_Location_Charges.hpp"
 
 using namespace Eigen;
-void read_Location_And_Measurement_Operator (const string& filename, unsigned long& N, vector<Point>& location, unsigned& m, MatrixXd& Htranspose) {
+
+
+void read_Charges(const string& s, unsigned long row, double*& charges, const unsigned m, const unsigned long N);
+
+void read_Location_Charges (const string& filename, unsigned long N, vector<Point>& location, unsigned m, double*& charges) {
     ifstream fin;
 	fin.open(filename.c_str());
 	
@@ -19,18 +23,9 @@ void read_Location_And_Measurement_Operator (const string& filename, unsigned lo
 		cerr << "Failed to open file " << filename << endl;
 		throw runtime_error("Failed to open file!");
 	}
-    // read first line in the file : N, m
-    string line;
-    getline(fin,line);
-    line.erase(remove(line.begin(), line.end(), ' '),
-               line.end());
-    stringstream ss;
-    ss << line;
-    char nonuse;
-    ss >> N >> nonuse >> m;
-    Htranspose  =   MatrixXd::Zero(N,m);
-   
     
+    string line;
+        
     // read location and measurement operator
     unsigned long row = 0;
     while(getline(fin, line)){
@@ -40,23 +35,21 @@ void read_Location_And_Measurement_Operator (const string& filename, unsigned lo
         while (line[i]!=',') {
             i++;
         }
-        Point new_Point;
-        new_Point.x =   (double)atof(&line[1]);
-        new_Point.y =   (double)atof(&line[i+1]);
+        Point new_Point((double)atof(&line[1]), (double)atof(&line[i+1]));
         location.push_back(new_Point);
  
         while (line[i]!=')') {
             i++;
         }
         if (line.length()!=(unsigned)i+2) {
-            read_Measurement_Operator(line.substr(i+1), row, Htranspose, m);
+            read_Charges(line.substr(i+1), row, charges, m, N);
         }
         row++;
     }
     fin.close();
 }
 
-void read_Measurement_Operator(const string& s, unsigned long row, MatrixXd& Htranspose, unsigned m) {
+void read_Charges(const string& s, unsigned long row, double*& charges, const unsigned m, const unsigned long N) {
     if (!s.empty()) {
         unsigned k = 0;
         const char* start_pt = NULL;
@@ -67,7 +60,7 @@ void read_Measurement_Operator(const string& s, unsigned long row, MatrixXd& Htr
                     i++;
                 }
                 if(start_pt!=&s[i]) {
-                    Htranspose(row,k)=(double)atof(start_pt);
+                    charges[k*N+row]=(double)atof(start_pt);
                 }
                 k++;
             }

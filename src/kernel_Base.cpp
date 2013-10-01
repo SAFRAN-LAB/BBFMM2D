@@ -66,11 +66,12 @@ void kernel_Base::set_Tree_Potential_Zero(H2_2D_Node* node){
 }
 
 //	Calculates potential;
-void kernel_Base::calculate_Potential(H2_2D_Tree& tree, MatrixXd& potential){
-    potential		=	MatrixXd(tree.N,tree.m);
+void kernel_Base::calculate_Potential(H2_2D_Tree& tree, double* potential){
+    MatrixXd potentialMatrix(tree.N,tree.m);
     set_Tree_Potential_Zero(tree.root);
     std::cout << "Calculating potential..." << std::endl;
-    calculate_Potential(tree.root,potential,tree);
+    calculate_Potential(tree.root,potentialMatrix,tree);
+    Map<MatrixXd>(potential, potentialMatrix.rows(), potentialMatrix.cols()) = potentialMatrix;
     std::cout << "Calculated potential." << std::endl;
 }
 
@@ -135,6 +136,4 @@ void kernel_Base::kernel_2D(const unsigned long M, const vector<Point>& x, const
         }
     }
 }
-
-
 

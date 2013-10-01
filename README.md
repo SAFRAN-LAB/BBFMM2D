@@ -12,8 +12,13 @@ Date: July 24th, 2013
 %% This program is free software; you can redistribute it and/or modify it under the terms of MPL2 license.      
 %% The Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not %% distributed with this file, You can obtain one at <http://mozilla.org/MPL/2.0/.>  
 
+###1. INTROCTION
+BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions.   
+The Black-box Fast Multipole Method is an $\mathcal{O}(N)$ fast multipole method, which is a technique to calculate sums of the form $f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}$.  
+BBFMM2D provides an $\mathcal{O}(Nlog(N))$ or  $\mathcal{O}(N)$ solution to matrix-matrix product $Q \times H$, where $Q$ is a covariance matrix of size $N\times N$ with a kernel, and $N$ is the number of unknown values at points $(x,y)$ in a 2D domain. $H$ is a $N \times m$ matrix with $N >> m$. 
+This fast multipole method is applicable for a wide range of non-oscillatory kernels, which can be evaluated for any pair of points. This Black-Box Fast Multipole Method relies on Chebyshev interplation to construct low-rank approximations for well-separated clusters. The main advantage of this fast multipole method is that it requires minimal pre-computation time and is applicable for a wide range of kernels.
 
-###DIRECTORIES AND FILES:
+###2. DIRECTORIES AND FILES
 
 
 	./examples/		:	Example input C++ codes; Needed to read input from user or from input file.  
@@ -24,126 +29,212 @@ Date: July 24th, 2013
 	./README.md		:	This file  
 	./License.md	:	License file  
 	./Makefile		:	Makefile
+	
+###3. TUTORIAL
+####3.1 To Get Started  
+1. To use BBFMM2D, you need to have <a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a> library.
 
-###SETTING THINGS UP:
-
-1. To run this package, you need to have **Eigen**.
-
-2. Download Eigen from here: <http://eigen.tuxfamily.org/index.php?title=Main_Page>
+2. Download Eigen from here: <http://eigen.tuxfamily.org/index.php?title=Main_Page>.
 
 3. Create a directory named `Codes/` inside the main Eigen folder and copy the directory `BBFMM2D/` into the directory `Codes/`.
 
-4. Open the Makefile, which is inside the folder BBFMM2D. Ensure that you have included the path to Eigen in the line containing `CFLAGS`. For instance, in the above setting, the path `"-I ./../../"` should be included in the Makefile.
+4. Open the Makefile, which is inside the folder BBFMM2D. Ensure that you have included the path to Eigen in the line containing `CFLAGS`. For instance, in the above setting, the path `"-I ./../../"` should be included in the Makefile.  
 
-5. Once you have this set up, you should be able to run the code. Check whether the code runs by performing the following action. Go to the directory where Makefile is in, then key in the following three commands in the terminal:
+5. To check whether things are set up correctly, you can perform the following action: Go to the directory where Makefile is in, then key in the following three commands in the terminal:
 
-		make get_matrix_through_routine_standard_kernel
+		make binary_file_mykernel
 		cd exec/
-		./H2_2D_MVP_get_matrix_through_routine_standard_kernel
+		./H2_2D_MVP_binary_file_mykernel
 
-The code should now run.
+####3.2 FMM with standard kernel
+#####3.2.1 Basic usage
 
+The basic usage of BBFMM2D is as follows: 
+
+	#include"BBFMM2D.hpp"  
+	...
+	{
+	unsigned long N;        // Number of charges;
+	unsigned m;             // Number of sets of charges;
+	vector<Point> location; // Locations of the charges;
+	double* charges;        // All the different sets of charges;
+	unsigned short nChebNodes	=	9; // Number of Chebyshev nodes per dimension; 
+	…
+	H2_2D_Tree Atree(nChebNodes, charges, location, N, m);// Build the fmm tree;
 	
-###CHANGING THE INPUTS:
-
-The files you have control over are the files inside the directory ./examples/, read through the files both must be self explanatory for the most part.
-
-1. If you want to generate matrix through your own routine, and use the standard kernels:
-
-    Go to `/examples/`, open `"H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp"`.        
-    * To generate matrix through routine:   
+	/* The following can be repeated with different kernels */
+	double* potential;
+    potential = new double[N*m];
     
-        Change `void get_Location(unsigned long& N, vector<Point>& location)` and `void get_Charges(const unsigned long N, unsigned& m, MatrixXd& Htranspose)`  
-    * To use standard kernels:   
-      
-      Select the kernel type in `main()`.  
-      Options of kernels:  
-      
-  	    	LOGARITHM:          kernel_Logarithm  
-  	   		ONEOVERR2:          kernel_OneOverR2  
-  			GAUSSIAN:           kernel_Gaussian  
-  			QUADRIC:            kernel_Quadric  
-    		INVERSEQUADRIC:     kernel_InverseQuadric  
-    		THINPLATESPLINE:    kernel_ThinPlateSpline 
-  
-
-	
-2. If you want to read matrix from text file, and use standard kernels:
-
-    Go to the folder `/input/`, put your input file inside of this folder. 
-     
-    Go to the folder `/examples/`, open `"H2_2D_MVP_input_from_file_standard_kernel.cpp"`. 
-    * To change input filename: 
-     
-      `string filenameInput = "../input/test_input.txt"`;  
-    * To use standard kernels:  
+    kernel_Gaussian A;
+    A.calculate_Potential(Atree,potential);
+    ...
+    }
     
-      The same step as described in 1.
+This example first build a fmm tree with this line:  
+`H2_2D_Tree Atree(nChebNodes, charges, location, N, m);`  
+where H2_2D_Tree is a class of fmm tree, the constructor takes 5 arguments:  
 
-
-3. If you want to generate matrix through your own routine, and use your own kernel:
-
-    Go to `/examples/`, open `"H2_2D_MVP_get_matrix_through_routine_myKernel.cpp"`.    
-    * To define your own kernel: 
-     
-      Modify `class myKernel`. 
-    * To generate your matrix:  
-    
-      The same step as described in 1.
-
-4. If you want to read matrix from text file, and use your own kernel:  
-
-	Go to `/examples/`, open `"H2_2D_MVP_input_from_file_myKernel.cpp"`.      
-    * To define your own kernel:  
-    
-  	    Modify `class myKernel`. 
-    * To change input filename: 
-     
-  	    The same step as described in 2. 
-  	     
-5. If you want to read matrix from binary file, and use standard kernel:
+* nChebNodes(unsigned short):   
+	Number of Chebyshev nodes per dimension. It should take value $\ge$ 3, and we recommend to take value from 3 to 10. (Larger number of Chebyshev nodes would give better result but with much more time)
+* charges(double*):   
+	All the different sets of charges. This pointer should point to an array with size $N \times m$, and the data should be stored in column-wise. ( i.e. first set of charges, followd by second set of charges, etc)
+* location(vector<Point>):  
+	Locations of the charges in $2D$ domain. Here Point is a structure type with $x$ and $y$ coordinate defined.  
+* N(unsigned long):  
+	Number of charges.  
+* m(unsigned):  
+	Number of sets of charges.  
 	
-	Go to `/examples/`, open `"H2_2D_MVP_binary_file_standard_kernel.cpp"`. 			     
-    * To change input filename:  
-      
-		`string filenameLocation     =   "../input/test_Location.bin";`  
-    	`string filenameH			  =   "../input/test_H.bin";`  
-    	`string filenameMetadata     =   "../input/metadata.txt";`  
-    change them into your input filenames. 
-    * To use standard kernels: 
-     
-  	    The same step as described in 1. ;  
+Once the tree is created, you can compute the matrix-matrix product with as many kernels as you want.(Please see **3.2.3**) The code shows an example using Gaussian kernel:  
 
-6. If you want to read matrix from binary file, and use your own kernel:  
+	kernel_Gaussian A;
+    A.calculate_Potential(Atree,potential);
+The result is computed via `calculate_Potential()`, which is a method of class `kernel_Gaussian`. The first argument of `calculate_Potential()` is the fmm tree that we just created; and the second argument potential is a pointer to the result, and the result is stored column-wise in `potential`.  
 
-	Go to `/examples/`, open `"H2_2D_MVP_binary_file_mykernel.cpp"`.
-	* To change the input filename:  
+#####3.2.2 Options of kernels
+
+We have provided several standard kernels:  
+To demonstrate the deltails of each kernel, we denote the element of the covariance matrix $Q_{ij} = k(r )$, where $r$ is the distance between point i and point j, is described by a kernel function.
+
+Options of kernels:  
+
+* LOGARITHM kernel:           
+	usage: kernel_Logarithm  
+	kernel function: $k(r) = 0.5 \times log(r^2)\, (r\neq 0);\, k(r )= 0 \,(r=0).$  
 	
-	  	The same step as described in 5.  
-	* To define your own kernel:  
 	
-	   Modify `class myKernel`.
+* ONEOVERR2 kernel:  
+	usage: kernel_OneOverR  
+	kernel function:  $k(r ) = 1 / r^2 \,(r \neq 0);\, k(r )= 0 \,(r=0)$.  
+	
+* GAUSSIAN kernel:  
+	usage: kernel_Gaussian  
+	kernel function: $k(r ) = exp(-r^2)$.  
+	
+* QUADRIC kernel:  
+	usage: kernel_Quadric  
+	kernel function: $ k(r ) = 1 + r^2$.  
+
+* INVERSEQUADRIC kernel:  
+	usage: kernel_InverseQuadric  
+	kernel function: $k(r ) = 1 / (1+r^2)$.
+	
+* THINPLATESPLINE kernel:  
+	usage:  kernel_ThinPlateSpline  
+	kernel function: $k(r ) =  0.5 \times r^2 \times log(r^2 )\, (r \neq 0);\, k(r )=0\,(r=0)$.
+    		
+If you want to define your own kernel, please see **3.3**.
+
+#####3.2.3 Usage of multiple kernels
+
+	#include"BBFMM2D.hpp"  
+	...
+	{
+	…
+	H2_2D_Tree Atree(nChebNodes, charges, location, N, m);// Build the fmm tree;
+	
+	/* The following can be repeated with different kernels */
+	...
+    kernel_Gaussian A;
+    A.calculate_Potential(Atree,potentialA);
+    ...   
+    kernel_Quadric B;
+    A.calculate_Potential(Atree,potentialB);
+	...
+    }
+The basic usage is already domonstrated in **3.2.1**. Once you have built the fmm tree, you can use different kernels to compute the matrix-matrix multiplication without rebuilding the tree. You can choose kernel type from standard kernels given by us ( see **3.2.2** ), or you can define your own kernel ( see **3.3** )
 	 
-    	
+####3.3 FMM with user defined kernel
 
+#####3.3.1 Basic usage
+The basic usage is almost the same as **3.2** except that you have to define your own routine of computing kernel. One example code is as follows:  
 
-###INPUT FILES  
+	#include"BBFMM2D.hpp"  
+	class myKernel: public kernel_Base {
+	public:
+    virtual double kernel_Func(Point r0, Point r1){
+        //implement your own kernel here
+        double rSquare	=	(r0.x-r1.x)*(r0.x-r1.x) + (r0.y-r1.y)*(r0.y-r1.y);
+        return exp(-pow(pow(rSquare,0.5)/900.0;8,0.5));
+    	}
+	};
+	...
+	{
+	…
+	H2_2D_Tree Atree(nChebNodes, charges, location, N, m);// Build the fmm tree;
+	
+	/* The following can be repeated with different kernels */
+	...
+    myKernel A;
+    A.calculate_Potential(Atree,potential);
+    ...
+    }
 
-Go to `/input/`, you should put your own input file in the input folder.
+You can define your own kernel inside `kernel_Func(Point r0, Point r1)`, it takes two Points as input and returns a double value ( $Q_{ij}$ ). 
 
-####TEXT FILES
+#####3.3.2 Usage of multiple kernels
 
-The file format is described as follows:
+You can also define and use multiple kernels in one file, but make sure to have different class names. 
+e.g.  
 
-The first row should be like this: 
+	class myKernelA: public kernel_Base{
+		public:
+    	virtual double kernel_Func(Point r0, Point r1) {
+    	...
+    	}
+	}
+	class myKernelB: public kernel_Base{
+		public:
+    	virtual double kernel_Func(Point r0, Point r1) {
+    	...
+    	}
+	}
+	…
+	
+	{
+	…
+	H2_2D_Tree Atree(nChebNodes, charges, location, N, m);// Build the fmm tree;
+	
+	/* The following can be repeated with different kernels */
+	...
+    myKernelA A;
+    A.calculate_Potential(Atree,potentialA);
+    ...
+    myKernelB B;
+    B.calculate_Potential(Atree,potentialB);
+    …  
+    kernel_Gaussian C;
+    C.calculate_Potential(Atree,potentialC);
+    ...
+    }
+
+###4. ROUTINES FOR INPUTING AND OUTPUTING DATA:  
+We have provided several routines for reading data from text file and binary file, and writing data into binary file.	
+
+####4.1 Reading meta data from text file
+	
+	void read_Metadata_BBFMM2D (const string& filenameMetadata, unsigned long& N, unsigned& m);
+The first argument, filenameMetadata is the filename for your meta data (the number of locations, number of sets of charges). The number of locations is stored in N, and number of sets of charges is stored in m.
+
+**File format:**  
  
 `Number of charges, Number of sets of charges`
 
 For example:
 
  	5000, 10
+ 	
+####4.2 Reading from text file 
+The prototype of function to read input from text file is:  
 
-For the rest of the rows, it should start with locations, followed by a row in Htranspose matrix(elements should be separated using ','). If some element is 0, you can leave it as empty instead of 0. If all the elements in a row is 0, nothing need to be typed after the location.(spaces are allowed)
+	void read_Location_Charges (const string& filename, unsigned long N, vector<Point>& location, unsigned m, double*& charges);
+
+The first argument is the filename of your text file, the second argument N and forth argument m are the number of locations and number of sets of charges respectively.
+This function stores location in `location` and stores charges column-wise in `charges`.
+
+**File format:**  
+For each row, it should start with locations, and followed by a row in $H^T$ ( if we do $QH^T$ multiplication, $H^T$ is the R.H.S.). Here note that elements should be separated using ','. If some element is 0, you can leave it as empty instead of 0. If all the elements in a row is 0, nothing need to be typed after the location.(spaces are allowed)
 
 The row should look like this:  
   
@@ -157,39 +248,119 @@ For example:
 	(0.342299,-0.246828) (0.0732668,,,,,,0.0951028)  
 	(-0.984604,-0.44417) (,0.782447,-0.867924,0.485731,-0.729282,-0.481031,0.541473)  
 
-####BINARY FILES
 
-You should have 3 files:  
+####4.3 Reading from binary file  
 
-1. A binary file for H matrix: 
+	void read_Location_Charges_binary(const string& filenameLocation, unsigned long N, vector<Point>& location, const string& filenameHtranspose,unsigned m, double* charges);
 
-	Elements of H is stored in binary file row-wise.
+The first argument filenameLocation and the forth argument filenameHtranspose are binary file names for location and $H^T$ respectively. N is the number of locations and m is the number of sets of charges. The data of locations is stored in `location` and the data of charges is stored in `charges` column-wise.  
 
-2. A binary file for Location:
+**File format:** 
+ 
+1. Binary file for charges: 
+
+	Elements of charges is stored this way:  
+	It should be stored column-wise, i.e.   
+	first set of charges, followed by second set of charges, etc.
+
+2. Binary file for Location:
 
 	Elements are stored this way(row-wise):
 		
 		loc0.x loc0.y  
 		loc1.x loc1.y  
 		…
-3. A text file for metadata: 
- 
-   The file format is like this:  
-   
-   `Number of charges, Number of sets of charges`
-   
-   For example:
 
- 		5000, 10
-   
-###RUNNING THE CODE:  
+####4.4 Writing into binary file  
+	
+	void write_Into_Binary_File(const string& filename, double* outdata, int numOfElems);  
+This first argument is the filename for your output data. The second argument is a pointer to the output data, and the last argument is the number of elements in the array of your output data.  
+
+
+###5. EXAMPLES
+
+We have provided several examples for BBFMM2D. Go to examples/, read through the files both must be self explanatory for the most part.
+You can use our examples with your own input.
+####5.1 Chage input of examples
+
+1. If you want to generate input through your own routine, and use the standard kernels:
+
+    Go to `/examples/`, open `"H2_2D_MVP_get_input_through_routine_standard_kernel.cpp"`.        
+    * To generate input through routine:   
+    
+        Change `void get_Location()` and `void get_Charges()`  
+    * To use standard kernels:   
+      
+      Choose the kernel type in `main()`, options of kernels are in **3.2.2**
+  
+
+	
+2. If you want to read input from text file, and use standard kernels:
+
+    Go to the folder `/input/`, put your input file inside of this folder. 
+     
+    Go to the folder `/examples/`, open `"H2_2D_MVP_textfile_standard_kernel.cpp"`. 
+    * To change input filename: 
+     
+      `string filenameInput = "../input/test_input.txt"`;  
+    * To use standard kernels:  
+    
+      The same step as described in 1.
+
+
+3. If you want to generate input through your own routine, and use your own kernel:
+
+    Go to `/examples/`, open `"H2_2D_MVP_get_input_through_routine_myKernel.cpp"`.    
+    * To define your own kernel: 
+     
+      Modify `class myKernel`. 
+    * To generate your input:  
+    
+      The same step as described in 1.
+
+4. If you want to read input from text file, and use your own kernel:  
+
+	Go to `/examples/`, open `"H2_2D_MVP_textfile_myKernel.cpp"`.      
+    * To define your own kernel:  
+    
+  	    Modify `class myKernel`. 
+    * To change input filename: 
+     
+  	    The same step as described in 2. 
+  	     
+5. If you want to read input from binary file, and use standard kernel:
+	
+	Go to `/examples/`, open `"H2_2D_MVP_binary_file_standard_kernel.cpp"`. 			     
+    * To change input filename:  
+      
+		`string filenameLocation     =   "../input/test_Location.bin";`  
+    	`string filenameCharges			  =   "../input/test_Charges.bin";`  
+    	`string filenameMetadata     =   "../input/metadata.txt";`  
+    change them into your input filenames. 
+    * To use standard kernels: 
+     
+  	    The same step as described in 1. ;  
+
+6. If you want to read input from binary file, and use your own kernel:  
+
+	Go to `/examples/`, open `"H2_2D_MVP_binary_file_mykernel.cpp"`.
+	* To change the input filename:  
+	
+	  	The same step as described in 5.  
+	* To define your own kernel:  
+	
+	   Modify `class myKernel`.
+	 
+When using our examples, make sure that the input file format are the same as described in  **4.**  	
+
+####5.2 Run examples  
 
 Here we give an example:  
-If you want to use `"H2_2D_MVP_input_from_file_standard_kernel.cpp"`  
+If you want to use `"H2_2D_MVP_textfile_standard_kernel.cpp"`  
 
 1. As stated earlier to run the code, go to the appropriate directory and key in the following:
 
-		make input_from_file_standard_kernel
+		make textfile_standard_kernel
 
 2. Make sure you have changed or cleaned the .o files from previous compilation. To clean the irrelevant files, key in:
 
@@ -203,20 +374,20 @@ If you want to use `"H2_2D_MVP_input_from_file_standard_kernel.cpp"`
 
 To run other .cpp files:  
 
-1) `H2_2D_MVP_get_matrix_through_routine_myKernel.cpp`     
+1) `H2_2D_MVP_get_input_through_routine_myKernel.cpp`     
    key in: 
 
-      	make get_matrix_through_routine_myKernel   
+      	make get_input_through_routine_myKernel   
    
-2) `H2_2D_MVP_get_matrix_through_routine_standard_kernel.cpp`     
+2) `H2_2D_MVP_get_input_through_routine_standard_kernel.cpp`     
    key in:      
 
-   		make get_matrix_through_routine_standard_kernel
+   		make get_input_through_routine_standard_kernel
    
-3) `H2_2D_MVP_input_from_file_myKernel.cpp`    
+3) `H2_2D_MVP_textfile_myKernel.cpp`    
    key in:  
    
-   		make input_from_file_myKernel 
+   		make textfile_myKernel 
 4) `H2_2D_MVP_binary_file_mykernel.cpp`  
    key in:
    
@@ -225,4 +396,24 @@ To run other .cpp files:
    key in:
    
    		make binary_file_standard_kernel
-   
+   		
+
+<style TYPE="text/css">
+code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
+</style>
+<script type="text/x-mathjax-config">
+
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
+    }
+});
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>

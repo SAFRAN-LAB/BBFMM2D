@@ -5,30 +5,19 @@
  *  \author Sivaram Ambikasaran, Ruoxi Wang
  *  \version 3.1
  */
-/*! \file H2_2D_MVP_input_from_file_mykernel.cpp
+/*! \file H2_2D_MVP_textfile_standard_kernel.cpp
    Input type : Text file;
-   Types of kernel: kernel defined by user 
+   Types of kernel: standard kernels 
  */
 
-#include"environment.hpp"
 #include"BBFMM2D.hpp"
 
 using namespace std;
 using namespace Eigen;
 
-/*! Define user's own kernel */
-class myKernel: public kernel_Base {
-public:
-    virtual double kernel_Func(Point r0, Point r1){
-        //implement your own kernel here
-        double rSquare	=	(r0.x-r1.x)*(r0.x-r1.x) + (r0.y-r1.y)*(r0.y-r1.y);
-        return 1.0 + rSquare;
-    }
-};
 
 int main(){
-
-	/**********************************************************/
+    /**********************************************************/
     /*                                                        */
     /*              Initializing the problem                  */
     /*                                                        */
@@ -37,15 +26,18 @@ int main(){
 	vector<Point> location; // Locations of the charges;
     
 	unsigned m;             // Number of sets of charges;
-	MatrixXd Htranspose;    // All the different sets of charges;
+	double* charges;        // All the different sets of charges;
+    
+    string filenameMetadata     =   "../input/metadatatext.txt";
+    read_Metadata_BBFMM2D (filenameMetadata, N, m);
+    
     
     string filenameInput = "../input/test_input.txt";
+    charges =   new double[N*m];
+    read_Location_Charges (filenameInput.c_str(), N, location, m, charges);
     
-    read_Location_And_Measurement_Operator (filenameInput.c_str(), N, location, m, Htranspose);
-    
-	cout << endl << "Number of charges:"    << N << endl;
+	cout << endl << "Number of charges:"         << N << endl;
 	cout << endl << "Number of sets of charges:" << m << endl;
-   
     /**********************************************************/
     /*                                                        */
     /*                 Fast matrix vector product             */
@@ -55,9 +47,11 @@ int main(){
     /****************      Building fmm tree     **************/
     
 	clock_t startBuild	=	clock();
-	unsigned short nChebNodes	=	6;                 // Number of Chebyshev nodes( >= 3)
-                                                       // per dimension;
-    H2_2D_Tree Atree(nChebNodes, Htranspose, location);// Build the fmm tree;
+	unsigned short nChebNodes	=	6;  // Number of Chebyshev nodes( >= 3)
+                                        // per dimension;
+    cout << "Number of Chebyshev Nodes: " << nChebNodes << endl;
+
+    H2_2D_Tree Atree(nChebNodes, charges, location, N, m);// Build the fmm tree;
     clock_t endBuild	=	clock();
     
     double FMMTotalTimeBuild	=	double(endBuild-startBuild)/double(CLOCKS_PER_SEC);
@@ -66,7 +60,8 @@ int main(){
     /****************    Calculating potential   *************/
     
     clock_t startA	=	clock();
-	MatrixXd potentialA(N,m);
+    double* potentialA;
+    potentialA = new double[N*m];
     /* Other options of kernel:
      LOGARITHM:          kernel_Logarithm
      ONEOVERR2:          kernel_OneOverR2
@@ -75,7 +70,7 @@ int main(){
      INVERSEQUADRIC:     kernel_InverseQuadric
      THINPLATESPLINE:    kernel_ThinPlateSpline
      */
-    myKernel A;
+    kernel_Quadric A;
     A.calculate_Potential(Atree,potentialA);
     clock_t endA	=	clock();
     
@@ -86,7 +81,8 @@ int main(){
     /****     If you want to use more than one kernels    ****/
     
     /*clock_t startB	=	clock();
-     MatrixXd potentialB(N,m);
+     double* potentialB;
+     potentialB = new double[N*m];
      kernel_Gaussian B;
      B.calculate_Potential(Atree,potentialB);
      clock_t endB	=	clock();
@@ -99,27 +95,40 @@ int main(){
     /*              Exact matrix vector product               */
     /*                                                        */
     /**********************************************************/
-
+    
+    
+    /****           write data into binary file          ****/
+    string outputfilename = "../output/potential.bin";
+    write_Into_Binary_File(outputfilename, potentialA, N*m);
+    
     cout << "Starting Exact computating..." << endl;
 	clock_t start	=	clock();
 	MatrixXd Q;
 	A.kernel_2D(N, location, N, location, Q);// Make sure the type of A here
-                                             // corresponds to the kernel used
-                                             // to generate Q.
+    // corresponds to the kernel used
+    // to generate Q.
 	clock_t end	=	clock();
     
 	double exactAssemblyTime	=	double(end-start)/double(CLOCKS_PER_SEC);
 	start	=	clock();
-	MatrixXd potentialExact	=	Q*Htranspose;
+    MatrixXd charges_      =   Map<MatrixXd>(charges, N, m);
+	MatrixXd potentialExact     =	Q*charges_;
 	end	=	clock();
 	double exactComputationTime	=	double(end-start)/double(CLOCKS_PER_SEC);
 	cout << endl << "Total time taken for exact matrix vector product is: " << exactAssemblyTime+exactComputationTime << endl;
+    MatrixXd potentialA_   =   Map<MatrixXd>(potentialA, N, m);
     
-
-	MatrixXd error              =	potentialA-potentialExact;
+	MatrixXd error              =	potentialA_-potentialExact;
 	double absoluteError		=	(error).norm();
 	double potentialNorm		=	(potentialExact).norm();
 	cout << endl << "Relative difference in the solution is: " << absoluteError/potentialNorm << endl;
     
+    
+    /*******        Clean Up        *******/
+    delete []charges;
+    delete []potentialA;
+    //delete []potentialB;
+    
     return 0;
+    
 }
