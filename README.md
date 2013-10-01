@@ -1,4 +1,3 @@
-
 <style TYPE="text/css">
 code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
 </style>
@@ -285,12 +284,16 @@ The first argument filenameLocation and the forth argument filenameHtranspose ar
 
 2. Binary file for Location:
 
-	Elements are stored this way(row-wise):
+	Elements are stored column-wise:
 		
-		loc0.x loc0.y  
-		loc1.x loc1.y  
+		loc0.x
+		loc1.x  
 		…
-
+		loc0.y
+		loc1.y
+		...
+		
+	
 ####4.4 Writing into binary file  
 	
 	void write_Into_Binary_File(const string& filename, double* outdata, int numOfElems);  
