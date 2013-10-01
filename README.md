@@ -1,3 +1,23 @@
+
+<style TYPE="text/css">
+code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
+</style>
+<script type="text/x-mathjax-config">
+
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
+    }
+});
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 #BBFMM2D  
 
 This is the first public release of the BBFMM2D library.  
@@ -12,7 +32,7 @@ Date: July 24th, 2013
 %% This program is free software; you can redistribute it and/or modify it under the terms of MPL2 license.      
 %% The Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not %% distributed with this file, You can obtain one at <http://mozilla.org/MPL/2.0/.>  
 
-###1. INTROCTION
+###1. INTRODUCTION
 BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions.   
 The Black-box Fast Multipole Method is an $\mathcal{O}(N)$ fast multipole method, which is a technique to calculate sums of the form $f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}$.  
 BBFMM2D provides an $\mathcal{O}(Nlog(N))$ or  $\mathcal{O}(N)$ solution to matrix-matrix product $Q \times H$, where $Q$ is a covariance matrix of size $N\times N$ with a kernel, and $N$ is the number of unknown values at points $(x,y)$ in a 2D domain. $H$ is a $N \times m$ matrix with $N >> m$. 
@@ -397,23 +417,3 @@ To run other .cpp files:
    
    		make binary_file_standard_kernel
    		
-
-<style TYPE="text/css">
-code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
-</style>
-<script type="text/x-mathjax-config">
-
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [['$','$'], ['\\(','\\)']],
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
-    }
-});
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i = 0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-});
-</script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
