@@ -31,7 +31,6 @@ Date: July 24th, 2013
 %% This program is free software; you can redistribute it and/or modify it under the terms of MPL2 license.      
 %% The Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not %% distributed with this file, You can obtain one at <http://mozilla.org/MPL/2.0/.>  
 
-![2DQuadTree](https://raw.github.com/sivaramambikasaran/BBFMM2D/blob/master/images/2DQuadTree.png)
 ###1. INTRODUCTION
 BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions.   
 The Black-box Fast Multipole Method is an $\mathcal{O}(N)$ fast multipole method, which is a technique to calculate sums of the form $f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}$.  
@@ -421,3 +420,4 @@ To run other .cpp files:
    
    		make binary_file_standard_kernel
 
+![2DQuadTree](images/2DQuadTree.png?raw=true)
