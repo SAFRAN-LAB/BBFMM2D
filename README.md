@@ -1,22 +1,7 @@
-<style TYPE="text/css">
-code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
-</style>
-<script type="text/x-mathjax-config">
-
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [['$','$'], ['\\(','\\)']],
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
-    }
-});
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i = 0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-});
-</script>
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
 #BBFMM2D  
 
 This is the first public release of the BBFMM2D library.  
@@ -31,11 +16,10 @@ Date: July 24th, 2013
 %% This program is free software; you can redistribute it and/or modify it under the terms of MPL2 license.      
 %% The Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not %% distributed with this file, You can obtain one at <http://mozilla.org/MPL/2.0/.>  
 
-![2DQuadTree](https://raw.github.com/sivaramambikasaran/BBFMM2D/blob/master/images/2DQuadTree.png)
 ###1. INTRODUCTION
 BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions.   
-The Black-box Fast Multipole Method is an $\mathcal{O}(N)$ fast multipole method, which is a technique to calculate sums of the form $f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}$.  
-BBFMM2D provides an $\mathcal{O}(Nlog(N))$ or  $\mathcal{O}(N)$ solution to matrix-matrix product $Q \times H$, where $Q$ is a covariance matrix of size $N\times N$ with a kernel, and $N$ is the number of unknown values at points $(x,y)$ in a 2D domain. $H$ is a $N \times m$ matrix with $N >> m$. 
+The Black-box Fast Multipole Method is an O(N) fast multipole method, which is a technique to calculate sums of the form <img src="http://latex.codecogs.com/svg.latex? $f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}$. " border="0"/>  
+BBFMM2D provides an O(Nlog(N)) or O(N) solution to matrix-matrix product Q*H, where Q is an N x N covariance matrix with a kernel, and N is the number of unknown values at points (x,y) in a 2D domain. H is a N x m matrix with N >> m. 
 This fast multipole method is applicable for a wide range of non-oscillatory kernels, which can be evaluated for any pair of points. This Black-Box Fast Multipole Method relies on Chebyshev interplation to construct low-rank approximations for well-separated clusters. The main advantage of this fast multipole method is that it requires minimal pre-computation time and is applicable for a wide range of kernels.
 
 ###2. DIRECTORIES AND FILES
@@ -96,11 +80,11 @@ This example first build a fmm tree with this line:
 where H2_2D_Tree is a class of fmm tree, the constructor takes 5 arguments:  
 
 * nChebNodes(unsigned short):   
-	Number of Chebyshev nodes per dimension. It should take value $\ge$ 3, and we recommend to take value from 3 to 10. (Larger number of Chebyshev nodes would give better result but with much more time)
+	Number of Chebyshev nodes per dimension. The value should be at least 3, and we recommend to take value from 3 to 10. (Larger number of Chebyshev nodes would give better result but with much more time)
 * charges(double*):   
-	All the different sets of charges. This pointer should point to an array with size $N \times m$, and the data should be stored in column-wise. ( i.e. first set of charges, followd by second set of charges, etc)
+	All the different sets of charges. This pointer should point to an array with size N x m, and the data should be stored in column-wise. ( i.e. first set of charges, followd by second set of charges, etc)
 * location(vector<Point>):  
-	Locations of the charges in $2D$ domain. Here Point is a structure type with $x$ and $y$ coordinate defined.  
+	Locations of the charges in 2D domain. Here Point is a structure type with x and y coordinate defined.  
 * N(unsigned long):  
 	Number of charges.  
 * m(unsigned):  
@@ -115,34 +99,34 @@ The result is computed via `calculate_Potential()`, which is a method of class `
 #####3.2.2 Options of kernels
 
 We have provided several standard kernels:  
-To demonstrate the deltails of each kernel, we denote the element of the covariance matrix $Q_{ij} = k(r )$, where $r$ is the distance between point i and point j, is described by a kernel function.
+To demonstrate the deltails of each kernel, we denote the element of the covariance matrix <img src="http://latex.codecogs.com/svg.latex?  $Q_{ij} = k(r )$ " border="0"/>, where r is the distance between point i and point j, is described by a kernel function.
 
 Options of kernels:  
 
 * LOGARITHM kernel:           
 	usage: kernel_Logarithm  
-	kernel function: $k(r) = 0.5 \times log(r^2)\, (r\neq 0);\, k(r )= 0 \,(r=0).$  
+	kernel function: <img src="http://latex.codecogs.com/svg.latex?  $k(r) = 0.5 \times log(r^2)\, (r\neq 0);\, k(r )= 0 \,(r=0).$ " border="0"/>  
 	
 	
 * ONEOVERR2 kernel:  
 	usage: kernel_OneOverR  
-	kernel function:  $k(r ) = 1 / r^2 \,(r \neq 0);\, k(r )= 0 \,(r=0)$.  
+	kernel function: <img src="http://latex.codecogs.com/svg.latex?  $k(r ) = 1 / r^2 \,(r \neq 0);\, k(r )= 0 \,(r=0)$." border="0"/>   
 	
 * GAUSSIAN kernel:  
 	usage: kernel_Gaussian  
-	kernel function: $k(r ) = exp(-r^2)$.  
+	kernel function:<img src="http://latex.codecogs.com/svg.latex? $k(r ) = exp(-r^2)$." border="0"/>   
 	
 * QUADRIC kernel:  
 	usage: kernel_Quadric  
-	kernel function: $ k(r ) = 1 + r^2$.  
+	kernel function: <img src="http://latex.codecogs.com/svg.latex? $ k(r ) = 1 + r^2$." border="0"/>   
 
 * INVERSEQUADRIC kernel:  
 	usage: kernel_InverseQuadric  
-	kernel function: $k(r ) = 1 / (1+r^2)$.
+	kernel function: <img src="http://latex.codecogs.com/svg.latex? $k(r ) = 1 / (1+r^2)$." border="0"/> 
 	
 * THINPLATESPLINE kernel:  
 	usage:  kernel_ThinPlateSpline  
-	kernel function: $k(r ) =  0.5 \times r^2 \times log(r^2 )\, (r \neq 0);\, k(r )=0\,(r=0)$.
+	kernel function: <img src="http://latex.codecogs.com/svg.latex? $k(r ) =  0.5 \times r^2 \times log(r^2 )\, (r \neq 0);\, k(r )=0\,(r=0)$." border="0"/>
     		
 If you want to define your own kernel, please see **3.3**.
 
@@ -191,7 +175,7 @@ The basic usage is almost the same as **3.2** except that you have to define you
     ...
     }
 
-You can define your own kernel inside `kernel_Func(Point r0, Point r1)`, it takes two Points as input and returns a double value ( $Q_{ij}$ ). 
+You can define your own kernel inside `kernel_Func(Point r0, Point r1)`, it takes two Points as input and returns a double value ( <img src="http://latex.codecogs.com/svg.latex? $Q_{ij}$." border="0"/>  ). 
 
 #####3.3.2 Usage of multiple kernels
 
@@ -254,7 +238,7 @@ The first argument is the filename of your text file, the second argument N and 
 This function stores location in `location` and stores charges column-wise in `charges`.
 
 **File format:**  
-For each row, it should start with locations, and followed by a row in $H^T$ ( if we do $QH^T$ multiplication, $H^T$ is the R.H.S.). Here note that elements should be separated using ','. If some element is 0, you can leave it as empty instead of 0. If all the elements in a row is 0, nothing need to be typed after the location.(spaces are allowed)
+For each row, it should start with locations, and followed by a row in <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/>  ( if we do <img src="http://latex.codecogs.com/svg.latex? $QH^T$" border="0"/>  multiplication, <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/>  is the R.H.S.). Here note that elements should be separated using ','. If some element is 0, you can leave it as empty instead of 0. If all the elements in a row is 0, nothing need to be typed after the location.(spaces are allowed)
 
 The row should look like this:  
   
@@ -273,7 +257,7 @@ For example:
 
 	void read_Location_Charges_binary(const string& filenameLocation, unsigned long N, vector<Point>& location, const string& filenameHtranspose,unsigned m, double* charges);
 
-The first argument filenameLocation and the forth argument filenameHtranspose are binary file names for location and $H^T$ respectively. N is the number of locations and m is the number of sets of charges. The data of locations is stored in `location` and the data of charges is stored in `charges` column-wise.  
+The first argument filenameLocation and the forth argument filenameHtranspose are binary file names for location and <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/> respectively. N is the number of locations and m is the number of sets of charges. The data of locations is stored in `location` and the data of charges is stored in `charges` column-wise.  
 
 **File format:** 
  
@@ -421,3 +405,4 @@ To run other .cpp files:
    
    		make binary_file_standard_kernel
 
+![2DQuadTree](images/2DQuadTree.png?raw=true)
