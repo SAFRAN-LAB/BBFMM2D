@@ -96,7 +96,7 @@ The result is computed via `calculate_Potential()`, which is a method of class `
 #####3.2.2 Options of provided kernels
 
 We have provided several standard kernels:  
-To demonstrate the deltails of each kernel, we denote the element of the covariance matrix <img src="http://latex.codecogs.com/svg.latex?  $Q_{ij} = k(r )$ " border="0"/>, where r is the distance between point i and point j, is described by a kernel function.
+The entries of the covariance matrix are given by <img src="http://latex.codecogs.com/svg.latex?  $Q_{ij} = k(r_{ij} )$ " border="0"/>, where <img src="http://latex.codecogs.com/svg.latex?  $r_{ij}$ " border="0"/> is the distance between point i and point j. Below are the details of the kernel functions we have provided:
 
 Options of kernels:  
 
