@@ -96,34 +96,39 @@ The result is computed via `calculate_Potential()`, which is a method of class `
 #####3.2.2 Options of provided kernels
 
 We have provided several standard kernels:  
-The entries of the covariance matrix are given by <img src="http://latex.codecogs.com/svg.latex?  $Q_{ij} = k(r_{ij} )$ " border="0"/>, where <img src="http://latex.codecogs.com/svg.latex?  $r_{ij}$ " border="0"/> is the distance between point i and point j. Below are the details of the kernel functions we have provided:
+The entries of the covariance matrix are given by <img src="http://latex.codecogs.com/svg.latex?  $Q_{ij} = k(x_i, y_i )$ " border="0"/>, where <img src="http://latex.codecogs.com/svg.latex?  $x_i$ " border="0"/> and <img src="http://latex.codecogs.com/svg.latex?  $y_i$ " border="0"/> are locations of points. Below are the details of the kernel functions we have provided:
 
 Options of kernels:  
 
 * LOGARITHM kernel:           
 	usage: kernel_Logarithm  
-	kernel function: <img src="http://latex.codecogs.com/svg.latex?  $k(r) = 0.5 \times log(r^2)\, (r\neq 0);\, k(r )= 0 \,(r=0).$ " border="0"/>  
+	kernel function:  
+    <img src="http://latex.codecogs.com/svg.latex?  $k(x,y) = 0.5 \times log(r^2)\, (r\neq 0);\, k(x,y)= 0 \,(r=0).$ " border="0"/> 
 	
 	
 * ONEOVERR2 kernel:  
 	usage: kernel_OneOverR  
-	kernel function: <img src="http://latex.codecogs.com/svg.latex?  $k(r ) = 1 / r^2 \,(r \neq 0);\, k(r )= 0 \,(r=0)$." border="0"/>   
+	kernel function:  
+    <img src="http://latex.codecogs.com/svg.latex?  $k(x,y) = 1 / r^2 \,(r \neq 0);\, k(x,y)= 0 \,(r=0)$. (r = |x-y|)" border="0"/>   
 	
 * GAUSSIAN kernel:  
 	usage: kernel_Gaussian  
-	kernel function:<img src="http://latex.codecogs.com/svg.latex? $k(r ) = exp(-r^2)$." border="0"/>   
+	kernel function:  
+	<img src="http://latex.codecogs.com/svg.latex? $k(x,y) = exp(-r^2)$. (r = |x-y|)" border="0"/>   
 	
 * QUADRIC kernel:  
 	usage: kernel_Quadric  
-	kernel function: <img src="http://latex.codecogs.com/svg.latex? $ k(r ) = 1 + r^2$." border="0"/>   
+	kernel function:  
+	 <img src="http://latex.codecogs.com/svg.latex? $ k(x,y) = 1 + r^2$. (r = |x-y|)" border="0"/>   
 
 * INVERSEQUADRIC kernel:  
 	usage: kernel_InverseQuadric  
-	kernel function: <img src="http://latex.codecogs.com/svg.latex? $k(r ) = 1 / (1+r^2)$." border="0"/> 
+	kernel function:  
+	 <img src="http://latex.codecogs.com/svg.latex? $k(x,y) = 1 / (1+r^2)$. (r = |x-y|)" border="0"/> 
 	
 * THINPLATESPLINE kernel:  
 	usage:  kernel_ThinPlateSpline  
-	kernel function: <img src="http://latex.codecogs.com/svg.latex? $k(r ) =  0.5 \times r^2 \times log(r^2 )\, (r \neq 0);\, k(r )=0\,(r=0)$." border="0"/>
+	kernel function:   <img src="http://latex.codecogs.com/svg.latex? $k(x,y) =  0.5 \times r^2 \times log(r^2 )\, (r \neq 0);\, k(x,y)=0\,(r=0). (r = |x-y|)$" border="0"/>
     		
 If you want to define your own kernel, please see **3.2.3**.
 
