@@ -46,10 +46,11 @@ This fast multipole method is applicable for a wide range of non-oscillatory ker
 		cd exec/
 		./H2_2D_MVP_binary_file_mykernel
 
-####3.2 FMM with standard kernel
-#####3.2.1 Basic usage
+####3.2 Basic usage
 
-The basic usage of BBFMM2D is as follows: 
+#####3.2.1 BBFMM2D with standard kernel
+
+The basic usage of BBFMM2D with standard kernel is as follows: 
 
 	#include"BBFMM2D.hpp"  
 	...
@@ -92,7 +93,7 @@ Once the tree is created, you can compute the matrix-matrix product with as many
     A.calculate_Potential(Atree,potential);
 The result is computed via `calculate_Potential()`, which is a method of class `kernel_Gaussian`. The first argument of `calculate_Potential()` is the fmm tree that we just created; and the second argument potential is a pointer to the result, and the result is stored column-wise in `potential`.  
 
-#####3.2.2 Options of kernels
+#####3.2.2 Options of provided kernels
 
 We have provided several standard kernels:  
 To demonstrate the deltails of each kernel, we denote the element of the covariance matrix <img src="http://latex.codecogs.com/svg.latex?  $Q_{ij} = k(r )$ " border="0"/>, where r is the distance between point i and point j, is described by a kernel function.
@@ -124,31 +125,11 @@ Options of kernels:
 	usage:  kernel_ThinPlateSpline  
 	kernel function: <img src="http://latex.codecogs.com/svg.latex? $k(r ) =  0.5 \times r^2 \times log(r^2 )\, (r \neq 0);\, k(r )=0\,(r=0)$." border="0"/>
     		
-If you want to define your own kernel, please see **3.3**.
+If you want to define your own kernel, please see **3.2.3**.
 
-#####3.2.3 Usage of multiple kernels
+#####3.2.3 BBFMM2D with user defined kernel
 
-	#include"BBFMM2D.hpp"  
-	...
-	{
-	…
-	H2_2D_Tree Atree(nChebNodes, charges, location, N, m);// Build the fmm tree;
-	
-	/* The following can be repeated with different kernels */
-	...
-    kernel_Gaussian A;
-    A.calculate_Potential(Atree,potentialA);
-    ...   
-    kernel_Quadric B;
-    A.calculate_Potential(Atree,potentialB);
-	...
-    }
-The basic usage is already domonstrated in **3.2.1**. Once you have built the fmm tree, you can use different kernels to compute the matrix-matrix multiplication without rebuilding the tree. You can choose kernel type from standard kernels given by us ( see **3.2.2** ), or you can define your own kernel ( see **3.3** )
-	 
-####3.3 FMM with user defined kernel
-
-#####3.3.1 Basic usage
-The basic usage is almost the same as **3.2** except that you have to define your own routine of computing kernel. One example code is as follows:  
+The basic usage is almost the same as **3.2.1** except that you have to define your own routine of computing kernel. One example code is as follows:  
 
 	#include"BBFMM2D.hpp"  
 	class myKernel: public kernel_Base {
@@ -173,9 +154,9 @@ The basic usage is almost the same as **3.2** except that you have to define you
 
 You can define your own kernel inside `kernel_Func(Point r0, Point r1)`, it takes two Points as input and returns a double value ( <img src="http://latex.codecogs.com/svg.latex? $Q_{ij}$." border="0"/>  ). 
 
-#####3.3.2 Usage of multiple kernels
+#####3.2.4 Usage of multiple kernels
 
-You can also define and use multiple kernels in one file, but make sure to have different class names. 
+You can also use multiple kernels (user defined kernels and standard kernels) in one file, but make sure to have different class names. 
 e.g.  
 
 	class myKernelA: public kernel_Base{
@@ -207,9 +188,15 @@ e.g.
     kernel_Gaussian C;
     C.calculate_Potential(Atree,potentialC);
     ...
+    kernel_Quadric D;
+    D.calculate_Potential(Atree,potentialD);  
+    …
     }
+    
 
-###4. ROUTINES FOR INPUTING AND OUTPUTING DATA:  
+The basic usage is already domonstrated in **3.2.1** and **3.2.3**. Once you have built the FMM tree, you can use different kernels to compute the matrix-matrix multiplication without rebuilding the tree. You can choose kernel type from standard kernels given by us ( see **3.2.2** ), or you can define your own kernel ( see **3.2.3** )
+
+###4. ROUTINES FOR INPUTING AND OUTPUTING DATA 
 We have provided several routines for reading data from text file and binary file, and writing data into binary file.	
 
 ####4.1 Reading meta data from text file
