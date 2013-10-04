@@ -14,8 +14,10 @@ Date: July 24th, 2013
 
 ###1. INTRODUCTION
 BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions.   
-The Black-box Fast Multipole Method is an O(N) fast multipole method, which is a technique to calculate sums of the form <img src="http://latex.codecogs.com/svg.latex? $f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}$. " border="0"/>  
-BBFMM2D provides an O(Nlog(N)) or O(N) solution to matrix-matrix product Q*H, where Q is an N x N covariance matrix with a kernel, and N is the number of unknown values at points (x,y) in a 2D domain. H is a N x m matrix with N >> m. 
+The Black-box Fast Multipole Method is an O(N) fast multipole method, which is a technique to calculate sums of the form  
+ <img src="http://latex.codecogs.com/svg.latex? $f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}$. " border="0"/>  
+where <img src="http://latex.codecogs.com/svg.latex? $ K(x_i,y_j)$" border="0"/> is kernel function, <img src="http://latex.codecogs.com/svg.latex? $x_i$" border="0"/> are observation points, <img src="http://latex.codecogs.com/svg.latex? $y_i$" border="0"/> are locations of sources, and <img src="http://latex.codecogs.com/svg.latex? $\sigma_i$" border="0"/> are charges at corresponding locations.
+BBFMM2D provides an O(Nlog(N)) or O(N) solution to matrix-matrix product <img src="http://latex.codecogs.com/svg.latex? $Q \times H^T$" border="0"/>, where Q is an N x N covariance matrix with a kernel, and N is the number of unknown values at points ( x, y ) in a 2D domain. <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/> is a N x m matrix with N >> m. 
 This fast multipole method is applicable for a wide range of non-oscillatory kernels, which can be evaluated for any pair of points. This Black-Box Fast Multipole Method relies on Chebyshev interplation to construct low-rank approximations for well-separated clusters. The main advantage of this fast multipole method is that it requires minimal pre-computation time and is applicable for a wide range of kernels.
 
 ###2. DIRECTORIES AND FILES
@@ -81,13 +83,13 @@ where H2_2D_Tree is a class of fmm tree, the constructor takes 5 arguments:
 * charges(double*):   
 	All the different sets of charges. This pointer should point to an array with size N x m, and the data should be stored in column-wise. ( i.e. first set of charges, followd by second set of charges, etc)
 * location(vector<Point>):  
-	Locations of the charges in 2D domain. Here Point is a structure type with x and y coordinate defined.  
+	Locations of the charges in 2D domain. In BBFMM2D, we assume here that observation points are the same as locations of sources. Here Point is a structure type with x and y coordinate defined.  
 * N(unsigned long):  
 	Number of charges.  
 * m(unsigned):  
 	Number of sets of charges.  
 	
-Once the tree is created, you can compute the matrix-matrix product with as many kernels as you want.(Please see **3.2.3**) The code shows an example using Gaussian kernel:  
+Once the tree is created, you can compute the matrix-matrix product with as many kernels as you want.(see **3.2.4**) The code shows an example using Gaussian kernel:  
 
 	kernel_Gaussian A;
     A.calculate_Potential(Atree,potential);
@@ -96,7 +98,7 @@ The result is computed via `calculate_Potential()`, which is a method of class `
 #####3.2.2 Options of provided kernels
 
 We have provided several standard kernels:  
-The entries of the covariance matrix are given by <img src="http://latex.codecogs.com/svg.latex?  $Q_{ij} = k(x_i, y_i )$ " border="0"/>, where <img src="http://latex.codecogs.com/svg.latex?  $x_i$ " border="0"/> and <img src="http://latex.codecogs.com/svg.latex?  $y_i$ " border="0"/> are locations of points. Below are the details of the kernel functions we have provided:
+The entries of the covariance matrix are given by <img src="http://latex.codecogs.com/svg.latex?  $Q_{ij} = k(x_i, y_i )$ " border="0"/>, where <img src="http://latex.codecogs.com/svg.latex?  $x_i$ " border="0"/> and <img src="http://latex.codecogs.com/svg.latex?  $y_i$ " border="0"/> denote locations of points(particles). Let  <img src="http://latex.codecogs.com/svg.latex?  $r_{ij}$ " border="0"/> be the Euclidean distance between  <img src="http://latex.codecogs.com/svg.latex?  $x_i$ " border="0"/> and <img src="http://latex.codecogs.com/svg.latex?  $y_i$ " border="0"/>.   Below are the details of the kernel functions we have provided:
 
 Options of kernels:  
 
@@ -109,26 +111,27 @@ Options of kernels:
 * ONEOVERR2 kernel:  
 	usage: kernel_OneOverR  
 	kernel function:  
-    <img src="http://latex.codecogs.com/svg.latex?  $k(x,y) = 1 / r^2 \,(r \neq 0);\, k(x,y)= 0 \,(r=0)$. (r = |x-y|)" border="0"/>   
+    <img src="http://latex.codecogs.com/svg.latex?  $k(x,y) = 1 / r^2 \,(r \neq 0);\, k(x,y)= 0 \,(r=0)$." border="0"/>   
 	
 * GAUSSIAN kernel:  
 	usage: kernel_Gaussian  
 	kernel function:  
-	<img src="http://latex.codecogs.com/svg.latex? $k(x,y) = exp(-r^2)$. (r = |x-y|)" border="0"/>   
+	<img src="http://latex.codecogs.com/svg.latex? $k(x,y) = exp(-r^2)$." border="0"/>   
 	
 * QUADRIC kernel:  
 	usage: kernel_Quadric  
 	kernel function:  
-	 <img src="http://latex.codecogs.com/svg.latex? $ k(x,y) = 1 + r^2$. (r = |x-y|)" border="0"/>   
+	 <img src="http://latex.codecogs.com/svg.latex? $ k(x,y) = 1 + r^2$." border="0"/>   
 
 * INVERSEQUADRIC kernel:  
 	usage: kernel_InverseQuadric  
 	kernel function:  
-	 <img src="http://latex.codecogs.com/svg.latex? $k(x,y) = 1 / (1+r^2)$. (r = |x-y|)" border="0"/> 
+	 <img src="http://latex.codecogs.com/svg.latex? $k(x,y) = 1 / (1+r^2)$." border="0"/> 
 	
 * THINPLATESPLINE kernel:  
 	usage:  kernel_ThinPlateSpline  
-	kernel function:   <img src="http://latex.codecogs.com/svg.latex? $k(x,y) =  0.5 \times r^2 \times log(r^2 )\, (r \neq 0);\, k(x,y)=0\,(r=0). (r = |x-y|)$" border="0"/>
+	kernel function:  
+	<img src="http://latex.codecogs.com/svg.latex? $k(x,y) =  0.5 \times r^2 \times log(r^2 )\, (r \neq 0);\, k(x,y)=0\,(r=0).$" border="0"/>
     		
 If you want to define your own kernel, please see **3.2.3**.
 
