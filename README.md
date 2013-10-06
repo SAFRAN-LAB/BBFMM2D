@@ -13,12 +13,21 @@ Date: July 24th, 2013
 %% The Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not %% distributed with this file, You can obtain one at <http://mozilla.org/MPL/2.0/.>  
 
 ###1. INTRODUCTION
+
 BBFMM2D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 2 dimensions.   
 The Black-box Fast Multipole Method is an O(N) fast multipole method, which is a technique to calculate sums of the form  
- <img src="http://latex.codecogs.com/svg.latex? $f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}$. " border="0"/>  
-where <img src="http://latex.codecogs.com/svg.latex? $ K(x_i,y_j)$" border="0"/> is kernel function, <img src="http://latex.codecogs.com/svg.latex? $x_i$" border="0"/> are observation points, <img src="http://latex.codecogs.com/svg.latex? $y_i$" border="0"/> are locations of sources, and <img src="http://latex.codecogs.com/svg.latex? $\sigma_i$" border="0"/> are charges at corresponding locations.
-BBFMM2D provides an O(Nlog(N)) or O(N) solution to matrix-matrix product <img src="http://latex.codecogs.com/svg.latex? $Q \times H^T$" border="0"/>, where Q is an N x N covariance matrix with a kernel, and N is the number of unknown values at points ( x, y ) in a 2D domain. <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/> is a N x m matrix with N >> m. 
-This fast multipole method is applicable for a wide range of non-oscillatory kernels, which can be evaluated for any pair of points. This Black-Box Fast Multipole Method relies on Chebyshev interplation to construct low-rank approximations for well-separated clusters. The main advantage of this fast multipole method is that it requires minimal pre-computation time and is applicable for a wide range of kernels.
+ <img src="http://latex.codecogs.com/svg.latex? $f(x_i) = \displaystyle \sum_{j=1}^N K(x_i,y_j) \sigma_j, \,\,\, \forall i \in\{1,2,\ldots,N\}$ " border="0"/>  
+where <img src="http://latex.codecogs.com/svg.latex? $K(x_i,y_j)$" border="0"/> is kernel function, <img src="http://latex.codecogs.com/svg.latex? $x_i$" border="0"/> are observation points, <img src="http://latex.codecogs.com/svg.latex? $y_i$" border="0"/> are locations of sources, and <img src="http://latex.codecogs.com/svg.latex? $\sigma_i$" border="0"/> are charges at corresponding locations.
+BBFMM2D provides an O(N) solution to matrix-vector products of the type <img src="http://latex.codecogs.com/svg.latex? $Ax$" border="0"/>. In that case the relation between A and K is:
+<img src="http://latex.codecogs.com/svg.latex? $A_{ij} = K(x_i,y_j)$ " border="0"/>.
+
+This implementation of the FMM differs from other methods by the fact that it is applicable to all smooth kernels K. [Give examples of RBF kernels, 1/r, log r, Stokes, etc.] The precomputation time is also minimal.
+
+The approximation scheme used in the FMM relies on Chebyshev interplation to construct low-rank approximations for well-separated clusters. In addition the use of Singular Value Decomposition ensures that the computational cost is minimal. In particular the rank is optimally chosen for a given error. 
+
+Please cite the following paper if you use this code:
+
+Fong, William, and Eric Darve. "The black-box fast multipole method." Journal of Computational Physics 228, no. 23 (2009): 8712-8725. You can see details <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">here</a>.
 
 ###2. DIRECTORIES AND FILES
 
@@ -97,41 +106,41 @@ The result is computed via `calculate_Potential()`, which is a method of class `
 
 #####3.2.2 Options of provided kernels
 
-We have provided several standard kernels:  
-The entries of the covariance matrix are given by <img src="http://latex.codecogs.com/svg.latex?  $Q_{ij} = k(x_i, y_i )$ " border="0"/>, where <img src="http://latex.codecogs.com/svg.latex?  $x_i$ " border="0"/> and <img src="http://latex.codecogs.com/svg.latex?  $y_i$ " border="0"/> denote locations of points(particles). Let  <img src="http://latex.codecogs.com/svg.latex?  $r_{ij}$ " border="0"/> be the Euclidean distance between  <img src="http://latex.codecogs.com/svg.latex?  $x_i$ " border="0"/> and <img src="http://latex.codecogs.com/svg.latex?  $y_i$ " border="0"/>.   Below are the details of the kernel functions we have provided:
+Below are the details of the kernel functions K we have provided:  
+( For all the kernel functions, we denote r to be Euclidean distance between x and y. )
 
 Options of kernels:  
 
 * LOGARITHM kernel:           
 	usage: kernel_Logarithm  
 	kernel function:  
-    <img src="http://latex.codecogs.com/svg.latex?  $k(x,y) = 0.5 \times log(r^2)\, (r\neq 0);\, k(x,y)= 0 \,(r=0).$ " border="0"/> 
+    <img src="http://latex.codecogs.com/svg.latex?  $K(x,y) = 0.5 \log(r^2)\, (r\neq 0);\, K(x,y)= 0 \,(r=0).$ " border="0"/> 
 	
 	
 * ONEOVERR2 kernel:  
 	usage: kernel_OneOverR  
 	kernel function:  
-    <img src="http://latex.codecogs.com/svg.latex?  $k(x,y) = 1 / r^2 \,(r \neq 0);\, k(x,y)= 0 \,(r=0)$." border="0"/>   
+    <img src="http://latex.codecogs.com/svg.latex?  $K(x,y) = 1 / r^2 \,(r \neq 0);\, K(x,y)= 0 \,(r=0)$." border="0"/>   
 	
 * GAUSSIAN kernel:  
 	usage: kernel_Gaussian  
 	kernel function:  
-	<img src="http://latex.codecogs.com/svg.latex? $k(x,y) = exp(-r^2)$." border="0"/>   
+	<img src="http://latex.codecogs.com/svg.latex? $K(x,y) = exp(-r^2)$." border="0"/>   
 	
 * QUADRIC kernel:  
 	usage: kernel_Quadric  
 	kernel function:  
-	 <img src="http://latex.codecogs.com/svg.latex? $ k(x,y) = 1 + r^2$." border="0"/>   
+	 <img src="http://latex.codecogs.com/svg.latex? $K(x,y) = 1 + r^2$." border="0"/>   
 
 * INVERSEQUADRIC kernel:  
 	usage: kernel_InverseQuadric  
 	kernel function:  
-	 <img src="http://latex.codecogs.com/svg.latex? $k(x,y) = 1 / (1+r^2)$." border="0"/> 
+	 <img src="http://latex.codecogs.com/svg.latex? $K(x,y) = 1 / (1+r^2)$." border="0"/> 
 	
 * THINPLATESPLINE kernel:  
 	usage:  kernel_ThinPlateSpline  
 	kernel function:  
-	<img src="http://latex.codecogs.com/svg.latex? $k(x,y) =  0.5 \times r^2 \times log(r^2 )\, (r \neq 0);\, k(x,y)=0\,(r=0).$" border="0"/>
+	<img src="http://latex.codecogs.com/svg.latex? $K(x,y) =  0.5 r^2 \log(r^2 )\, (r \neq 0);\, K(x,y)=0\,(r=0).$" border="0"/>
     		
 If you want to define your own kernel, please see **3.2.3**.
 
@@ -160,7 +169,7 @@ The basic usage is almost the same as **3.2.1** except that you have to define y
     ...
     }
 
-You can define your own kernel inside `kernel_Func(Point r0, Point r1)`, it takes two Points as input and returns a double value ( <img src="http://latex.codecogs.com/svg.latex? $Q_{ij}$." border="0"/>  ). 
+You can define your own kernel inside `kernel_Func(Point r0, Point r1)`, it takes two Points as input and returns a double value ( <img src="http://latex.codecogs.com/svg.latex? $A_{ij}$." border="0"/>  ). 
 
 #####3.2.4 Usage of multiple kernels
 
@@ -229,7 +238,7 @@ The first argument is the filename of your text file, the second argument N and 
 This function stores location in `location` and stores charges column-wise in `charges`.
 
 **File format:**  
-For each row, it should start with locations, and followed by a row in <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/>  ( if we do <img src="http://latex.codecogs.com/svg.latex? $QH^T$" border="0"/>  multiplication, <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/>  is the R.H.S.). Here note that elements should be separated using ','. If some element is 0, you can leave it as empty instead of 0. If all the elements in a row is 0, nothing need to be typed after the location.(spaces are allowed)
+For each row, it should start with locations, and followed by a row in B  ( if we do AB  multiplication, B is the R.H.S.). Here note that elements should be separated using ','. If some element is 0, you can leave it as empty instead of 0. If all the elements in a row is 0, nothing need to be typed after the location.(spaces are allowed)
 
 The row should look like this:  
   
@@ -243,12 +252,11 @@ For example:
 	(0.342299,-0.246828) (0.0732668,,,,,,0.0951028)  
 	(-0.984604,-0.44417) (,0.782447,-0.867924,0.485731,-0.729282,-0.481031,0.541473)  
 
-
 ####4.3 Reading from binary file  
 
 	void read_Location_Charges_binary(const string& filenameLocation, unsigned long N, vector<Point>& location, const string& filenameHtranspose,unsigned m, double* charges);
 
-The first argument filenameLocation and the forth argument filenameHtranspose are binary file names for location and <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/> respectively. N is the number of locations and m is the number of sets of charges. The data of locations is stored in `location` and the data of charges is stored in `charges` column-wise.  
+The first argument filenameLocation and the forth argument filenameHtranspose are binary file names for location and <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/> respectively(Here <img src="http://latex.codecogs.com/svg.latex? $H^T$" border="0"/> is the R.H.S. of <img src="http://latex.codecogs.com/svg.latex? $AH^T$" border="0"/>).  N is the number of locations and m is the number of sets of charges. The data of locations is stored in `location` and the data of charges is stored in `charges` column-wise.  
 
 **File format:** 
  
@@ -280,7 +288,7 @@ This first argument is the filename for your output data. The second argument is
 
 We have provided several examples for BBFMM2D. Go to examples/, read through the files both must be self explanatory for the most part.
 You can use our examples with your own input.
-####5.1 Chage input of examples
+####5.1 Making changes to the examples for your own application
 
 1. If you want to generate input through your own routine, and use the standard kernels:
 
