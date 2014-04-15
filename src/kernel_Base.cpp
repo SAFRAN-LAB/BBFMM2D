@@ -67,7 +67,8 @@ void kernel_Base::set_Tree_Potential_Zero(H2_2D_Node* node){
 
 //	Calculates potential;
 void kernel_Base::calculate_Potential(H2_2D_Tree& tree, double* potential){
-    MatrixXd potentialMatrix(tree.N,tree.m);
+    MatrixXd potentialMatrix;
+    potentialMatrix = MatrixXd::Zero(tree.N,tree.m);
     set_Tree_Potential_Zero(tree.root);
     std::cout << "Calculating potential..." << std::endl;
     calculate_Potential(tree.root,potentialMatrix,tree);
@@ -77,7 +78,7 @@ void kernel_Base::calculate_Potential(H2_2D_Tree& tree, double* potential){
 
 //	Obtains Chebyshev node potential from well separated clusters;
 void kernel_Base::calculate_NodePotential_From_Wellseparated_Clusters(H2_2D_Node*& node, unsigned short rank,unsigned short nChebNodes){
-	MatrixXd K(rank, rank);
+	MatrixXd K = MatrixXd::Zero(rank, rank);
 	for(unsigned short k=0; k<4; ++k){
 		for(unsigned short i=0; i<node->child[k]->nInteraction; ++i){
             if (!node->child[k]->interaction[i]->isEmpty && !node->child[k]->isEmpty) {
@@ -100,7 +101,7 @@ void kernel_Base::tranfer_Potential_To_Potential_Tree(H2_2D_Node*& node, MatrixX
 void kernel_Base::kernel_Cheb_2D(const unsigned short& M, const vector<Point>& xVec, const unsigned short& N, const vector<Point>& yVec, MatrixXd& K){
 	vector<Point> xNew;
 	vector<Point> yNew;
-	K		=	MatrixXd(M*M,N*N);
+	K		=	MatrixXd::Zero(M*M,N*N);
 	for(unsigned short j=0;j<M;++j){
 		for(unsigned short i=0;i<M;++i){
             Point newPoint;
