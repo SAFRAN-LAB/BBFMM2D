@@ -1,6 +1,6 @@
 CC=g++
-CFLAGS=-c -Wall -DNDEBUG -O3 -ffast-math -ffinite-math-only -I header/ -I ./../../
-LDFLAGS=
+CFLAGS=-c -Wall -DNDEBUG -O3 -ffast-math -ffinite-math-only -I header/ -I../../
+LDFLAGS= 
 
 SOURCES=src/H2_2D_Tree.cpp src/H2_2D_Node.cpp src/kernel_Base.cpp src/kernel_Types.cpp src/read_metadata_BBFMM2D.cpp src/write_Into_Binary_File.cpp
 
