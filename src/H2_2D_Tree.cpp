@@ -23,7 +23,7 @@ H2_2D_Tree::H2_2D_Tree(const unsigned short nChebNodes, double* const charge, co
 	cNode               =	VectorXd(nChebNodes);
 	get_Standard_Chebyshev_Nodes(nChebNodes,cNode);
     //	Get Chebyshev polynomials evaluated at Chebyshev nodes
-	TNode               =	MatrixXd(nChebNodes,nChebNodes);
+	TNode               =	MatrixXd::Zero(nChebNodes,nChebNodes);
 	get_Standard_Chebyshev_Polynomials(nChebNodes,nChebNodes,cNode,TNode);
     //	Gets transfer matrices
 	get_Transfer(nChebNodes,cNode,TNode,R);
@@ -160,7 +160,7 @@ void H2_2D_Tree::get_Standard_Chebyshev_Nodes(const unsigned short nChebNodes, V
 
 //	Obtains standard Chebyshev polynomials evaluated at given set of Points;
 void H2_2D_Tree::get_Standard_Chebyshev_Polynomials(const unsigned short nChebPoly, const unsigned long N, const VectorXd& x, MatrixXd& T){
-	T	=	MatrixXd(N,nChebPoly);
+	T	=	MatrixXd::Zero(N,nChebPoly);
 	T.col(0)=	VectorXd::Ones(N);
 	if(nChebPoly>1){
 		T.col(1)	=	x;
@@ -224,7 +224,7 @@ void H2_2D_Tree::get_Transfer_From_Parent_To_Children(const unsigned short nCheb
 		Transfer[k]	=	(2.0*Transfer[k]*TNode.transpose()-MatrixXd::Ones(N,nChebNodes))/nChebNodes;
 	}
 	unsigned short rank	=	nChebNodes*nChebNodes;
-	R			=	MatrixXd(N,rank);
+	R			=	MatrixXd::Zero(N,rank);
 	for(unsigned short k=0;k<N;++k){
 		for(unsigned short i=0; i<nChebNodes; ++i){
 			for(unsigned short j=0;j<nChebNodes;++j){
@@ -246,14 +246,15 @@ void H2_2D_Tree::get_Transfer_From_Parent_CNode_To_Children_CNode(const unsigned
 
 //	Evaluates transfer from four children to parent;
 void H2_2D_Tree::get_Transfer(const unsigned short nChebNodes, const VectorXd& cNode, const MatrixXd& TNode, MatrixXd* R){
-	MatrixXd S(2*nChebNodes,nChebNodes);
+	MatrixXd S;
+	S = MatrixXd::Zero(2*nChebNodes,nChebNodes);
 	get_Transfer_From_Parent_CNode_To_Children_CNode(nChebNodes, cNode, TNode, S);
 	MatrixXd Transfer[2];
 	Transfer[0]	=	S.block(0,0,nChebNodes,nChebNodes);
 	Transfer[1]	=	S.block(nChebNodes,0,nChebNodes,nChebNodes);
 	unsigned short rank	=	nChebNodes*nChebNodes;
 	for(unsigned short k=0; k<4; ++k){
-		R[k]	=	MatrixXd(rank,rank);
+		R[k]	=	MatrixXd::Zero(rank,rank);
 	}
 	for(unsigned short i=0;i<nChebNodes;++i){
 		for(unsigned short j=0;j<nChebNodes;++j){
