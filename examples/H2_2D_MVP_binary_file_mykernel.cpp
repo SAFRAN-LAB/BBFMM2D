@@ -43,7 +43,7 @@ int main(){
     
     read_Metadata_BBFMM2D (filenameMetadata, N, m);
     
-    charges =   new double[N*m];
+    charges =   new double[N*m]();
     
     read_Location_Charges_binary (filenameLocation, N, location, filenameCharges, m, charges);
     
@@ -72,7 +72,7 @@ int main(){
     
     clock_t startA	=	clock();
     double* potentialA;
-    potentialA = new double[N*m];
+    potentialA = new double[N*m]();
     /* Other options of kernels:
      LOGARITHM:          kernel_Logarithm
      ONEOVERR2:          kernel_OneOverR2
