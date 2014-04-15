@@ -12,6 +12,7 @@ Read Number of unknowns, number of terms in structure,number of measurements,num
 #define __read_metadata_BBFMM2D_hpp__
 
 #include"environment.hpp"
+#include "Eigen/Dense"
 
 
 using namespace Eigen;
