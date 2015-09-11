@@ -15,10 +15,12 @@ void kernel_Base::calculate_Potential(H2_2D_Node*& node, MatrixXd& potential,H2_
 			MatrixXd tempK;
 			for(unsigned short k=0;k<8;++k){
 				if(node->neighbor[k]!=NULL){
+					if(!node->neighbor[k]->isEmpty){
 					kernel_2D(node->N , node->location, node->neighbor[k]->N, node->neighbor[k]->location, tempK);
                     //	Potential from neighbors
 					tree.get_Charge(node->neighbor[k]);
 					node->potential+=tempK*node->neighbor[k]->charge;
+				}
 				}
 			}
             //			Potential from Chebyshev nodes
@@ -33,6 +35,7 @@ void kernel_Base::calculate_Potential(H2_2D_Node*& node, MatrixXd& potential,H2_
 			bool computePotential	=	false;
 			for(unsigned short k=0;k<8;++k){
 				if(node->neighbor[k]!=NULL){
+					if(!node->neighbor[k]->isEmpty){
 					if(node->neighbor[k]->isLeaf){
 						MatrixXd tempK;
 						kernel_2D(node->N, node->location, node->neighbor[k]->N, node->neighbor[k]->location, tempK);
@@ -40,6 +43,7 @@ void kernel_Base::calculate_Potential(H2_2D_Node*& node, MatrixXd& potential,H2_
 						node->potential+=tempK*node->neighbor[k]->charge;
 						computePotential	=	true;
 					}
+				}
 				}
 			}
 			calculate_NodePotential_From_Wellseparated_Clusters(node,tree.rank,tree.nChebNodes);
@@ -58,7 +62,7 @@ void kernel_Base::calculate_Potential(H2_2D_Node*& node, MatrixXd& potential,H2_
 void kernel_Base::set_Tree_Potential_Zero(H2_2D_Node* node){
     if (node) {
         node->potential     =   MatrixXd::Zero(node->potential.rows(),node->potential.cols());
-        node->nodePotential =   MatrixXd::Zero(node->nodePotential.rows(),node->potential.cols());
+        node->nodePotential =   MatrixXd::Zero(node->nodePotential.rows(),node->nodePotential.cols());
         for (unsigned short k=0; k<4; ++k) {
             set_Tree_Potential_Zero(node->child[k]);
         }
@@ -80,20 +84,22 @@ void kernel_Base::calculate_Potential(H2_2D_Tree& tree, double* potential){
 void kernel_Base::calculate_NodePotential_From_Wellseparated_Clusters(H2_2D_Node*& node, unsigned short rank,unsigned short nChebNodes){
 	MatrixXd K = MatrixXd::Zero(rank, rank);
 	for(unsigned short k=0; k<4; ++k){
+		if(!node->child[k]->isEmpty){
 		for(unsigned short i=0; i<node->child[k]->nInteraction; ++i){
-            if (!node->child[k]->interaction[i]->isEmpty && !node->child[k]->isEmpty) {
+            if (node->child[k]->interaction[i] != NULL && !node->child[k]->interaction[i]->isEmpty) {
                 kernel_Cheb_2D(nChebNodes,node->child[k]->scaledCnode,nChebNodes,node->child[k]->interaction[i]->scaledCnode,K);
                 node->child[k]->nodePotential	=	node->child[k]->nodePotential+K*node->child[k]->interaction[i]->nodeCharge;
 
             }
 		}
 	}
+	}
 }
 
 //	Tranfers potential from node to final potential matrix when needed;
 void kernel_Base::tranfer_Potential_To_Potential_Tree(H2_2D_Node*& node, MatrixXd& potential){
 	for(unsigned long k=0; k<node->N; ++k){
-		potential.row(node->index(k))+=node->potential.row(k);
+			potential.row(node->index(k))+=node->potential.row(k);
 	}
 }
 
@@ -124,7 +130,9 @@ void kernel_Base::kernel_Cheb_2D(const unsigned short& M, const vector<Point>& x
 //	Tranfers potential from Chebyshev node of parent to Chebyshev node of children;
 void kernel_Base::transfer_NodePotential_To_Child(H2_2D_Node*& node, MatrixXd R[]){
 	for(unsigned short k=0;k<4;++k){
-		node->child[k]->nodePotential	=	node->child[k]->nodePotential+R[k]*node->nodePotential;
+		if(!node->child[k]->isEmpty){
+			node->child[k]->nodePotential	=	node->child[k]->nodePotential+R[k]*node->nodePotential;
+		}
 	}
 }
 

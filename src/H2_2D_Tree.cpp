@@ -108,7 +108,9 @@ void H2_2D_Tree::assign_Children(H2_2D_Node*& node){
 
 			for(unsigned short k=0; k<4; ++k){
 				assign_Children(node->child[k]);
-				node->nodeCharge=	node->nodeCharge+R[k].transpose()*(node->child[k]->nodeCharge);
+				if(!node->child[k]->isEmpty){
+					node->nodeCharge=	node->nodeCharge+R[k].transpose()*(node->child[k]->nodeCharge);
+				}
 			}
 		}
 	}
@@ -121,7 +123,7 @@ void H2_2D_Tree::build_Tree(H2_2D_Node*& node){
 			assign_Siblings(node);
 			for(unsigned short k=0;k<8;++k){
 				if(node->neighbor[k]!=NULL){
-					if(!node->neighbor[k]->isLeaf){
+					if(!node->neighbor[k]->isLeaf  && !node->neighbor[k]->isEmpty){
                         assign_Cousin(node,k);
 					}
 				}
@@ -318,7 +320,7 @@ void H2_2D_Tree:: assign_Siblings(H2_2D_Node*& node){
 //	Assign cousins to children of the node
 void H2_2D_Tree:: assign_Cousin(H2_2D_Node*& node, unsigned short neighborNumber){
 //	Assigning children of neighbor 0
-	if(neighborNumber==0){
+	if(neighborNumber==0 && node->neighbor[0] != NULL ){
 //	Assigning the cousins to child0. One neighbor and three well-separated cousins.
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[0]->child[0];
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[0]->child[1];
@@ -348,7 +350,7 @@ void H2_2D_Tree:: assign_Cousin(H2_2D_Node*& node, unsigned short neighborNumber
 		node->child[0]->nNeighbor					=	node->child[0]->nNeighbor+1;
 	}
 //	Assigning children of neighbor 1
-	else if(neighborNumber==1){
+	else if(neighborNumber==1 && node->neighbor[1] != NULL ){
 //	Assigning the cousins to child0. One neighbor and three well-separated cousins.
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[1]->child[0];
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[1]->child[1];
@@ -382,7 +384,7 @@ void H2_2D_Tree:: assign_Cousin(H2_2D_Node*& node, unsigned short neighborNumber
 		node->child[1]->nNeighbor					=	node->child[1]->nNeighbor+2;
 	}
 //	Assigning children of neighbor 2
-	else if (neighborNumber==2){
+	else if (neighborNumber==2 && node->neighbor[2] != NULL ){
 //	Assigning the cousins to child0. One neighbor and three well-separated cousins.
 
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[2]->child[0];
@@ -416,7 +418,7 @@ void H2_2D_Tree:: assign_Cousin(H2_2D_Node*& node, unsigned short neighborNumber
 		node->child[1]->nNeighbor					=	node->child[1]->nNeighbor+1;
 	}
 //	Assigning children of neighbor 3
-	else if(neighborNumber==3){
+	else if(neighborNumber==3 && node->neighbor[3] != NULL ){
 //	Assigning the cousins to child0. One neighbor and three well-separated cousins.
 
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[3]->child[0];
@@ -451,7 +453,7 @@ void H2_2D_Tree:: assign_Cousin(H2_2D_Node*& node, unsigned short neighborNumber
 		node->child[3]->nNeighbor					=	node->child[3]->nNeighbor+2;
 	}
 //	Assigning children of neighbor 4
-	else if(neighborNumber==4){
+	else if(neighborNumber==4 && node->neighbor[4] != NULL ){
 //	Assigning the cousins to child0. One neighbor and three well-separated cousins.
 
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[4]->child[0];
@@ -485,7 +487,7 @@ void H2_2D_Tree:: assign_Cousin(H2_2D_Node*& node, unsigned short neighborNumber
 		node->child[3]->nNeighbor					=	node->child[3]->nNeighbor+1;
 	}
 //	Assigning children of neighbor 5
-	else if(neighborNumber==5){
+	else if(neighborNumber==5 && node->neighbor[5] != NULL ){
 //	Assigning the cousins to child0. One neighbor and three well-separated cousins.
 
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[5]->child[0];
@@ -520,7 +522,7 @@ void H2_2D_Tree:: assign_Cousin(H2_2D_Node*& node, unsigned short neighborNumber
 		node->child[3]->nNeighbor					=	node->child[3]->nNeighbor+2;
 }
 //	Assigning children of neighbor 6
-	else if (neighborNumber==6){
+	else if (neighborNumber==6 && node->neighbor[6] != NULL ){
 //	Assigning the cousins to child0. One neighbor and three well-separated cousins.
 
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[6]->child[0];
@@ -554,7 +556,7 @@ void H2_2D_Tree:: assign_Cousin(H2_2D_Node*& node, unsigned short neighborNumber
 		node->child[2]->nNeighbor					=	node->child[2]->nNeighbor+1;
 	}
 //	Assigning children of neighbor 7
-	else if (neighborNumber==7){
+	else if (neighborNumber==7 && node->neighbor[7] != NULL ){
 //	Assigning the cousins to child0. One neighbor and three well-separated cousins.
 
 		node->child[0]->interaction[node->child[0]->nInteraction++]	=	node->neighbor[7]->child[0];
